@@ -52,7 +52,11 @@ app.get('/game', (req, res) => {
     var game = gameCoordinator.findUnstartedGame()
     if (!game)
         var game = gameCoordinator.createGame(config.get("app.defaultGameOptions"))
-    res.render("game.ejs", { game: game, username: req.session.username })
+    if (req.user) {
+        res.render('game.ejs', { username: req.user.username, loggedIn: true, game: game })
+    } else {
+        res.render('game.ejs', { username: req.session.username, loggedIn: false, game: game })
+    }
 });
 
 app.get('/auth/google', passport.authenticate("google", {
