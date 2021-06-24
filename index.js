@@ -1,15 +1,15 @@
-const app = require('./app')
-const mongoose = require('mongoose')
+const app = require('./app.js')
 const io = require('./routes/socketRoutes.js')
-const port = 7300;
+const mongoose = require('mongoose')
+const config = require('config')
 
 async function bootstrap() {
-    await mongoose.connect("mongodb://defaultUser:passwordPassport1224@ladeira.eu:1283/CrackedTyping", { useNewUrlParser: true, useUnifiedTopology: true })
-    console.log("Connected to MongoDB");
-    return app.listen(port);
+    await mongoose.connect(config.get("mongodb.connectionString"), config.get("mongodb.options"))
+    console.log("Connected to MongoDB")
+    return app.listen(config.get("app.port"))
 }
 
 bootstrap().then(server => {
-    io.attach(server);
-    console.log(`Express listening on port ${port}`)
+    console.log(`Express listening on port ${config.get("app.port")}`)
+    io.attach(server)
 });
