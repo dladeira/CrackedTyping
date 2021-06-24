@@ -4,7 +4,7 @@ const session = require('express-session')({
     resave: true,
     saveUninitialized: true,
     store: MongoStore.create({
-        mongoUrl: 'mongodb://admin:mediameister5634@localhost:1283/CrackedTyping?authSource=admin',
+        mongoUrl: 'mongodb://defaultUser:passwordPassport1224@ladeira.eu:1283/CrackedTyping',
         mongoOptions: {
             useNewUrlParser: true,
             useUnifiedTopology: true
