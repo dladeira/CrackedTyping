@@ -35,7 +35,7 @@ function updateGameTime() {
     if (currentGameTime < 0) { // Hasn't started yet
         gameTextInput.readOnly = true;
         gameTimerElement.innerHTML = "Starting in: " + getRoundedTime();
-        gameTextInput.placeholder = "Sarting in "+ getRoundedTime();
+        gameTextInput.placeholder = "Starting in "+ getRoundedTime();
     } else if (currentGameTime < gameLength) { // Game is ongoing
         // The game has just started
         if (!started) {
