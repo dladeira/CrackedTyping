@@ -1,0 +1,17 @@
+{
+    "app": {
+        "port": 7300,
+        "defaultGameOptions": {
+            "startIn": 5000,
+            "gameLength": 30000,
+            "gameDeleteDelay": 5000
+        }
+    },
+    "mongodb": {
+        "connectionString": "mongodb://defaultUser:passwordPassport1224@ladeira.eu:1283/CrackedTyping",
+        "options": {
+            "useNewUrlParser": true,
+            "useUnifiedTopology": true
+        }
+    }
+}
