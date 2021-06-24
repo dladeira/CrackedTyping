@@ -1,4 +1,31 @@
 
 <%- include('partials/header.ejs', { username: username}) %>
 <link type="text/css" rel="stylesheet" href="/css/landing.css">
-<a href="/game">Join game</a>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet"> 
+
+<!-- 
+    The div bellow is the container that will have all of the "cards" each one of these is for each
+    gamemode on the website.
+-->
+
+<div class="flex-better-than-bootstrap">
+
+<!-- 
+    Beginning of code for a card
+-->
+<a href="/game">
+    <div class="card">
+        <img class="card-image" src="/img/keyboard.jpg" alt="keyboard">
+        <div class="card-title">Join Game</div>
+        <div class="card-description">Test out your skills against another player.</div>
+    </div>
+</a>
+<!-- 
+    End of code for a card
+-->
+
+
+
+</div>
