@@ -33,9 +33,10 @@ setInterval(() => {
 // Don't use gameOngoing() because distinction between starting and ended
 function updateGameTime() {
     if (currentGameTime < 0) { // Hasn't started yet
+        var startingText = "Starting in: " + Math.abs(msToSec(currentGameTime));
         gameTextInput.readOnly = true;
-        gameTimerElement.innerHTML = "Starting in: " + getRoundedTime();
-        gameTextInput.placeholder = "Starting in "+ getRoundedTime();
+        gameTimerElement.innerHTML = startingText;
+        gameTextInput.placeholder = startingText;
     } else if (currentGameTime < gameLength) { // Game is ongoing
         // The game has just started
         if (!started) {
@@ -45,7 +46,7 @@ function updateGameTime() {
             started = true;
         }
         if (!finishedGame)
-            gameTimerElement.innerHTML = "Seconds elapsed: " + getRoundedTime();
+            gameTimerElement.innerHTML = "Time left: " + msToSec(gameLength - currentGameTime);
     } else { // Game ended
         finishGame();
     }
@@ -55,8 +56,8 @@ gameTextInput.oninput = event => {
     var wordInputed = gameTextInput.value;
     var preWordInputed = wordInputed.substring(0, wordInputed.length - 1); // Word before the event was fired
 
-    if (event.data == " ") {
-        if (getCurrentWord() == preWordInputed) {
+    if (event.data == " " || isLastWord()) {
+        if ((getCurrentWord() == preWordInputed) || (getCurrentWord() == wordInputed)) {
             gameTextInput.value = "";
             event.preventDefault();
             correctTypedText += wordInputed;
@@ -105,6 +106,10 @@ function getTotalTypedText() {
     return correctTypedText + gameTextInput.value;
 }
 
+function isLastWord() {
+    return getTotalTypedText().split(' ').length >= gameText.split(' ').length;
+}
+
 function getFinalGameText(gameText) {
     var finalText = "";
     var gameTextWordArray = gameText.split(" ");
@@ -118,6 +123,6 @@ function getWordElement(wordNumber) {
     return document.getElementById(`word-${wordNumber}`)
 }
 
-function getRoundedTime() {
-    return Math.abs(Math.round(currentGameTime / 100) / 10);
+function msToSec(time) {
+    return Math.round(time / 100) / 10;
 }
