@@ -1,1 +1,6 @@
 <h1>Logged in as: <%= username %></h1>
+<% if (loggedIn) { %>
+    <a href="/auth/logout">Log out</a>
+<% } else { %>
+    <a href="/auth/google">Log in</a>
+<% } %>
