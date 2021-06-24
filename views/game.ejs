@@ -1,0 +1,25 @@
+<style>
+    .error {
+        background-color: red;
+    }
+    .currentWord {
+        background-color: black;
+        color: white;
+    }
+</style>
+
+<%- include('partials/header.ejs', { username: username}) %>
+<p>Game info:</p>
+<p id="gameIdElement" style="margin: 0">ID: <%= game.id %></p>
+<p id="gameTimeElement" style="margin: 0"></p>
+<input id="gameId" type="hidden" value="<%=game.id%>">
+<input id="gameLength" type="hidden" value="<%=game.length%>">
+<input id="gameStartTime" type="hidden" value="<%= game.startTime %>">
+<input id="gameText" type="hidden" value="<%= game.text %>">
+
+<p id="gameTextElement"></p>
+<input autofocus id="gameTextInput" type="text">
+
+<!-- Keep scripts in this order (socket.io on top)-->
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/game.js"></script>
