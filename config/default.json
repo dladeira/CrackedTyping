@@ -1,11 +1,6 @@
 {
     "app": {
         "port": 7300,
-        "defaultGameOptions": {
-            "startIn": 5000,
-            "gameLength": 30000,
-            "gameDeleteDelay": 5000
-        },
         "google": {
             "clientId": "623304601185-t4a290j6gqoblliedq90c9nfir84sm5e.apps.googleusercontent.com",
             "clientSecret": "wI-nbUfmJrIOdzZlBX5lF0Fw"
@@ -17,6 +12,17 @@
         "options": {
             "useNewUrlParser": true,
             "useUnifiedTopology": true
+        }
+    },
+    "game": {
+        "defaultOptions": {
+            "startDelay": 5000,
+            "gameLength": 30000,
+            "deleteDelay": 5000
+        },
+        "defaultText": {
+            "passage": "There has been an error in finding a text so the default text has been provided",
+            "totalTimesTyped": 0
         }
     }
 }

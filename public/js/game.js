@@ -3,11 +3,13 @@ var gameId = document.getElementById("gameId").value;
 var gameStartTime = document.getElementById("gameStartTime").value;
 var gameLength = document.getElementById("gameLength").value;
 var gameText = document.getElementById("gameText").value;
+var gameTotalTimesTyped = document.getElementById("gameTotalTimesTyped").value;
 
 // DOM Elements
 var gameTimerElement = document.getElementById("gameTimeElement");
 var gameTextElement = document.getElementById("gameTextElement");
 var gameTextInput = document.getElementById("gameTextInput");
+var gameTimesTypedElement = document.getElementById("gameTimesTypedElement");
 
 var currentGameTime = new Date().getTime() - gameStartTime;
 var socket = io();

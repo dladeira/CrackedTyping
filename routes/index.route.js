@@ -15,14 +15,9 @@ router.get('/', (req, res) => {
 });
 
 router.get('/game', (req, res) => {
-    var game = gameCoordinator.findUnstartedGame()
-    if (!game)
-        var game = gameCoordinator.createGame(config.get("app.defaultGameOptions"))
-    if (req.user) {
+    gameCoordinator.findUnstartedGame(game => {
         res.render('game.ejs', { game: game })
-    } else {
-        res.render('game.ejs', { game: game })
-    }
+    })
 });
 
 module.exports = router;

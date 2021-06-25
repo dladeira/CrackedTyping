@@ -10,11 +10,13 @@
 </style>
 <p>Game info:</p>
 <p id="gameIdElement" style="margin: 0">ID: <%= game.id %></p>
+<p style="margin: 0">Total Times Typed: <%= game.text.totalTimesTyped %></p>
 <p id="gameTimeElement" style="margin: 0"></p>
 <input id="gameId" type="hidden" value="<%=game.id%>">
 <input id="gameLength" type="hidden" value="<%=game.length%>">
 <input id="gameStartTime" type="hidden" value="<%= game.startTime %>">
-<input id="gameText" type="hidden" value="<%= game.text %>">
+<input id="gameText" type="hidden" value="<%= game.text.passage %>">
+<input id="gameTotalTimesTyped" type="hidden" value="<%=game.text.totalTimesTyped%>">
 
 <p id="gameTextElement"></p>
 <input autofocus id="gameTextInput" type="text">
