@@ -3,6 +3,7 @@ const session = require('express-session')({
     secret: 'secretSessionMessageOrSomething',
     resave: true,
     saveUninitialized: true,
+    cookie: { sameSite: 'lax' },
     store: MongoStore.create({
         mongoUrl: 'mongodb://defaultUser:passwordPassport1224@ladeira.eu:1283/CrackedTyping',
         mongoOptions: {

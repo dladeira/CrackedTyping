@@ -95,7 +95,7 @@ function finishGame() {
     finishedGame = true;
     gameTextInput.readOnly = true;
     gameTextInput.placeholder = "Finished!";
-    gameTimerElement.innerHTML = "Game ended! Your speed: " + Math.round(gameText.split(" ").length / (secondsElapsed / 60)) + " WPM!";
+    gameTimerElement.innerHTML = "Game ended! Your speed: " + Math.round(getTotalTypedText().split(" ").length / (secondsElapsed / 60)) + " WPM!";
 }
 
 function isTextCorrect(wordInputed) {

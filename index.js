@@ -24,6 +24,6 @@ async function bootstrap() {
 }
 
 bootstrap().then(() => {
-    console.log(`Development enviroment ${config.env ? config.env : "default"}`)
+    console.log(`Enviroment is set to ${app.get('env')}`)
     console.log(`---> Finished`)
 });
