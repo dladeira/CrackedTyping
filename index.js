@@ -1,9 +1,11 @@
 const app = require('./app.js')
-const io = require('./routes/socketRoutes.js')
+const io = require('./routes/socket.route.js')
 const mongoose = require('mongoose')
 const config = require('config')
 const https = require('https')
 const fs = require('fs')
+
+let server;
 
 const serverOptions = {
     key: fs.readFileSync('./certificates/privkey.pem'),
@@ -13,10 +15,15 @@ const serverOptions = {
 async function bootstrap() {
     await mongoose.connect(config.get("mongodb.connectionString"), config.get("mongodb.options"))
     console.log("Connected to MongoDB")
-    return https.createServer(serverOptions, app).listen(config.get("app.port"))
+
+    server = await https.createServer(serverOptions, app).listen(config.get("app.port"))
+    console.log(`Express listening on port ${config.get("app.port")}`)
+
+    await io.attach(server)
+    console.log(`Socket.io attached to https server`)
 }
 
-bootstrap().then(server => {
-    console.log(`Express listening on port ${config.get("app.port")}`)
-    io.attach(server)
+bootstrap().then(() => {
+    console.log(`Development enviroment ${config.env ? config.env : "default"}`)
+    console.log(`---> Finished`)
 });
