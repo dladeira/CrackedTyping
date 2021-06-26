@@ -38,8 +38,10 @@ function findGames() {
 
 function findUnstartedGame(callback) {
     for (var i = 0; i < gameList.length; i++) {
-        if (gameList[i].timeSinceStart < -1000) callback(gameList[i])
-        return
+        if (gameList[i].timeSinceStart < -1000) {
+            callback(gameList[i])
+            return
+        }
     }
     createGame(config.get('game.defaultOptions'), callback)
 }
@@ -57,7 +59,6 @@ function getRandomText(callback) {
 
 exports.findGameById = findGameById
 exports.findUnstartedGame = findUnstartedGame
-exports.createGame = createGame
 exports.findGames = findGames
 
 class Game {
@@ -65,7 +66,7 @@ class Game {
         this.options = options
         this.id = id
         this.gameEndCallback = gameEndCallback
-        this.text = text // TODO: Rename text to passage in views
+        this.text = text
 
         setTimeout(() => {
             this.startGame()
@@ -105,7 +106,11 @@ class Game {
     }
 
     get playerCount() {
-        return this.users.length;
+        return this.users.length
+    }
+
+    get passage() {
+        return this.text.passage
     }
 
     // No removing users (no leaving game)

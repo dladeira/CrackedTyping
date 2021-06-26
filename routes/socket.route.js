@@ -2,19 +2,23 @@ const io = require('socket.io')()
 const sharedSession = require('express-socket.io-session')
 const session = require('../session.js')
 const gameCoordinator = require('../gameCoordinator.js')
-var socketGameMap = {};
 
-io.use(sharedSession(session, { autoSave: true }));
+io.use(sharedSession(session, { autoSave: true }))
 
 io.on('connection', socket => {
+    console.log(`User ${socket.handshake.session.username} has connected`)
     socket.on('disconnect', () => {
 
     })
-    socket.on('joinGame', gameId => {
-        if (!socketGameMap[socket.id]) socketGameMap[socket.id] = [];
-        socketGameMap[socket.id].push(gameId);
-        gameCoordinator.findGameById(gameId).addUser(socket.handshake.session.username);
-    });
-});
 
-module.exports = io;
+    socket.on('gameUpdate', data => {
+        io.emit('gameUpdate', data)
+    })
+
+    socket.on('gameJoin', data => {
+        io.emit('gameJoin', data)
+        gameCoordinator.findGameById(data.id).addUser(socket.handshake.session.username)
+    })
+})
+
+module.exports = io

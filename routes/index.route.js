@@ -16,7 +16,8 @@ router.get('/', (req, res) => {
 
 router.get('/game', (req, res) => {
     gameCoordinator.findUnstartedGame(game => {
-        res.render('game.ejs', { game: game })
+        const {...object} = game
+        res.render('game.ejs', { game: game, gameJSON: JSON.stringify(game) })
     })
 });
 

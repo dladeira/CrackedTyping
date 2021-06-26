@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const textSchema = new mongoose.Schema({
-    passage: String,
+    passage: String, // passages to use "" and not ''
     totalTimesTyped: { type: Number, default: 0 }
 
 })
