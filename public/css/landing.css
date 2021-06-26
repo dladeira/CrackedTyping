@@ -2,7 +2,8 @@
     margin: 0px;
     padding: 0px;
     --color: rgb(47, 255, 141);
-    --background: rgb(16, 21, 26);
+    --background: rgb(53, 64, 75);
+    --darker-background: rgb(16, 21, 26);
 }
 
 body {
@@ -11,6 +12,7 @@ body {
 }
 
 .flex-better-than-bootstrap {
+    margin-top: 20px;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
@@ -37,7 +39,7 @@ body {
     position: absolute;
     top: 20px;
     left: 20px;
-    font-family: 'Roboto Mono', monospace;
+    font-family: 'Open Sans', sans-serif;
     color: var(--color);
     text-decoration: none;
     font-size: 30px;

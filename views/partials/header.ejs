@@ -1,12 +1,29 @@
-<h1>Logged in as: <%= username %></h1>
-<% if (loggedIn) { %>
-    <a href="/auth/logout">Log out</a>
-<% } else { %>
-    <a href="/auth/google">Log in</a>
-<% } %>
+
 <script src="/socket.io/socket.io.js"></script>
 <script>
     var username = '<%= username %>'
 
     var socket = io()
 </script>
+<!--
+
+-->
+<link type="text/css" rel="stylesheet" href="/css/header.css">
+
+<div class="navbar-uwu">
+    <a href="/views/landing.ejs" class="nav-button-left">
+        CrackedTyping
+    </a>
+
+
+
+    <% if (loggedIn) { %>
+        <a href="/auth/logout" class="nav-button-right">Log out</a>
+    <% } else { %>
+        <a href="/auth/google" class="nav-button-right">Log in</a>
+    <% } %>
+
+
+</div>
+
+<h2 class="current-login">Currently logged in as: <%= username %></h2>

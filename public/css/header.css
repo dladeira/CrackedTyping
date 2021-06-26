@@ -1,0 +1,50 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    --color: rgb(47, 255, 141);
+    --background: rgb(53, 64, 75);
+    --darker-background: rgb(16, 21, 26);
+}
+
+.navbar-uwu {
+    background-color: var(--darker-background);
+    width: 100%;
+    height: fit-content;
+    overflow: hidden;
+}
+
+.navbar-uwu a {
+    color: white;
+    background-color: var(--darker-background);
+    text-decoration: none;
+    height: 50px;
+    font-size: 30px;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    padding: 5px 10px;
+}
+
+.navbar-uwu a:hover {
+    color: var(--color);
+}
+.navbar-uwu a:active {
+    color: var(--color);
+    background-color: var(--background)
+}
+
+.nav-button-left {
+    float: left;
+}
+
+.nav-button-right {
+    float: right;
+}
+
+.current-login {
+    width: 100%;
+    color: var(--color);
+    text-align: center;
+    border-bottom: solid 3px var(--color);
+    font-family: 'Roboto Mono', monospace;
+    font-size: 20px;
+}
