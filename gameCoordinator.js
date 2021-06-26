@@ -63,6 +63,7 @@ exports.findGames = findGames
 
 class Game {
     constructor(id, options, text, gameEndCallback) {
+        this.uniqueId = Math.random() * 1000000000; // Game uniqueness check (game ids get reused)
         this.options = options
         this.id = id
         this.gameEndCallback = gameEndCallback
@@ -75,11 +76,11 @@ class Game {
         // Set startTime ahead of time
         this.startTime = new Date().getTime() + this.options.startDelay
 
-        this.users = []
+        this.players = []
     }
 
     startGame() {
-        console.log(`Game ${this.id} started with ${this.users.length} players`)
+        console.log(`Game ${this.id} started with ${this.players.length} players`)
         setTimeout(() => {
             this.endGame()
         }, this.options.gameLength)
@@ -106,7 +107,7 @@ class Game {
     }
 
     get playerCount() {
-        return this.users.length
+        return this.players.length
     }
 
     get passage() {
@@ -114,7 +115,15 @@ class Game {
     }
 
     // No removing users (no leaving game)
-    addUser(user) {
-        this.users.push(user)
+    addPlayer(user) {
+        this.players.push(user)
+    }
+
+    setPlayerWPM(username, wpm) {
+        for (var i = 0; i < this.players.length; i++) {
+            if (this.players[i].username == username) {
+                this.players[i].wpm = wpm
+            }
+        }
     }
 }

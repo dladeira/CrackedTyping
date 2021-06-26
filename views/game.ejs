@@ -9,8 +9,8 @@
     }
 </style>
 <p>Game info:</p>
-<p id="gameIdElement" style="margin: 0">ID: <%= game.id %></p>
-<p style="margin: 0">Total Times Typed: <%= game.text.totalTimesTyped %></p>
+<p id="gameIdElement" style="margin: 0"></p>
+<p id="gameTimesTypedElement" style="margin: 0"></p>
 <p id="gameStatusElement" style="margin: 0"></p>
 Players:
 <ul id="playerListElement">
@@ -21,8 +21,4 @@ Players:
 
 <!-- Keep scripts in this order (socket.io on top)-->
 <script src="/socket.io/socket.io.js"></script>
-<script>
-    // TODO: Prevent XSS attacks using custom usernames
-    var game = JSON.parse('<%- gameJSON %>')
-</script>
 <script src="/js/game.js"></script>
