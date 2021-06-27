@@ -7,11 +7,8 @@ const config = require('config')
 io.use(sharedSession(session, { autoSave: true }))
 
 io.on('connection', socket => {
-    
-    console.log(`User ${socket.handshake.session.username} has connected`)
-    socket.on('disconnect', () => {
-    })
 
+    // TODO: User two times in the same game
     socket.on('findGame', () => {
         gameCoordinator.findUnstartedGame(game => {
             game.addPlayer({

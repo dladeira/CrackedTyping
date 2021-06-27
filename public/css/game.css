@@ -7,12 +7,17 @@
     user-select: none;
 }
 
-.error {
-    background-color: red;
+.incorrectLetter {
+   background-color: red;
+   color: white;
 }
-.currentWord {
-    background-color: black;
-    color: rgb(167, 156, 156);
+
+.correctLetter {
+    color: gold;
+}
+
+#cursor {
+    color: white;
 }
 
 .contentWrapper {
@@ -32,6 +37,8 @@
     color: var(--color);
     font-family: 'Roboto Mono', monospace;
 
+    font-size: 1.3vw;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -42,6 +49,7 @@
     border: 2px solid white;
     padding: 2%;
     margin: 2% 0;
+    color: rgb(167, 156, 156);
 }
 
 .gameInfoContainer {
