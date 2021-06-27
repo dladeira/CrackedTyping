@@ -91,14 +91,16 @@ class Game {
         this.text.totalTimesTyped += this.playerCount
         this.text.save()
         for (var player of this.players) {
-            User.findOne({ username: player.username}, (err, user) => {
-                if (err) {
-                    console.log(err)
-                    return;
-                }
-                user.pastGames.push({ wpm: player.wpm, date: new Date().getTime() });
-                user.save()
-            })
+            if (player.saveData) {
+                User.findOne({ username: player.username}, (err, user) => {
+                    if (err) {
+                        console.log(err)
+                        return;
+                    }
+                    user.pastGames.push({ wpm: player.wpm, date: new Date().getTime() });
+                    user.save()
+                })
+            }
         }
 
         setTimeout(() => { // Don't delete game instantly

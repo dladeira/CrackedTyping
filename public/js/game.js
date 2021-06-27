@@ -31,6 +31,12 @@ socket.on('foundGame', gameFound => {
     bootstrap(gameFound)
 })
 
+/*
+    TODO:
+     - If you have spaces between your
+    letters the word is still correct
+*/
+
 function bootstrap(game) {
     setInterval(() => {
         /*
@@ -69,13 +75,8 @@ function bootstrap(game) {
         }
     }, intervalDelay)
 
-    setInterval(() => {
-        if (gameStage == 1)
-            socket.emit('gameUpdate', { username: username, speed: getWPM(), id: game.id })
-    }, wpmUpdateDelay)
-
     socket.on('dataRequest', () => {
-        if (gameStage == 1) {
+        if (gameStage < 2) { // Game hasn't finished yet
             socket.emit('dataResponse', { username: username, gameId: game.id, wpm: getWPM(), gameUniqueId: game.uniqueId })
         }
     })
@@ -147,11 +148,12 @@ function bootstrap(game) {
 
     function finishGame() {
         if (gameStage == 2) return // Game has already been finished, don't finish again!
+        gameStage = 2 // Prevent game from finishing more than once
         var wpm = getWPM(); // Use variable instead of calling the function twice to maintain sync
         socket.emit('dataResponse', { username: username, gameId: game.id, wpm: wpm }) // Sync local and public wpm
         gameTextInput.placeholder = "Finished!"
-        gameStatusElement.innerHTML = "Game ended! Your speed: " + wpm + " WPM!"
-        gameStage = 2 // Prevent game from finishing more than once
+        gameTextInput.value = ""
+        gameStatusElement.innerHTML = "Game ended!"
     }
 
     function isTextCorrect(wordInputed) {
@@ -171,11 +173,14 @@ function bootstrap(game) {
     }
 
     function getTypedText() {
-        return confirmedText + gameTextInput.value
+        return confirmedText
     }
 
     function getWPM() {
-        var wpm = Math.round(getTypedText().split(" ").length / (secondsElapsed / 60))
-        return (wpm ? wpm : 0) // WPM is null if secondsElapsed is 0 (divide by 0)
+        var wordsTyped = getTypedText().split(" ").length - 1
+        var wpm = Math.round(wordsTyped / (secondsElapsed / 60))
+        console.log(getTypedText().split(" "))
+        console.log(`typed ${wordsTyped} word in ${secondsElapsed} seconds resulting in ${wpm} wpm`)
+        return (isNaN(wpm) || wpm == "Infinity" ? 0 : wpm) // WPM is "Infinity" if secondsElapsed is 0 (divide by 0)
     }
 }

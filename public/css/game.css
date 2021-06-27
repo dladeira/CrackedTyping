@@ -1,0 +1,78 @@
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.error {
+    background-color: red;
+}
+.currentWord {
+    background-color: black;
+    color: rgb(167, 156, 156);
+}
+
+.contentWrapper {
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    padding: 2%;
+    margin: 0 auto 20vh auto;
+    width: 60%;
+    background-color: var(--darker-background);
+    color: var(--color);
+    font-family: 'Roboto Mono', monospace;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#gamePassageElement {
+    background-color: black;
+    border: 2px solid white;
+    padding: 2%;
+    margin: 2% 0;
+}
+
+.gameInfoContainer {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 6%;
+}
+
+.gameStatsContainer, .playerListContainer {
+    width: 50%;
+}
+
+#gameInfoText {
+    text-align: center;
+    padding-bottom: 0.5%;
+    margin-bottom: 3%;
+    border-bottom: 2px solid var(--color);
+}
+
+#playersText {
+    text-align: center;
+}
+
+#playerListElement {
+    list-style-type: none;
+}
+
+#gameTextInput {
+    outline: 0 ;
+    border: solid white 2px;
+    background-color: black;
+    color: var(--color);
+    padding: 10px;
+}

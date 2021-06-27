@@ -1,25 +1,26 @@
 <%- include('partials/header.ejs') %>
-<style>
-    .error {
-        background-color: red;
-    }
-    .currentWord {
-        background-color: black;
-        color: white;
-    }
-</style>
-<p>Game info:</p>
-<p id="gameIdElement" style="margin: 0"></p>
-<p id="gameTimesTypedElement" style="margin: 0"></p>
-<p id="gameStatusElement" style="margin: 0"></p>
-Players:
-<ul id="playerListElement">
-</ul>
+<link rel="stylesheet" href="/css/game.css" type="text/css">
+<div class="contentWrapper">
+    <div class="container">
+        <p id="gameInfoText">Game info:</p>
+        <div class="gameInfoContainer">
+            <div class="gameStatsContainer">
+                <p id="gameIdElement" style="margin: 0"></p>
+                <p id="gameTimesTypedElement" style="margin: 0"></p>
+                <p id="gameStatusElement" style="margin: 0"></p>
+            </div>
+            <div class="playerListContainer">
+                <p id="playersText">Players:</p>
+                <ul id="playerListElement"></ul>
+            </div>
+        </div>
 
-<p id="gamePassageElement"></p>
-<input autofocus autocomplete="off" id="gameTextInput" type="text">
+        <p id="gamePassageElement" class="unselectable"></p>
+        <input autofocus autocomplete="off" id="gameTextInput" type="text">
 
-<!-- Keep scripts in this order (socket.io on top)-->
-<script src="/socket.io/socket.io.js"></script>
-<script src="/js/game.js"></script>
-<%- include('partials/footer.ejs') %>
+        <!-- Keep scripts in this order (socket.io on top)-->
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/game.js"></script>
+        <%- include('partials/footer.ejs') %>
+    </div>
+</div>

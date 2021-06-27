@@ -14,7 +14,11 @@ io.on('connection', socket => {
 
     socket.on('findGame', () => {
         gameCoordinator.findUnstartedGame(game => {
-            game.addPlayer({ username: socket.handshake.session.username, wpm: 0 })
+            game.addPlayer({
+                username: socket.handshake.session.username,
+                wpm: 0,
+                saveData: socket.handshake.session.loggedIn
+            })
             socket.emit('foundGame', game)
         })
     })
