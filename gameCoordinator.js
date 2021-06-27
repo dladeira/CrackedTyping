@@ -1,4 +1,4 @@
-const { Text } = require('./models/index.js')
+const { Text, User } = require('./models/index.js')
 const config = require('config')
 
 var gameList = []
@@ -87,8 +87,20 @@ class Game {
     }
 
     endGame() {
+        console.log(`Game ${this.id} ended`)
         this.text.totalTimesTyped += this.playerCount
-            this.text.save()
+        this.text.save()
+        for (var player of this.players) {
+            User.findOne({ username: player.username}, (err, user) => {
+                if (err) {
+                    console.log(err)
+                    return;
+                }
+                user.pastGames.push({ wpm: player.wpm, date: new Date().getTime() });
+                user.save()
+            })
+        }
+
         setTimeout(() => { // Don't delete game instantly
             this.gameEndCallback()
         }, this.deleteDelay)

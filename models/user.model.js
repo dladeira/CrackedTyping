@@ -3,7 +3,11 @@ const findOrCreate = require('mongoose-findorcreate')
 
 const userSchema = new mongoose.Schema({
     googleId: String,
-    username: String
+    username: String,
+    pastGames: [{
+        wpm: Number,
+        date: Date
+    }]
 })
 
 userSchema.plugin(findOrCreate);

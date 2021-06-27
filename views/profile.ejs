@@ -1,0 +1,7 @@
+Past games:
+<% var totalWPM = 0; %>
+<% for (var game of pastGames)  { %>
+    <% totalWPM+= game.wpm %>
+    <%= game %>
+<% } %><br>
+Average WPM: <%= Math.round(totalWPM / pastGames.length) %>
