@@ -1,3 +1,4 @@
+<%- include('partials/header.ejs') %>
 Past games:
 <% var totalWPM = 0; %>
 <% for (var game of pastGames)  { %>
@@ -5,3 +6,4 @@ Past games:
     <%= game %>
 <% } %><br>
 Average WPM: <%= Math.round(totalWPM / pastGames.length) %>
+<%- include('partials/footer.ejs') %>
