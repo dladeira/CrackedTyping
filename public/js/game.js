@@ -148,7 +148,7 @@ function bootstrap(game) {
     function finishGame() {
         if (gameStage == 2) return // Game has already been finished, don't finish again!
         var wpm = getWPM(); // Use variable instead of calling the function twice to maintain sync
-        socket.emit('dataResponse', { username: username, gameId: game.id, wpm: wpm }) // Sync local and public time
+        socket.emit('dataResponse', { username: username, gameId: game.id, wpm: wpm }) // Sync local and public wpm
         gameTextInput.placeholder = "Finished!"
         gameStatusElement.innerHTML = "Game ended! Your speed: " + wpm + " WPM!"
         gameStage = 2 // Prevent game from finishing more than once
