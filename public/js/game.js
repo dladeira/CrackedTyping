@@ -13,7 +13,6 @@ var secondsElapsed = 0 // Seconds of user being able to type
 
 // (milliseconds)
 var intervalDelay = 100
-var wpmUpdateDelay = 1000
 
 /*
  gameStage variable acts independently of
@@ -48,20 +47,13 @@ function bootstrap(game) {
             secondsElapsed += intervalDelay / 1000
         }
 
-        // Only allow typing during the game
-        gameTextInput.readOnly = gameStage != 1
-
         if (gameTimer < 0) { // Hasn't started yet
             var startingText = "Starting in: " + Math.abs(msToSec(gameTimer))
-            setGameStatus(startingText, startingText)
+            setGameStatus(startingText, startingText, 0)
         } else if (gameTimer < game.options.gameLength) { // Game is ongoing
-            // Prevent changing stage if user finished early
-            if (gameStage == 0)
-                gameStage = 1
-
-            // Prevent replacing status if user finished early
-            if (gameStage == 1) {
-                setGameStatus("Time left: " + msToSec(game.options.gameLength - gameTimer), "Start typing!")
+            // Prevent changing status if user finished early
+            if (gameStage != 2) {
+                setGameStatus("Time left: " + msToSec(game.options.gameLength - gameTimer), "Start typing!", 1)
             }
         } else { // Game ended
             finishGame()
@@ -139,12 +131,9 @@ function bootstrap(game) {
     }
 
     function finishGame() {
-        if (gameStage == 2) return
-        gameStage = 2 // Prevent game from finishing more than once
+        if (gameStage == 2) return // Prevent game from finishing more than once
+        setGameStatus("Game ended!", "Finished!", 2)
         socket.emit('dataResponse', { username: username, gameId: game.id, wpm: getWPM() })
-        gameTextInput.readonly = true; // Prevent the 100ms delay when game ended but user can type
-        setGameStatus("Game ended!", "Finished!")
-        gameTextInput.value = ""
     }
 
     function onLastWord() {
@@ -165,10 +154,15 @@ function bootstrap(game) {
         return (isNaN(wpm) || wpm == "Infinity" ? 0 : wpm) // WPM is "Infinity" if secondsElapsed is 0
     }
 
-    function setGameStatus(status, placeholder) {
+    function setGameStatus(status, placeholder, stage) {
         gameStatusElement.innerHTML = status
-        if (placeholder)
-            gameTextInput.placeholder = placeholder
+        gameTextInput.placeholder = placeholder
+        gameStage = stage;
+
+        // Only allow typing during the game
+        gameTextInput.readOnly = stage != 1
+        if (stage != 1)
+            gameTextInput.value = ""
     }
 
     function getCorrectLetterCount() {
