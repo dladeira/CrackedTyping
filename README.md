@@ -3,13 +3,13 @@
 
 A typing website
 
-Current routes:
+## Routes
 ```
---/ : Landing page
---game : Join random game and play
---user/
-----/profile : Profile with past games
---auth/
-----/google : Login with Google
-----/github : Login with Github
+-\ : Landing page
+-game : Join random game and play
+-user\
+--profile : Profile with past games
+-auth\
+--google : Login with Google
+--github : Login with Github
 ```
