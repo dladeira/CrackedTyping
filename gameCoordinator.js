@@ -3,8 +3,8 @@ const config = require('config')
 
 var gameList = []
 
-function createGame(options, callback, id) { // Leave id argument for future games with random ids
-    if (!id) id = findUnusedId()
+function createGame(options, callback) {
+    id = findUnusedId()
 
     getRandomText(text => {
         var newGame = new Game(id, options, text, () => {
@@ -128,9 +128,19 @@ class Game {
         return this.text.passage
     }
 
+    playerJoined(username) {
+        for (var user of this.players) {
+            if (user.username == username) {
+                return true
+            }
+        }
+        return false
+    }
+
     // No removing users (no leaving game)
     addPlayer(user) {
-        this.players.push(user)
+        if (!this.playerJoined(user.username))
+            this.players.push(user)
     }
 
     setPlayerWPM(username, wpm) {
