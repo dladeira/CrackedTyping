@@ -8,7 +8,7 @@ io.use(sharedSession(session, { autoSave: true }))
 
 io.on('connection', socket => {
 
-    // TODO: User two times in the same game
+    // Duplicate users is handled by gameCoordinator
     socket.on('findGame', () => {
         gameCoordinator.findUnstartedGame(game => {
             game.addPlayer({

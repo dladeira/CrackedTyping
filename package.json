@@ -4,7 +4,9 @@
   "description": "A typing website",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "start": "node index.js",
+    "build": "npm i",
+    "production": "export NODE_ENV=production && npm start"
   },
   "repository": {
     "type": "git",
