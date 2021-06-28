@@ -1,4 +1,4 @@
-function povideUserData(req, res, next) {
+function provideUserData(req, res, next) {
     if (!req.session.guestName) {
         req.session.guestName = "Guest " + Math.floor(Math.random() * 10000)
     }
@@ -18,4 +18,4 @@ function povideUserData(req, res, next) {
     next()
 }
 
-module.exports = povideUserData
+module.exports = provideUserData
