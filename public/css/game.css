@@ -31,7 +31,7 @@
 
 .container {
     padding: 2%;
-    margin: 0 auto 20vh auto;
+    margin: 0 auto 20vh;
     width: 60%;
     background-color: var(--darker-background);
     color: var(--color);
