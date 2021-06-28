@@ -95,36 +95,30 @@ function bootstrap(game) {
     */
     function updatePassage() { // Each word has it's own <span>
         var passageHTML = ""
-        var passageLetterArray = Array.from(game.text.passage)
-        var correctLettersLeft = getCorrectLetters()
-        var incorrectLettersLeft = getIncorrectLetters()
+        var correctLettersLeft = getCorrectLetterCount()
+        var incorrectLettersLeft = getIncorrectLetterCount()
         var cursorPlaced = false;
-        for (var letterNumber in passageLetterArray) {
+        for (var letter of Array.from(game.text.passage)) {
+            var classToAdd = ""
             if (correctLettersLeft-- > 0) {
-                passageHTML += `<span id=\"letter-${letterNumber}\" class=\"correctLetter\">${passageLetterArray[letterNumber]}</span>`
-                continue
+                var classToAdd = "correctLetter"
             } else if (incorrectLettersLeft-- > 0) {
-                if (!cursorPlaced) {
-                    passageHTML+= `<span id="cursor">|</span>`
-                    cursorPlaced = true
-                }
-                passageHTML += `<span id=\"letter-${letterNumber}\" class=\"incorrectLetter\">${passageLetterArray[letterNumber]}</span>`
-                continue
+                var classToAdd = "incorrectLetter"
             }
-            if (!cursorPlaced) {
+            if (classToAdd != "correctLetter" && !cursorPlaced) {
                 passageHTML+= `<span id="cursor">|</span>`
                 cursorPlaced = true;
             }
-            passageHTML += `<span id=\"letter-${letterNumber}\" class=\"\">${passageLetterArray[letterNumber]}</span>`
+            passageHTML += `<span class="${classToAdd}">${letter}</span>`
         }
         passageElement.innerHTML = passageHTML
     }
 
     gameTextInput.oninput = event => {
         var wordInputed = gameTextInput.value.substring(0, gameTextInput.value.length - 1)
-        if (isLastWord())
+        if (onLastWord())
             wordInputed = gameTextInput.value
-        if (event.data == " " || isLastWord()) {
+        if (event.data == " " || onLastWord()) {
             if (getExpectedWord() == wordInputed) {
                 gameTextInput.value = ""
                 confirmedText += wordInputed + " "
@@ -145,21 +139,15 @@ function bootstrap(game) {
     }
 
     function finishGame() {
-        if (gameStage == 2) return // Game has already been finished, don't finish again!
+        if (gameStage == 2) return
         gameStage = 2 // Prevent game from finishing more than once
-        var wpm = getWPM() // Use variable instead of calling the function twice to maintain sync
-        socket.emit('dataResponse', { username: username, gameId: game.id, wpm: wpm }) // Sync local and public wpm
-        gameTextInput.placeholder = "Finished!"
+        socket.emit('dataResponse', { username: username, gameId: game.id, wpm: getWPM() })
         gameTextInput.readonly = true; // Prevent the 100ms delay when game ended but user can type
+        setGameStatus("Game ended!", "Finished!")
         gameTextInput.value = ""
-        gameStatusElement.innerHTML = "Game ended!"
     }
 
-    function isTextCorrect(wordInputed) {
-        return getExpectedWord().substring(0, (wordInputed.length > getExpectedWord().length ? getExpectedWord().length : wordInputed.length)) == wordInputed
-    }
-
-    function isLastWord() {
+    function onLastWord() {
         return getTotalTypedText().split(' ').filter(e => e).length  >= game.text.passage.split(' ').length
     }
 
@@ -174,16 +162,16 @@ function bootstrap(game) {
     function getWPM() {
         var wordsTyped = confirmedText.split(" ").length - 1
         var wpm = Math.round(wordsTyped / (secondsElapsed / 60))
-        return (isNaN(wpm) || wpm == "Infinity" ? 0 : wpm) // WPM is "Infinity" if secondsElapsed is 0 (divide by 0)
+        return (isNaN(wpm) || wpm == "Infinity" ? 0 : wpm) // WPM is "Infinity" if secondsElapsed is 0
     }
 
     function setGameStatus(status, placeholder) {
         gameStatusElement.innerHTML = status
         if (placeholder)
-        gameTextInput.placeholder = placeholder
+            gameTextInput.placeholder = placeholder
     }
 
-    function getCorrectLetters() {
+    function getCorrectLetterCount() {
         var letterCount = 0;
         var letterArray = Array.from(getTotalTypedText());
         var passageLetterArray = Array.from(game.text.passage);
@@ -197,13 +185,13 @@ function bootstrap(game) {
         return letterCount;
     }
 
-    function getIncorrectLetters() {
+    function getIncorrectLetterCount() {
         var letterCount = 0;
         var letterArray = Array.from(getTotalTypedText());
         var passageLetterArray = Array.from(game.text.passage);
         var incorrectLetterFound = false;
         for (var i in letterArray) {
-            if (i < getCorrectLetters()) // Skip all the correct letters
+            if (i < getCorrectLetterCount()) // Skip all the correct letters
                 continue;
 
             // 2nd condition : If the user has typed more characters than exist, def wrong

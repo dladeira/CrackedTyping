@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('../passport.js')
+const ensureLoggedOut = require('../middlewares/ensureLoggedOut.js')
 
 router.use(ensureLoggedOut)
 
@@ -25,11 +26,5 @@ router.get("/logout", (req, res) => {
     req.logout()
     res.redirect('/')
 })
-
-function ensureLoggedOut(req, res, next) {
-    if (req.user)
-        req.logout()
-    next()
-}
 
 module.exports = router

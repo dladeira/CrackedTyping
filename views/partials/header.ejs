@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html>
     <head>
-
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap">  
         <link type="text/css" rel="stylesheet" href="/css/header.css">
 
         <!-- Keep sript at bottom of <head> container to prevent flash of unstyled content -->
         <script>var username = '<%= username %>'</script>
     </head>
     <body>
-    <div class="navbar-uwu">
-        <a href="/" class="nav-button-left">
-            CrackedTyping
-        </a>
-
-
+    <div class="navbar">
+        <a href="/" class="brand">CrackedTyping</a>
 
         <% if (loggedIn) { %>
-            <a href="/auth/logout" class="nav-button-right">Log out</a>
+            <a href="/auth/logout" class="nav-button-right logout">Log out</a>
         <% } else { %>
-            <a href="/auth/google" class="nav-button-right">Log in</a>
+            <div class="nav-button-right">
+                <span id="login-text">Log in:</span>
+                <a href="/auth/google" class="login-button google-button"><img src="/img/google-logo.svg" alt="G" class="login-logo google-logo">Google</a>
+                <a href="/auth/github" class="login-button github-button"><img src="/img/github-logo.svg" alt="G" class="login-logo github-logo">Github</a>
+            </div>
         <% } %>
 
 
