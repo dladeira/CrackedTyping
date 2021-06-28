@@ -1,9 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('../passport.js')
-const ensureLoggedOut = require('../middlewares/ensureLoggedOut.js')
-
-router.use(ensureLoggedOut)
 
 router.get('/google', passport.authenticate("google", {
     scope: [

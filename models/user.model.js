@@ -3,6 +3,7 @@ const findOrCreate = require('mongoose-findorcreate')
 
 const userSchema = new mongoose.Schema({
     googleId: String,
+    githubId: String,
     username: String,
     pastGames: [{
         wpm: Number,
