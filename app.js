@@ -4,7 +4,7 @@ const passport = require('./passport.js')
 const authRoutes = require('./routes/auth.route.js')
 const indexRoutes = require('./routes/index.route.js')
 const userData = require('./middlewares/userData.js')
-const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser')
 
 // Parse data from POST requests
 app.use(express.json())

@@ -5,7 +5,7 @@ const config = require('config')
 const https = require('https')
 const fs = require('fs')
 
-let server;
+let server
 
 const serverOptions = {
     key: fs.readFileSync('./certificates/privkey.pem'),
@@ -26,4 +26,4 @@ async function bootstrap() {
 bootstrap().then(() => {
     console.log(`Enviroment is set to ${app.get('env')}`)
     console.log(`---> Finished`)
-});
+})

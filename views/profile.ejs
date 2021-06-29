@@ -1,16 +1,33 @@
 <%- include('partials/header.ejs') %>
+<style>
+    a {
+        color: white;
+    }
+</style>
+
 <% var totalWPM = 0; for (var game of pastGames)  { totalWPM+= game.wpm } %>
 
 <p>Username: <%= username %></p>
 Average WPM: <%= (Math.round(totalWPM / pastGames.length) ? Math.round(totalWPM / pastGames.length) : "No games found!") %><br>
 <% if (!loggedInGoogle) { %>
-    <p>Google not linked: <a href="/auth/google">LINK IT</a></p>
+    <p>Google not linked: <a href="/auth/google">LINK</a></p>
 <% }  else { %>
-    <p>Googled linked</p>
+    <p>Googled linked:
+        <% if (loggedInGithub) { %>
+            <a href="/auth/google/unlink">UNLINK</a>
+        <% } else { %>
+            CAN'T UNLINK ONLY LOGIN
+        <% } %>
+    </p>
 <% } %>
 <% if (!loggedInGithub) { %>
-    <p>Github not linked: <a href="/auth/github">LINK IT</a></p>
+    <p>Github not linked: <a href="/auth/github">LINK</a></p>
 <% } else { %>
-    <p>Github linked</p>
+    <p>Github linked: 
+        <% if (loggedInGoogle) { %>
+            <a href="/auth/github/unlink">UNLINK</a>
+        <% } else { %>
+            CAN'T UNLINK ONLY LOGIN
+        <% } %></p>
 <% } %>
 <%- include('partials/footer.ejs') %>
