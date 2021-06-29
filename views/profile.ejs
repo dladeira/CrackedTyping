@@ -1,20 +1,18 @@
 <%- include('partials/header.ejs') %>
-<style>
-    a {
-        color: white;
-    }
-</style>
-
+<link type="text/css" rel="stylesheet" href="/css/profile.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap">  
 <% var totalWPM = 0; for (var game of pastGames)  { totalWPM+= game.wpm } %>
 
-<p>Username: <%= username %></p>
+<!-- <p>Username: <%= username %></p>
 <p>Change Username:
     <form id="changeUsernameForm" action="/auth/usernamechange" method="POST">
         <input autocomplete="off" name="newUsername" type="text" value="<%= username %>" id="changeUsernameInput">
         <button type="submit" id="changeUsernameButton">Change</button>
         <p id="changeUsernameStatus"></p>
     </form>
-</p>
+</p> -->
 <p>Description: <%= description %></p>
 <p>Change Description:
     <form id="changeDescriptionForm" action="/auth/descriptionchange" method="POST">
@@ -45,6 +43,63 @@
             CAN'T UNLINK ONLY LOGIN
         <% } %></p>
 <% } %>
+
+
+    <div class="profile-container-flex">
+
+        <div class="profile-container">
+            
+            <div class="username-container">
+                <div class="profile-picture-container">
+                    <img class="profile-picture" src="">
+                </div>
+                
+
+                <div class="user">
+
+                    <div class="username"><p class="padding-left-10">Username: <%= username %></p></div>
+
+                    <div class="username-update">
+                        
+                            <form id="changeUsernameForm" action="/auth/usernamechange" method="POST">
+                                <input class="username-change" autocomplete="off" name="newUsername" type="text" placeholder="Change Username" id="changeUsernameInput">
+                                <button type="submit" id="changeUsernameButton">Change</button>
+                                
+                            </form>
+                        
+                    </div>
+                        <p id="changeDescriptionStatus"></p>
+                        <p id="changeUsernameStatus"></p>
+                </div>
+                
+            </div>
+
+
+            <div class="description"></div>
+
+            <div class="statistics"></div>
+
+            <div class="accounts"></div>
+
+
+
+
+
+
+            
+        </div>
+
+
+
+
+
+
+    </div>
+
+
+
+
+
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/profile.js"></script>
 <%- include('partials/footer.ejs') %>
