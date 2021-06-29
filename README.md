@@ -8,8 +8,10 @@ A typing website
 -\ : Landing page
 -game : Join random game and play
 -user\
---profile : Profile with past games
+--profile : User profile and settings
 -auth\
 --google : Login with Google
+---unlink: Unlink Google Strategy
 --github : Login with Github
+---unlink: Unlink Github Strategy
 ```
