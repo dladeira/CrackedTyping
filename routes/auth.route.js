@@ -76,4 +76,21 @@ router.post("/usernameChange", (req, res) => {
     })
 })
 
+router.post("/descriptionChange", (req, res) => {
+    var newDescription = req.body.newDescription
+    if (!newDescription.match(config.get("app.regex.description"))) {
+        res.send("stop trying to hack in a invalid description")
+        return
+    }
+    
+    User.findOne({_id: req.user._id}, (err, user) => {
+        if (err) return res.send(err)
+        user.description = newDescription
+        user.save().then(err => {
+            res.redirect('/user/profile')
+        })
+
+    })
+})
+
 module.exports = router

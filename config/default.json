@@ -11,7 +11,8 @@
         },
         "origin": "https://localhost:7300",
         "regex": {
-            "username": "^[a-zA-Z0-9]{4,20}$"
+            "username": "^[a-zA-Z0-9]{4,20}$",
+            "description": "[^]{1,250}$"
         }
     },
     "mongodb": {

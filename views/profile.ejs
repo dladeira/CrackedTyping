@@ -9,10 +9,18 @@
 
 <p>Username: <%= username %></p>
 <p>Change Username:
-    <form id="changeUsernameForm" action="/auth/usernameChange" method="POST">
-        <input autocomplete="off" name="newUsername" type="text" placeholder="<%= username %>" id="changeUsernameInput">
+    <form id="changeUsernameForm" action="/auth/usernamechange" method="POST">
+        <input autocomplete="off" name="newUsername" type="text" value="<%= username %>" id="changeUsernameInput">
         <button type="submit" id="changeUsernameButton">Change</button>
         <p id="changeUsernameStatus"></p>
+    </form>
+</p>
+<p>Description: <%= description %></p>
+<p>Change Description:
+    <form id="changeDescriptionForm" action="/auth/descriptionchange" method="POST">
+        <input autocomplete="off" name="newDescription" type="text" value="<%= description %>" id="changeDescriptionInput">
+        <button type="submit" id="changeDescriptionButton">Change</button>
+        <p id="changeDescriptionStatus"></p>
     </form>
 </p>
 <p>Average WPM: <%= (Math.round(totalWPM / pastGames.length) ? Math.round(totalWPM / pastGames.length) : "No games found!") %></p>

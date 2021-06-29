@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
     googleId: String,
     githubId: String,
     username: String,
+    description: String,
     pastGames: [{
         wpm: Number,
         date: Date
