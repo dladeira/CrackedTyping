@@ -15,4 +15,5 @@ A typing website
 --github : Login with Github
 ---unlink: Unlink Github Strategy
 --usernameChange : Change username (POST)
+--descriptionChange : Change description (POST)
 ```
