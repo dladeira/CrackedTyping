@@ -30,8 +30,8 @@ passport.use(new GoogleStrategy({
 }))
 
 passport.use(new GithubStrategy({
-    clientID: "d4d413105f6aa015ffb3",
-    clientSecret: "24628de04064459fd160e525d255f474c5c6390b",
+    clientID: config.get("app.github.clientId"),
+    clientSecret: config.get('app.github.clientSecret'),
     callbackURL: config.get("app.origin") + "/auth/github/redirect", // The only acceptable value for app.origin is ladeira.eu
     passReqToCallback: true
 }, (req, accessToken, refreshToken, profile, done) => {

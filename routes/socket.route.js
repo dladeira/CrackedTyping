@@ -1,12 +1,20 @@
 const io = require('socket.io')()
+const config = require('config')
 const sharedSession = require('express-socket.io-session')
 const session = require('../session.js')
 const gameCoordinator = require('../gameCoordinator.js')
-const config = require('config')
+const { User } = require('../models/index.js')
 
 io.use(sharedSession(session, { autoSave: true }))
 
 io.on('connection', socket => {
+
+    socket.on('usernameExists', username => {
+        User.findOne({ username: username }, (err, user) => {
+            socket.emit('usernameExists', { username: username, exists: (err || user) })
+             
+        })
+    })
 
     // Duplicate users is handled by gameCoordinator
     socket.on('findGame', () => {

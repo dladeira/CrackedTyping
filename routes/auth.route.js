@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const config = require('config')
 const passport = require('../passport.js')
 const { User } = require('../models/index.js')
 
@@ -51,6 +52,28 @@ router.get("/github/redirect", passport.authenticate("github", { failureRedirect
 router.get("/logout", (req, res) => {
     req.logout()
     res.redirect('/')
+})
+
+router.post("/usernameChange", (req, res) => {
+    var newUsername = req.body.newUsername
+    if (!newUsername.match(config.get("app.regex.username"))) {
+        res.send("stop trying to hack in a invalid username")
+        return
+    }
+
+    User.findOne({_id: req.user._id}, (err, user) => {
+        User.findOne({ username: newUsername }, (err, usernameExistsUser) => {
+            if (err || usernameExistsUser) {
+                res.send("stop trying to hack in a invalid username")
+                return
+            }
+            if (err) return res.send(err)
+            user.username = newUsername
+            user.save().then(err => {
+                res.redirect('/user/profile')
+            })
+        })
+    })
 })
 
 module.exports = router

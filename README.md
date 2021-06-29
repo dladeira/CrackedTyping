@@ -14,4 +14,5 @@ A typing website
 ---unlink: Unlink Google Strategy
 --github : Login with Github
 ---unlink: Unlink Github Strategy
+--usernameChange : Change username (POST)
 ```
