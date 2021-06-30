@@ -11,7 +11,7 @@ function provideUserData(req, res, next) {
         res.locals.loggedIn = true
         res.locals.loggedInGoogle = (req.user.googleId != undefined)
         res.locals.loggedInGithub = (req.user.githubId != undefined)
-        res.locals.description = req.user.description ? req.user.description : "no desc"
+        res.locals.description = req.user.description ? req.user.description : ""
     } else { // Not logged in, provide guest username
         req.session.username = req.session.guestName
         req.session.loggedIn = false

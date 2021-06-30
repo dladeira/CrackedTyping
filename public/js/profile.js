@@ -18,7 +18,8 @@ changeUsernameInput.oninput = event => {
 socket.on('usernameExists', data => {
     if (data.username == changeUsernameInput.value) {
         usernameExists = data.exists
-        setUsernameStatus(usernameExists ? "Username already exists" : "Username available")
+        if (submitUsernameEvent())
+            setUsernameStatus(usernameExists ? "Username already exists" : "Username available")
     }
 })
 
@@ -26,24 +27,26 @@ function submitUsernameEvent(event) {
     var newUsername = changeUsernameInput.value
     if (!newUsername.match("^[a-zA-Z0-9]+$")) {
         setUsernameStatus("Can only contain letters and numbers")
-        event.preventDefault()
-        return
+        if (event) event.preventDefault()
+        return false
     }
     if (newUsername.length < 4) {
         setUsernameStatus("At least 4 characters")
-        event.preventDefault()
-        return
+        if (event) event.preventDefault()
+        return false
     }
     if (newUsername.length > 20) {
         setUsernameStatus("Less than 20 characters")
-        event.preventDefault()
-        return
+        if (event) event.preventDefault()
+        return false
     }
 
     if (usernameExists) {
-        event.preventDefault()
-        return
+        if (event) event.preventDefault()
+        return false
     }
+
+    return true
 }
 
 function submitDescriptionEvent(event) {

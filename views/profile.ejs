@@ -15,7 +15,7 @@
 </p> -->
 <p>Description: <%= description %></p>
 <p>Change Description:
-    <form id="changeDescriptionForm" action="/auth/descriptionchange" method="POST">
+    <form id="changeDescriptionForm" action="/auth/changedescription" method="POST">
         <input autocomplete="off" name="newDescription" type="text" value="<%= description %>" id="changeDescriptionInput">
         <button type="submit" id="changeDescriptionButton">Change</button>
         <p id="changeDescriptionStatus"></p>
@@ -43,6 +43,9 @@
             CAN'T UNLINK ONLY LOGIN
         <% } %></p>
 <% } %>
+<form action="/auth/deleteaccount" method="POST">
+    Delete your account<button type="submit">Delete</button>
+</form>
 
 
     <div class="profile-container-flex">
@@ -61,7 +64,7 @@
 
                     <div class="username-update">
                         
-                            <form id="changeUsernameForm" action="/auth/usernamechange" method="POST">
+                            <form id="changeUsernameForm" action="/auth/changeusername" method="POST">
                                 <input class="username-change" autocomplete="off" name="newUsername" type="text" placeholder="Change Username" id="changeUsernameInput">
                                 <button type="submit" id="changeUsernameButton">Change</button>
                                 
