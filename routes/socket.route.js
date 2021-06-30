@@ -12,7 +12,6 @@ io.on('connection', socket => {
     socket.on('usernameExists', username => {
         User.findOne({ username: username }, (err, user) => {
             socket.emit('usernameExists', { username: username, exists: (err || user) })
-             
         })
     })
 

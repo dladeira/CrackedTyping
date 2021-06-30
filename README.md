@@ -5,16 +5,15 @@ A typing website
 
 ## Routes
 ```
--\ : Landing page
+\ : Landing page
 -game : Join random game and play
--user\
---profile : User profile and settings
+-account\ : User profile and settings
+--changeUsername : Change username (POST)
+--changeDescription : Change description (POST)
+--delete : Delete account (POST)
 -auth\
 --google : Login with Google
 ---unlink: Unlink Google Strategy
 --github : Login with Github
 ---unlink: Unlink Github Strategy
---changeUsername : Change username (POST)
---changeDescription : Change description (POST)
---deleteAccount : Delete account (POST)
 ```

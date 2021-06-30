@@ -1,8 +1,7 @@
 const express = require('express')
 const app = express()
 const passport = require('./passport.js')
-const authRoutes = require('./routes/auth.route.js')
-const indexRoutes = require('./routes/index.route.js')
+const { indexRouter, authRouter, accountRouter } = require('./routes/index.js')
 const userData = require('./middlewares/userData.js')
 const cookieParser = require('cookie-parser')
 
@@ -25,7 +24,8 @@ app.use(passport.session())
 app.use(userData);
 
 // Routes
-app.use('/auth', authRoutes)
-app.use('/', indexRoutes)
+app.use('/', indexRouter)
+app.use('/auth', authRouter)
+app.use('/account', accountRouter)
 
 module.exports = app

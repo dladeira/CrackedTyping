@@ -5,105 +5,47 @@ const passport = require('../passport.js')
 const { User } = require('../models/index.js')
 const loggedIn = require('../middlewares/loggedIn.js')
 
-router.get('/google', passport.authenticate("google", {
-    scope: [
-        "profile",
-        "email"
-    ]
-}))
-
-router.get("/google/redirect", passport.authenticate("google", { failureRedirect: "/" }), (req, res) => {
-    res.redirect('/user/profile')
+router.get("/:strategy/login", (req, res) => {
+    passport.authenticate(req.params.strategy, {
+        scope: [
+            "profile",
+            "email"
+        ]
+    })(req, res)
 })
 
-router.get('/google/unlink', (req, res) => {
-    if (!req.user.googleId) {
-        res.redirect('/')
+router.get("/:strategy/redirect", (req, res) => {
+    passport.authenticate(req.params.strategy, {
+        successRedirect: req.session.loginRedirect,
+        failureRedirect: "/"
+    })(req, res)
+})
+
+router.get("/:strategy/unlink", (req, res) => {
+    var strategyIdVarName = req.params.strategy + "Id"
+    var userStrategyId = req.user[strategyIdVarName]
+    if (!userStrategyId) {
+        console.log(`User ${req.user.username} attempting to unlink a not linked strategy (${req.params.strategy})`)
+        res.redirect("/account")
         return
     }
-    User.findOne({ googleId: req.user.googleId }, (err, user) => {
-        if (user.githubId) {
-            user.googleId = undefined
-            user.save()
+    var query = {}
+    query[strategyIdVarName] = userStrategyId
+    User.findOne(query, (err, user) => {
+        if (err) {
+            console.log(err)
+            res.send(err)
+            return
         }
-        res.redirect('/user/profile')
+        user[strategyIdVarName] = undefined
+        user.save()
+        res.redirect("/account")
     })
-})
-
-router.get('/github', passport.authenticate("github"))
-
-router.get('/github/unlink', (req, res) => {
-    if (!req.user.githubId) {
-        res.redirect('/')
-        return
-    }
-    User.findOne({ githubId: req.user.githubId }, (err, user) => {
-        if (user.googleId) {
-            user.githubId = undefined
-            user.save()
-        }
-        res.redirect('/user/profile')
-    })
-})
-
-router.get("/github/redirect", passport.authenticate("github", { failureRedirect: "/" }), (req, res) => {
-    res.redirect('/user/profile')
 })
 
 router.get("/logout", loggedIn, (req, res) => {
     req.logout()
     res.redirect('/')
-})
-
-router.post("/changeUsername", loggedIn, (req, res) => {
-    var newUsername = req.body.newUsername
-    if (!newUsername.match(config.get("app.regex.username"))) {
-        res.send("stop trying to hack in a invalid username")
-        return
-    }
-
-    User.findOne({ _id: req.user._id }, (err, user) => {
-        User.findOne({ username: newUsername }, (err, usernameExistsUser) => {
-            if (err || usernameExistsUser) {
-                res.send("stop trying to hack in a invalid username")
-                return
-            }
-            if (err) return res.send(err)
-            user.username = newUsername
-            user.save().then(err => {
-                res.redirect('/user/profile')
-            })
-        })
-    })
-})
-
-router.post("/changeDescription", loggedIn, (req, res) => {
-    var newDescription = req.body.newDescription
-    if (!newDescription.match(config.get("app.regex.description"))) {
-        res.send("stop trying to hack in a invalid description")
-        return
-    }
-
-    User.findOne({ _id: req.user._id }, (err, user) => {
-        if (err) return res.send(err)
-        user.description = newDescription
-        user.save().then(err => {
-            res.redirect('/user/profile')
-        })
-
-    })
-})
-
-router.post("/deleteAccount", loggedIn, (req, res) => {
-    User.deleteOne({ _id: req.user._id}, (err) => {
-        if (err) {
-            console.log(err)
-            res.send(err)
-        } else {
-            req.logout()
-            res.redirect('/')
-        }
-    })
 })
 
 module.exports = router

@@ -7,7 +7,7 @@
 
 <!-- <p>Username: <%= username %></p>
 <p>Change Username:
-    <form id="changeUsernameForm" action="/auth/usernamechange" method="POST">
+    <form id="changeUsernameForm" action="/account/changeusername" method="POST">
         <input autocomplete="off" name="newUsername" type="text" value="<%= username %>" id="changeUsernameInput">
         <button type="submit" id="changeUsernameButton">Change</button>
         <p id="changeUsernameStatus"></p>
@@ -15,7 +15,7 @@
 </p> -->
 <p>Description: <%= description %></p>
 <p>Change Description:
-    <form id="changeDescriptionForm" action="/auth/changedescription" method="POST">
+    <form id="changeDescriptionForm" action="/account/changedescription" method="POST">
         <input autocomplete="off" name="newDescription" type="text" value="<%= description %>" id="changeDescriptionInput">
         <button type="submit" id="changeDescriptionButton">Change</button>
         <p id="changeDescriptionStatus"></p>
@@ -23,7 +23,7 @@
 </p>
 <p>Average WPM: <%= (Math.round(totalWPM / pastGames.length) ? Math.round(totalWPM / pastGames.length) : "No games found!") %></p>
 <% if (!loggedInGoogle) { %>
-    <p>Google not linked: <a href="/auth/google">LINK</a></p>
+    <p>Google not linked: <a href="/auth/google/login">LINK</a></p>
 <% }  else { %>
     <p>Googled linked:
         <% if (loggedInGithub) { %>
@@ -34,7 +34,7 @@
     </p>
 <% } %>
 <% if (!loggedInGithub) { %>
-    <p>Github not linked: <a href="/auth/github">LINK</a></p>
+    <p>Github not linked: <a href="/auth/github/login">LINK</a></p>
 <% } else { %>
     <p>Github linked: 
         <% if (loggedInGoogle) { %>
@@ -43,7 +43,7 @@
             CAN'T UNLINK ONLY LOGIN
         <% } %></p>
 <% } %>
-<form action="/auth/deleteaccount" method="POST">
+<form action="/account/delete" method="POST">
     Delete your account<button type="submit">Delete</button>
 </form>
 
@@ -64,7 +64,7 @@
 
                     <div class="username-update">
                         
-                            <form id="changeUsernameForm" action="/auth/changeusername" method="POST">
+                            <form id="changeUsernameForm" action="/account/changeusername" method="POST">
                                 <input class="username-change" autocomplete="off" name="newUsername" type="text" placeholder="Change Username" id="changeUsernameInput">
                                 <button type="submit" id="changeUsernameButton">Change</button>
                                 

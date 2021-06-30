@@ -10,13 +10,4 @@ router.get('/game', (req, res) => {
     res.render('game.ejs')
 })
 
-// TODO Mysterious logout at /profile...
-router.get('/user/profile', loggedIn, (req, res) => {
-    if (req.user) {
-        res.render('profile.ejs', { pastGames: req.user.pastGames } )
-    } else {
-        res.redirect('/')
-    }
-})
-
 module.exports = router;

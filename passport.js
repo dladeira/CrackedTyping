@@ -9,50 +9,55 @@ passport.use(new GoogleStrategy({
     clientSecret: config.get("app.google.clientSecret"),
     callbackURL: config.get("app.origin") + "/auth/google/redirect",
     passReqToCallback: true
-}, (req, accessToken, refreshToken, profile, done) => {
-    if (req.user) {
-        User.findOne({ _id: req.user._id }, (err, user) => {
-            if (user) {
-                user.googleId = profile.id
-                user.save()
-            }
-            return done(err, user)
-        })
-    } else {
-        User.findOrCreate({ googleId: profile.id }, (err, user, created) => {
-            if (created) {
-                user.username = profile.displayName;
-                user.save()
-            }
-            return done(err, user)
-        })
-    }
-}))
+}, strategyCallback("googleId")))
 
 passport.use(new GithubStrategy({
     clientID: config.get("app.github.clientId"),
     clientSecret: config.get('app.github.clientSecret'),
     callbackURL: config.get("app.origin") + "/auth/github/redirect", // The only acceptable value for app.origin is ladeira.eu
     passReqToCallback: true
-}, (req, accessToken, refreshToken, profile, done) => {
-    if (req.user) {
-        User.findOne({ _id: req.user._id }, (err, user) => {
-            if (user) {
-                user.githubId = profile.id
-                user.save()
-            }
-            return done(err, user)
-        })
-    } else {
-        User.findOrCreate({ githubId: profile.id }, (err, user, created) => {
-            if (created) {
-                user.username = profile.displayName
-                user.save()
-            }
-            return done(err, user)
-        })
+}, strategyCallback("githubId")))
+
+function strategyCallback(idProperty) {
+    return function strategyCallback(req, accessToken, refreshToken, profile, done) {
+        var query = {}
+        query[idProperty] = profile.id
+        if (req.user) {
+            req.session.loginRedirect = "/account"
+            User.findOne({ _id: req.user._id }, (err, user) => {
+                User.findOne(query, (err, strategyExists) => {
+                    if (err) {
+                        console.log(err)
+                        done(null)
+                        return
+                    }
+                    if (strategyExists) {
+                        done(null)
+                        return
+                    }
+                    user[idProperty] = profile.id
+                    user.save().then(user => {
+                        return done(err, user)
+                    })
+                })
+            })
+        } else {
+            req.session.loginRedirect = "/"
+            var query = {}
+            query[idProperty] = profile.id
+            User.findOrCreate(query, (err, user, created) => {
+                if (created) {
+                    user.username = profile.displayName
+                    user.save().then(user => {
+                        return done(err, user)
+                    })
+                } else {
+                    return done(err, user)
+                }
+            })
+        }
     }
-}))
+}
 
 passport.serializeUser((user, done) => {
     done(null, user.id)
