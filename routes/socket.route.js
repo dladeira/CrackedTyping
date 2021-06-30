@@ -21,7 +21,8 @@ io.on('connection', socket => {
             game.addPlayer({
                 username: socket.handshake.session.username,
                 wpm: 0,
-                saveData: socket.handshake.session.loggedIn
+                saveData: socket.handshake.session.loggedIn,
+                final: false
             })
             socket.emit('foundGame', game)
         })
@@ -36,7 +37,9 @@ io.on('connection', socket => {
     socket.on('dataResponse', data => {
         var game = gameCoordinator.findGameById(data.gameId);
         if (game && (game.uniqueId == data.gameUniqueId)) {
-            game.setPlayerWPM(data.username, data.wpm)
+            if (game.started) {
+                game.setPlayerWPM(data.username, data.wpm, data.final)
+            }
             socket.emit('dataResponse', game.players)
         }
     })

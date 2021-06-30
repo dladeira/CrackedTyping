@@ -61,8 +61,8 @@ function bootstrap(game) {
     }, intervalDelay)
 
     socket.on('dataRequest', () => {
-        if (gameStage < 2) { // Game hasn't finished yet
-            socket.emit('dataResponse', { username: username, gameId: game.id, wpm: getWPM(), gameUniqueId: game.uniqueId })
+        if (gameStage < 2) { // Game in progress
+            socket.emit('dataResponse', { username: username, gameId: game.id, wpm: getWPM(), gameUniqueId: game.uniqueId, final: false })
         }
     })
 
@@ -133,7 +133,7 @@ function bootstrap(game) {
     function finishGame() {
         if (gameStage == 2) return // Prevent game from finishing more than once
         setGameStatus("Game ended!", "Finished!", 2)
-        socket.emit('dataResponse', { username: username, gameId: game.id, wpm: getWPM() })
+        socket.emit('dataResponse', { username: username, gameId: game.id, wpm: getWPM(), final: true })
     }
 
     function onLastWord() {

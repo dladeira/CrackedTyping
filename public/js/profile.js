@@ -12,7 +12,6 @@ changeUsernameForm.onsubmit = submitUsernameEvent
 changeDescriptionForm.onsubmit = submitDescriptionEvent
 
 changeUsernameInput.oninput = event => {
-    awaitingUsername = true;
     socket.emit('usernameExists', changeUsernameInput.value)
 }
 

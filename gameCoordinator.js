@@ -91,7 +91,7 @@ class Game {
         this.text.totalTimesTyped += this.playerCount
         this.text.save()
         for (var player of this.players) {
-            if (player.saveData) {
+            if (player.saveData && player.final) {
                 User.findOne({ username: player.username}, (err, user) => {
                     if (err) {
                         console.log(err)
@@ -102,7 +102,6 @@ class Game {
                 })
             }
         }
-
         setTimeout(() => { // Don't delete game instantly
             this.gameEndCallback()
         }, this.deleteDelay)
@@ -116,10 +115,13 @@ class Game {
         return this.options.gameLength
     }
 
-    get gameOngoing() {
-        return (timeSinceStart > 0) && (length > timeSinceStart)
+    get ongoing() {
+        return (this.timeSinceStart > 0) && (this.length > this.timeSinceStart)
     }
-
+    
+    get started() {
+        return (this.timeSinceStart > 0)
+    }
     get playerCount() {
         return this.players.length
     }
@@ -143,10 +145,22 @@ class Game {
             this.players.push(user)
     }
 
-    setPlayerWPM(username, wpm) {
+    playerFinished(username) {
         for (var i = 0; i < this.players.length; i++) {
             if (this.players[i].username == username) {
-                this.players[i].wpm = wpm
+                return this.players[i].final
+            }
+        }
+        return true
+    }
+
+    setPlayerWPM(username, wpm, final) {
+        for (var i = 0; i < this.players.length; i++) {
+            if (this.players[i].username == username) {
+                if (!this.playerFinished(username)) {
+                    this.players[i].wpm = wpm
+                    this.players[i].final = final
+                }
             }
         }
     }
