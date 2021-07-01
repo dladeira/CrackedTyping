@@ -11,6 +11,8 @@ A typing website
 --changeUsername : Change username (POST)
 --changeDescription : Change description (POST)
 --delete : Delete account (POST)
+-user\:username : Profile page for the user
+-users\ Search for a user (POST)
 -auth\
 --google : Login with Google
 ---unlink: Unlink Google Strategy

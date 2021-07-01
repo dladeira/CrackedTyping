@@ -4,11 +4,13 @@ const { User } = require('../models/index.js')
 const loggedIn = require('../middlewares/loggedIn.js')
 const config = require('config')
 
-router.get('/', loggedIn, (req, res) => {
-    res.render('profile.ejs', { pastGames: req.user.pastGames } )
+router.use(loggedIn)
+
+router.get('/', (req, res) => {
+    res.render('account.ejs', { pastGames: req.user.pastGames } )
 })
 
-router.post("/changeUsername", loggedIn, (req, res) => {
+router.post("/changeUsername", (req, res) => {
     var newUsername = req.body.newUsername
     if (!newUsername.match(config.get("app.regex.username"))) {
         console.log(`User ${req.user.username} attempting to bruteforce a invalid username (${newUsername})`)
@@ -41,7 +43,7 @@ router.post("/changeUsername", loggedIn, (req, res) => {
     })
 })
 
-router.post("/changeDescription", loggedIn, (req, res) => {
+router.post("/changeDescription", (req, res) => {
     var newDescription = req.body.newDescription
     if (!newDescription.match(config.get("app.regex.description"))) {
         console.log(`User ${req.user.username} attempting to bruteforce a duplicate description (${newDescription})`)
@@ -59,7 +61,7 @@ router.post("/changeDescription", loggedIn, (req, res) => {
     })
 })
 
-router.post("/delete", loggedIn, (req, res) => {
+router.post("/delete", (req, res) => {
     User.deleteOne({ _id: req.user._id}, (err) => {
         if (err) {
             console.log(err)

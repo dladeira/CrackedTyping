@@ -1,0 +1,5 @@
+<%- include('partials/header.ejs') %>
+<% for (var user of users) { %>
+    <a href="/user/<%=user.username%>"><%= user.username %></a>
+<% } %>
+<% include('partials/footer.ejs') %>
