@@ -1,0 +1,126 @@
+* { 
+    margin: 0;
+    padding: 0;
+    --color: rgb(47, 255, 141);
+    --background: rgb(53, 64, 75);
+    --darker-background: rgb(16, 21, 26);
+}
+
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--background);
+    color: rgb(189, 189, 189);
+}
+
+#cookiebar {
+    background-color: var(--darker-background);
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    bottom: 0;
+}
+
+.brand {
+    color: white;
+    text-decoration: none;
+    height: 50px;
+    font-size: 30px;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    padding: 5px 10px;
+}
+
+.brand:hover {
+    color: var(--color);
+}
+.brand:active {
+    color: var(--color);
+    background-color: var(--background)
+}
+
+.current-login {
+    width: 100%;
+    color: var(--color);
+    text-align: center;
+    border-bottom: solid 3px var(--color);
+    font-family: 'Roboto Mono', monospace;
+    font-size: 20px;
+}
+
+.nav-button-right {
+    display: flex;
+    align-items: center;
+}
+
+.login-button {
+    margin: 0 10px;
+    padding: 10px;
+    height: 18px;
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+
+    display: flex;
+    align-items: center;
+
+    border: 2px solid white;
+    border-radius: 10px;
+}
+
+.login-button:hover {
+    color: var(--color);
+}
+
+.google-button {
+    border-color: red;
+}
+
+.github-button {
+    border-color: white;
+}
+
+.login-logo {
+    max-height: 100%;
+}
+
+.google-logo {
+    padding-right: 0.7vw;
+    padding-top: 1px;
+}
+
+.github-logo {
+    padding-right: 0.7vw;
+}
+
+.logout {
+    text-decoration: none;
+    color: white;
+    height: 50px;
+    font-size: 30px;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    padding: 5px 10px;
+}
+
+.logout:hover {
+    color: var(--color);
+}
+
+.logout:active {
+    color: var(--color);
+    background-color: var(--background)
+}
+
+#login-text {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 900;
+    font-size: 20px;
+    margin-right: 10px;
+}
