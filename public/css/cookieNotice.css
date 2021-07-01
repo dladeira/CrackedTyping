@@ -19,9 +19,10 @@ html, body {
     background-color: var(--darker-background);
     width: 100%;
     overflow: hidden;
-    position: fixed;
+    position: absolute;
     display: flex;
     justify-content: space-between;
+    bottom: 0;
 }
 
 .brand {
