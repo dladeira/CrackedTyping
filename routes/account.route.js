@@ -54,7 +54,7 @@ router.post("/changeDescription", (req, res) => {
     User.findOne({ _id: req.user._id }, (err, user) => {
         if (err) return res.send(err)
         user.description = newDescription
-        user.save().then(err => {
+        user.save().then(() => {
             res.redirect('/account')
         })
 
