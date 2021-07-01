@@ -12,7 +12,10 @@
     <body>
     <div class="navbar">
         <a href="/" class="brand">CrackedTyping</a>
-
+        <form action="/userQuery" method="POST">
+            <input name="query" placeholder="search for user" type="text">
+            <button type="submit">/()</button>
+        </form>
         <% if (loggedIn) { %>
             <a href="/auth/logout" class="nav-button-right logout">Log out</a>
         <% } else { %>

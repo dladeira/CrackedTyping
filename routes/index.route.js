@@ -10,6 +10,17 @@ router.get('/game', (req, res) => {
     res.render('game.ejs')
 })
 
+router.post('/userQuery/',  (req, res) => {
+    User.find({ username: new RegExp(req.body.query, 'i')}, (err, users) => {
+        if (err) {
+            console.log(err)
+            res.send(err)
+            return err
+        }
+        res.render('searchUser.ejs', { users: users })
+    })
+})
+
 router.get('/user/:username', (req, res) => {
     // Username is case-insensitive
     User.findOne({ username: new RegExp(`^${req.params.username}$`, 'i')}, (err, user) => {
