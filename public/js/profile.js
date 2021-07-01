@@ -1,17 +1,15 @@
 var changeDescriptionForm = document.getElementById("changeDescriptionForm")
 var changeDescriptionInput = document.getElementById("changeDescriptionInput")
-var changeDescriptionButton = document.getElementById("changeDescriptionButton")
 
 var changeUsernameForm = document.getElementById("changeUsernameForm")
 var changeUsernameInput = document.getElementById("changeUsernameInput")
-var changeUsernameButton = document.getElementById("changeUsernameButton")
 var socket = io()
 var usernameExists = false
 
 changeUsernameForm.onsubmit = submitUsernameEvent
 changeDescriptionForm.onsubmit = submitDescriptionEvent
 
-changeUsernameInput.oninput = event => {
+changeUsernameInput.oninput = () => {
     socket.emit('usernameExists', changeUsernameInput.value)
 }
 

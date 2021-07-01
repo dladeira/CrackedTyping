@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-const config = require('config')
 const passport = require('../passport.js')
 const { User } = require('../models/index.js')
 const loggedIn = require('../middlewares/loggedIn.js')

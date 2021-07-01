@@ -36,7 +36,7 @@ router.post("/changeUsername", (req, res) => {
                 return
             }
             user.username = newUsername
-            user.save().then(err => {
+            user.save().then(() => {
                 res.redirect('/account')
             })
         })
