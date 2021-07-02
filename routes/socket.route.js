@@ -29,18 +29,19 @@ io.on('connection', socket => {
     })
 
     /*
-    - Every 100ms ask for every socket's data
+    - Every Xms ask for every socket's data (dataRequest)
     - Verify the data to prevent cheating
     - Update games based on user's data
-    - Send relevant game data back to sockets
+    - Send relevant game data back to sockets (dataResponse)
     */
+
     socket.on('dataResponse', data => {
         var game = gameCoordinator.findGameById(data.gameId);
         if (game && (game.uniqueId == data.gameUniqueId)) {
             if (game.started) {
                 game.setPlayerWPM(data.username, data.wpm, data.final)
             }
-            socket.emit('dataResponse', game.players)
+            socket.emit('dataResponse', { players: game.players, time: game.timeSinceStart })
         }
     })
 

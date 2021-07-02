@@ -1,16 +1,15 @@
-const MongoStore = require('connect-mongo');
+const MongoStore = require('connect-mongo')
+const config = require('config')
+
 const session = require('express-session')({
     secret: 'secretSessionMessageOrSomething',
     resave: true,
     saveUninitialized: true,
     cookie: { sameSite: 'lax' },
     store: MongoStore.create({
-        mongoUrl: 'mongodb://defaultUser:passwordPassport1224@ladeira.eu:1283/CrackedTyping',
-        mongoOptions: {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        }
+        mongoUrl: config.get('mongodb.connectionString'),
+        mongoOptions: config.get('mongodb.options')
     })
-});
+})
 
-module.exports = session;
+module.exports = session

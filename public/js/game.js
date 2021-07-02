@@ -31,18 +31,19 @@ socket.on('foundGame', gameFound => {
 })
 
 function bootstrap(game) {
+    console.log(game)
     updatePassage()
     gameIdElement.innerHTML = `ID: ${game.id}`
     gameTimesTypedElement.innerHTML = `Total Times Typed ${game.text.totalTimesTyped}`
 
-    setInterval(() => {
-        /*
+    /*
         gameTimer starts at a negative value equivelent to
         the seconds for the game to start, after which it
         acts like a normal timer
         */
-        var gameTimer = new Date().getTime() - game.startTime
+    var gameTimer = game.timeSinceStart
 
+    setInterval(() => {
         if (gameStage == 1) {
             secondsElapsed += intervalDelay / 1000
         }
@@ -66,8 +67,9 @@ function bootstrap(game) {
         }
     })
 
-    socket.on('dataResponse', players => {
-        updatePlayers(players)
+    socket.on('dataResponse', data => {
+        updatePlayers(data.players)
+        gameTimer = data.time
     })
 
     function updatePlayers(players) {
@@ -133,7 +135,7 @@ function bootstrap(game) {
     function finishGame() {
         if (gameStage == 2) return // Prevent game from finishing more than once
         setGameStatus("Game ended!", "Finished!", 2)
-        socket.emit('dataResponse', { username: username, gameId: game.id, wpm: getWPM(), final: true })
+        socket.emit('dataResponse', { username: username, gameId: game.id, wpm: getWPM(), gameUniqueId: game.uniqueId, final: true })
     }
 
     function onLastWord() {

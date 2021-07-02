@@ -1,6 +1,16 @@
 {
     "app": {
         "port": 7300,
+        "origin": "https://localhost:7300"
+    },
+    "mongodb": {
+        "connectionString": "mongodb://defaultUser:passwordPassport1224@ladeira.eu:1283/CrackedTyping",
+        "options": {
+            "useNewUrlParser": true,
+            "useUnifiedTopology": true
+        }
+    },
+    "auth": {
         "google": {
             "clientId": "623304601185-t4a290j6gqoblliedq90c9nfir84sm5e.apps.googleusercontent.com",
             "clientSecret": "wI-nbUfmJrIOdzZlBX5lF0Fw"
@@ -8,18 +18,6 @@
         "github" : {
             "clientId": "d4d413105f6aa015ffb3",
             "clientSecret": "24628de04064459fd160e525d255f474c5c6390b"
-        },
-        "origin": "https://localhost:7300",
-        "regex": {
-            "username": "^[a-zA-Z0-9]{4,20}$",
-            "description": "[^]{0,30}$"
-        }
-    },
-    "mongodb": {
-        "connectionString": "mongodb://defaultUser:passwordPassport1224@ladeira.eu:1283/CrackedTyping",
-        "options": {
-            "useNewUrlParser": true,
-            "useUnifiedTopology": true
         }
     },
     "game": {
@@ -32,6 +30,12 @@
             "passage": "There has been an error in finding a text so the default text has been provided",
             "totalTimesTyped": 0
         },
-        "dataCollectionDelay": 1000
+        "dataCollectionDelay": 100
+    },
+    "account": {
+        "constraints": {
+                "username": "^[a-zA-Z0-9]{4,20}$",
+                "description": "[^]{0,30}$"
+        }
     }
 }

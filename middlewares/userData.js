@@ -1,25 +1,24 @@
+/*
+ Data is passed both to session and locals
+ so it can be accessed both by socket.route.js
+ and EJS files correspondingly
+*/
 function provideUserData(req, res, next) {
-    if (!req.session.guestName) {
-        req.session.guestName = "Guest " + Math.floor(Math.random() * 10000)
-    }
+    // Don't create a new guest name if player already has one
+    if (!req.session.guestName)
+        req.session.guestName = `Guest ${Math.floor(Math.random() * 10000)}`
 
-    if (req.user) { // Logged in, provide actual username
-        req.session.username = req.user.username
-        req.session.loggedIn = true
+    req.session.username = req.user ? req.user.username : req.session.guestName
+    req.session.loggedIn = req.user ? true : false
 
-        res.locals.username = req.user.username
-        res.locals.loggedIn = true
+    res.locals.username = req.session.username
+    res.locals.loggedIn = req.session.loggedIn
+
+    if (req.user) { // Logged in
         res.locals.loggedInGoogle = (req.user.googleId != undefined)
         res.locals.loggedInGithub = (req.user.githubId != undefined)
         res.locals.description = req.user.description
-    } else { // Not logged in, provide guest username
-        req.session.username = req.session.guestName
-        req.session.loggedIn = false
-
-        res.locals.username = req.session.guestName
-        res.locals.loggedIn = false
     }
-
     next()
 }
 

@@ -10,66 +10,71 @@ router.get('/', (req, res) => {
     res.render('account.ejs', { pastGames: req.user.pastGames } )
 })
 
-router.post("/changeUsername", (req, res) => {
+router.post('/changeUsername', (req, res) => {
     var newUsername = req.body.newUsername
-    if (!newUsername.match(config.get("app.regex.username"))) {
+    if (!newUsername.match(config.get('account.constraints.username'))) {
         console.log(`User ${req.user.username} attempting to bruteforce a invalid username (${newUsername})`)
-        res.send("Invalid username")
-        return
+        return res.send('Invalid username')
     }
 
     User.findOne({ _id: req.user._id }, (err, user) => {
         if (err) {
             console.log(err)
-            res.send(err)
-            return
+            return res.send(err)
         }
         User.findOne({ username: newUsername }, (err, usernameExists) => {
             if (err) {
                 console.log(err)
-                res.send(err)
-                return
+                return res.send(err)
             }
+
             if (usernameExists) {
-                console.log(`User ${req.user.username} attempting to bruteforce a duplicate username (${newUsername})`)
-                res.send("Username exists")
-                return
+                console.log(`User ${req.user.username} attempted to bruteforce a duplicate username (${newUsername})`)
+                return res.send("Username exists")
             }
+
             user.username = newUsername
             user.save().then(() => {
-                res.redirect('/account')
+                return res.redirect('/account')
+            }).catch(err => {
+                console.log(err)
+                return res.send('An error has occured, please try again later')
             })
         })
     })
 })
 
-router.post("/changeDescription", (req, res) => {
+router.post('/changeDescription', (req, res) => {
     var newDescription = req.body.newDescription
-    if (!newDescription.match(config.get("app.regex.description"))) {
-        console.log(`User ${req.user.username} attempting to bruteforce a duplicate description (${newDescription})`)
-        res.send("Invalid description")
-        return
+    if (!newDescription.match(config.get('account.constraints.description'))) {
+        console.log(`User ${req.user.username} attempted to bruteforce a invalid description (${newDescription})`)
+        return res.send('Invalid description')
     }
 
     User.findOne({ _id: req.user._id }, (err, user) => {
-        if (err) return res.send(err)
+        if (err) {
+            console.log(err)
+            return res.send(err)
+        }
         user.description = newDescription
         user.save().then(() => {
             res.redirect('/account')
+        }).catch(err => {
+            console.log(err)
+            return res.send('An error has occured, please try again later')
         })
 
     })
 })
 
-router.post("/delete", (req, res) => {
-    User.deleteOne({ _id: req.user._id}, (err) => {
+router.post('/delete', (req, res) => {
+    User.deleteOne({ _id: req.user._id}, err => {
         if (err) {
             console.log(err)
-            res.send(err)
-            return
+            return res.send(err)
         }
         req.logout()
-        res.redirect('/')
+        return res.redirect('/')
     })
 })
 

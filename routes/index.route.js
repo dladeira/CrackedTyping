@@ -10,12 +10,12 @@ router.get('/game', (req, res) => {
     res.render('game.ejs')
 })
 
-router.post('/userQuery/',  (req, res) => {
-    User.find({ username: new RegExp(req.body.query, 'i')}, (err, users) => {
+router.post('/userQuery/', (req, res) => {
+    // Search is case-insensitive
+    User.find({ username: new RegExp(req.body.query, 'i') }, (err, users) => {
         if (err) {
             console.log(err)
-            res.send(err)
-            return err
+            return res.send(err)
         }
         res.render('searchUser.ejs', { users: users })
     })
@@ -23,18 +23,17 @@ router.post('/userQuery/',  (req, res) => {
 
 router.get('/user/:username', (req, res) => {
     // Username is case-insensitive
-    User.findOne({ username: new RegExp(`^${req.params.username}$`, 'i')}, (err, user) => {
+    User.findOne({ username: new RegExp(`^${req.params.username}$`, 'i') }, (err, user) => {
         if (err) {
             console.log(err)
-            res.send(err)
-            return err
+            return res.send(err)
         }
 
-        if (user) {
-            res.render('profile.ejs', { user: user })
-        } else {
-            res.send(`User ${req.params.username} cannot be found`)
-        }
+        if (!user) // User does not exist, send error message
+            return res.send(`User ${req.params.username} cannot be found`)
+
+        // User exists, render their profile page
+        return res.render('profile.ejs', { user: user })
     })
 })
 

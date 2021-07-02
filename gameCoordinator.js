@@ -16,8 +16,9 @@ function createGame(options, callback) {
 }
 
 function findGameById(id) {
-    for (var i = 0; i < gameList.length; i++) {
-        if (gameList[i].id == id) return gameList[i]
+    for (var game of gameList) {
+        if (game.id == id)
+            return game
     }
     return undefined
 }
@@ -37,9 +38,9 @@ function findGames() {
 }
 
 function findUnstartedGame(callback) {
-    for (var i = 0; i < gameList.length; i++) {
-        if (gameList[i].timeSinceStart < -1000) {
-            callback(gameList[i])
+    for (var game of gameList) {
+        if (game.timeSinceStart < -1000) {
+            callback(game)
             return
         }
     }
@@ -50,8 +51,7 @@ function getRandomText(callback) {
     Text.find({}, (err, texts) => {
         if (err) {
             console.log('Encountered an error while getting all texts, using game.defaultText')
-            callback(config.get('game.defaultText'))
-            return
+            return callback(config.get('game.defaultText'))
         }
         callback(texts[parseInt(Math.random() * texts.length)])
     })
@@ -63,19 +63,18 @@ exports.findGames = findGames
 
 class Game {
     constructor(id, options, text, gameEndCallback) {
-        this.uniqueId = Math.random() * 1000000000; // Game uniqueness check (game ids get reused)
+        this.uniqueId = Math.random() * 1000000000; // Game uniqueness check (game ids get recycled)
         this.options = options
         this.id = id
         this.gameEndCallback = gameEndCallback
         this.text = text
+        this.startTime = new Date().getTime() + this.options.startDelay
 
         setTimeout(() => {
             this.startGame()
         }, this.options.startDelay)
 
         // Set startTime ahead of time
-        this.startTime = new Date().getTime() + this.options.startDelay
-
         this.players = []
     }
 
@@ -89,21 +88,21 @@ class Game {
     endGame() {
         console.log(`Game ${this.id} ended`)
         this.text.totalTimesTyped += this.playerCount
-        this.text.save()
+        this.text.save() // Error handling overrated, doesn't really matter anyways
         for (var player of this.players) {
             if (player.saveData && player.final) {
                 User.findOne({ username: player.username}, (err, user) => {
-                    if (err) {
-                        console.log(err)
-                        return;
-                    }
+                    if (err)
+                        return console.log(err)
                     user.pastGames.push({ wpm: player.wpm, date: new Date().getTime() });
-                    user.save()
+                    user.save().catch(err => { // Now this matters a bit more
+                        console.log(err)
+                    })
                 })
             }
         }
-        setTimeout(() => { // Don't delete game instantly
-            this.gameEndCallback()
+        setTimeout(() => { // Don't delete game instantly (slow internet connections might finish later)
+            this.gameEndCallback() // Sri Lanka internet connection lmao
         }, this.deleteDelay)
     }
 
@@ -131,35 +130,34 @@ class Game {
     }
 
     playerJoined(username) {
-        for (var user of this.players) {
-            if (user.username == username) {
+        for (var player of this.players) {
+            if (player.username == username)
                 return true
-            }
         }
         return false
     }
 
-    // No removing users (no leaving game)
+    // No removing users (play game or gay)
     addPlayer(user) {
         if (!this.playerJoined(user.username))
             this.players.push(user)
     }
 
     playerFinished(username) {
-        for (var i = 0; i < this.players.length; i++) {
-            if (this.players[i].username == username) {
-                return this.players[i].final
-            }
+        for (var player of this.players) {
+            if (player.username == username)
+                return player.final
         }
+        // Player doesn't exist, lets just say he finished cause like why not
         return true
     }
 
     setPlayerWPM(username, wpm, final) {
-        for (var i = 0; i < this.players.length; i++) {
-            if (this.players[i].username == username) {
+        for (var player of this.players) {
+            if (player.username == username) {
                 if (!this.playerFinished(username)) {
-                    this.players[i].wpm = wpm
-                    this.players[i].final = final
+                    player.wpm = wpm
+                    player.final = final
                 }
             }
         }

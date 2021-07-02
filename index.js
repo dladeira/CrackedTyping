@@ -5,25 +5,23 @@ const config = require('config')
 const https = require('https')
 const fs = require('fs')
 
-let server
-
 const serverOptions = {
     key: fs.readFileSync('./certificates/privkey.pem'),
     cert: fs.readFileSync('./certificates/fullchain.pem')
 }
 
 async function bootstrap() {
-    await mongoose.connect(config.get("mongodb.connectionString"), config.get("mongodb.options"))
-    console.log("Connected to MongoDB")
+    let server = await https.createServer(serverOptions, app).listen(config.get('app.port'))
+    console.log(`Express listening on port ${config.get('app.port')}`)
 
-    server = await https.createServer(serverOptions, app).listen(config.get("app.port"))
-    console.log(`Express listening on port ${config.get("app.port")}`)
+    await mongoose.connect(config.get('mongodb.connectionString'), config.get('mongodb.options'))
+    console.log('Connected to MongoDB')
 
     await io.attach(server)
-    console.log(`Socket.io attached to https server`)
+    console.log('Socket.io attached to server')
 }
 
 bootstrap().then(() => {
     console.log(`Enviroment is set to ${app.get('env')}`)
-    console.log(`---> Finished`)
+    console.log('---> Finished')
 })
