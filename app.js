@@ -1,5 +1,3 @@
-// TODO: Error: Configuration property "account.constraints.username" is not defined
-
 const express = require('express')
 const app = express()
 const passport = require('./passport.js')
