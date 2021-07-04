@@ -1,10 +1,10 @@
 // DOM Elements
-var gameStatusElement = document.getElementById("gameStatusElement")
-var gameIdElement = document.getElementById("gameIdElement")
-var passageElement = document.getElementById("gamePassageElement")
-var gameTextInput = document.getElementById("gameTextInput")
-var gameTimesTypedElement = document.getElementById("gameTimesTypedElement")
-var playerListElement = document.getElementById("playerListElement")
+var gameStatusElement = document.getElementById("js-status")
+var gameIdElement = document.getElementById("js-id")
+var passageElement = document.getElementById("game-passage")
+var gameTextInput = document.getElementById("text-input")
+var gameTimesTypedElement = document.getElementById("js-times-typed")
+var playerListElement = document.getElementById("player-list")
 
 var socket = io()
 var currentWordIndex = 0 // Start the user at the first word
@@ -134,7 +134,7 @@ function bootstrap(game) {
 
     function finishGame() {
         if (gameStage == 2) return // Prevent game from finishing more than once
-        setGameStatus("Game ended!", "Finished!", 2)
+        setGameStatus('Game ended! <a id="play-again" href="/game">Continue the grind?</a>', "Finished!", 2)
         socket.emit('dataResponse', { username: username, gameId: game.id, wpm: getWPM(), gameUniqueId: game.uniqueId, final: true })
     }
 

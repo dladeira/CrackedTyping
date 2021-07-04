@@ -44,7 +44,7 @@
     justify-content: center;
 }
 
-#gamePassageElement {
+#game-passage {
     background-color: black;
     border: 2px solid white;
     padding: 2%;
@@ -52,17 +52,17 @@
     color: rgb(167, 156, 156);
 }
 
-.gameInfoContainer {
+#info-container {
     display: flex;
     flex-direction: row;
     margin-bottom: 6%;
 }
 
-.gameStatsContainer, .playerListContainer {
+#game-stats, #players-container {
     width: 50%;
 }
 
-#gameInfoText {
+#info-text {
     text-align: center;
     padding-bottom: 0.5%;
     margin-bottom: 3%;
@@ -73,14 +73,18 @@
     text-align: center;
 }
 
-#playerListElement {
+#player-list {
     list-style-type: none;
 }
 
-#gameTextInput {
+#text-input {
     outline: 0 ;
     border: solid white 2px;
     background-color: black;
     color: var(--color);
     padding: 10px;
+}
+
+#play-again {
+    color: white;
 }
