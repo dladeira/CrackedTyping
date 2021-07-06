@@ -13,7 +13,7 @@
 }
 
 .correctLetter {
-    color: gold;
+    color: var(--orange);
 }
 
 #cursor {
@@ -27,21 +27,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.container {
-    padding: 2%;
-    margin: 0 auto 20vh;
-    width: 60%;
-    background-color: var(--darker-background);
-    color: var(--color);
-    font-family: 'Roboto Mono', monospace;
-
-    font-size: 1.3vw;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
 #game-passage {
@@ -86,5 +71,10 @@
 }
 
 #play-again {
+    color: var(--orange);
+    text-decoration: none;
+}
+
+#play-again:hover {
     color: white;
 }

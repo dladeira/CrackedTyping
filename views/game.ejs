@@ -1,26 +1,22 @@
 <%- include('partials/header.ejs') %>
 <link rel="stylesheet" href="/css/game.css" type="text/css">
-<div class="contentWrapper">
-    <div class="container">
-        <p id="info-text">Game info:</p>
-        <div id="info-container">
-            <div id="game-stats">
-                <p id="js-id" style="margin: 0">ID: </p>
-                <p id="js-times-typed" style="margin: 0">Total Times Typed: </p>
-                <p id="js-status" style="margin: 0">Starting in: </p>
-            </div>
-            <div id="players-container">
-                <p id="playersText">Players:</p>
-                <ul id="player-list"></ul>
-            </div>
-        </div>
-
-        <p id="game-passage" class="unselectable"></p>
-        <input autofocus autocomplete="off" id="text-input" type="text">
-
-        <!-- Keep scripts in this order (socket.io on top)-->
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="/js/game.js"></script>
-        <%- include('partials/footer.ejs') %>
+<p id="info-text">Game info:</p>
+<div id="info-container">
+    <div id="game-stats">
+        <p id="js-id" style="margin: 0">ID: </p>
+        <p id="js-times-typed" style="margin: 0">Total Times Typed: </p>
+        <p id="js-status" style="margin: 0">Starting in: </p>
+    </div>
+    <div id="players-container">
+        <p id="playersText">Players:</p>
+        <ul id="player-list"></ul>
     </div>
 </div>
+
+<p id="game-passage" class="unselectable"></p>
+<input autofocus autocomplete="off" id="text-input" type="text">
+
+<!-- Keep scripts in this order (socket.io on top)-->
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/game.js"></script>
+<%- include('partials/footer.ejs') %>

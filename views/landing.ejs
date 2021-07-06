@@ -2,26 +2,40 @@
 <link rel="stylesheet" href="/css/landing.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap">
 
-<!-- 
-    The div bellow is the container that will have all of the "cards" each one of these is for each
-    gamemode on the website.
+<!--
+    There are two containers over here, left and right.
+
+    -- Left is "games-container" and will have gamemodes,
+    currently it is only "Join Game" (game-card)
+
+    -- Right is "account-container" since the locations are
+    personalized to you and you need to be logged in,
+    the locations are: "Account" (account-card) and "Stats" (stats-card)
 -->
 
-<div class="flex-better-than-bootstrap">
+<div class="games-container" >
+    <a class="card game-card" href="/game">
+        <div class="card-body">
+            <div class="card-title">Join Game</div>
+            <div class="card-description">Continue the typing grind</div>
+        </div>
+    </a>
+</div>
 
-<!-- 
-    Beginning of code for a card
--->
-<a href="/game">
-    <div class="card">
-        <img class="card-image" src="/img/keyboard.jpg" alt="keyboard">
-        <div class="card-title">Join Game</div>
-        <div class="card-description">Test out your skills against another player.</div>
-    </div>
-</a>
-<!-- 
-    End of code for a card
--->
+<div class="account-container">
+    <a class="card account-card" href="/account">
+        <div class="card-body">
+            <div class="card-title">Account</div>
+            <div class="card-description">Go to your profile</div>
+        </div>
+    </a>
+    <a class="card stats-card" href="/game">
+        <div class="card-body">
+            <div class="card-title">Stats</div>
+            <div class="card-description">Explore global statistics</div>
+        </div>
+    </a>
+</div>
 
 
 

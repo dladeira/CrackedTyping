@@ -1,9 +1,14 @@
 * {
     margin: 0;
     padding: 0;
-    --color: rgb(47, 255, 141);
+    --color: #39FF14;
     --background: rgb(53, 64, 75);
     --darker-background: rgb(16, 21, 26);
+    --orange: #ffb900;
+    --darkest-background: rgb(7, 10, 12);
+
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
 }
 
 html, body {
@@ -30,7 +35,6 @@ html, body {
     text-decoration: none;
     height: 50px;
     font-size: 30px;
-    font-family: 'Open Sans', sans-serif;
     text-align: center;
     padding: 5px 10px;
 }
@@ -38,6 +42,7 @@ html, body {
 .brand:hover {
     color: var(--color);
 }
+
 .brand:active {
     color: var(--color);
     background-color: var(--background)
@@ -48,8 +53,8 @@ html, body {
     color: var(--color);
     text-align: center;
     border-bottom: solid 3px var(--color);
-    font-family: 'Roboto Mono', monospace;
     font-size: 20px;
+    background-color: var(--darkest-background);
 }
 
 .nav-button-right {
@@ -62,7 +67,6 @@ html, body {
     padding: 10px;
     height: 18px;
     color: white;
-    font-family: 'Open Sans', sans-serif;
     text-align: center;
     text-decoration: none;
     font-size: 20px;
@@ -104,7 +108,6 @@ html, body {
     color: white;
     height: 50px;
     font-size: 30px;
-    font-family: 'Open Sans', sans-serif;
     text-align: center;
     padding: 5px 10px;
 }
@@ -119,8 +122,22 @@ html, body {
 }
 
 #login-text {
-    font-family: 'Open Sans', sans-serif;
     font-weight: 900;
     font-size: 20px;
     margin-right: 10px;
+}
+
+.container {
+    padding: 2%;
+    margin: 0 auto;
+    width: 60%;
+    background-color: var(--darker-background);
+    color: var(--color);
+
+    font-size: 1.3vw;
+    min-height: 50%;
+
+    display: flex;
+    flex-direction: column;
+    align-self: center;
 }

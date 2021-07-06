@@ -16,7 +16,7 @@ async function bootstrap() {
 
     await mongoose.connect(config.get('mongodb.connectionString'), config.get('mongodb.options'))
     console.log('Connected to MongoDB')
-
+    
     await io.attach(server)
     console.log('Socket.io attached to server')
 }
