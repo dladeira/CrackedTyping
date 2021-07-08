@@ -1,0 +1,32 @@
+.user-container {
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid white;
+}
+
+#username {
+    margin-left: 20px;
+
+    color: var(--orange);
+    font-size: 2rem;
+}
+
+#description {
+    color: white;
+    font-size: 1.1rem;
+}
+
+.information-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    font-size: 1rem;
+}
+
+#games-played {
+
+}
+
+#average-wpm {
+
+}

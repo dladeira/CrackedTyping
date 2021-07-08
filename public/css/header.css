@@ -1,12 +1,15 @@
 * {
     margin: 0;
     padding: 0;
+
     --color: #39FF14;
     --background: rgb(53, 64, 75);
     --darker-background: rgb(16, 21, 26);
     --orange: #ffb900;
     --darkest-background: rgb(7, 10, 12);
+}
 
+html {
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
 }

@@ -7,7 +7,11 @@ const config = require('config')
 router.use(loggedIn)
 
 router.get('/', (req, res) => {
-    res.render('account.ejs', { pastGames: req.user.pastGames } )
+    res.render('user.ejs', { user: req.user })
+})
+
+router.get('/settings', (req, res) => {
+    res.render('accountSettings.ejs', { pastGames: req.user.pastGames })
 })
 
 router.post('/changeUsername', (req, res) => {
@@ -68,7 +72,7 @@ router.post('/changeDescription', (req, res) => {
 })
 
 router.post('/delete', (req, res) => {
-    User.deleteOne({ _id: req.user._id}, err => {
+    User.deleteOne({ _id: req.user._id }, err => {
         if (err) {
             console.log(err)
             return res.send(err)

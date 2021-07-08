@@ -1,7 +1,0 @@
-<%- include('partials/header.ejs') %>
-<% var totalWPM = 0; for (var game of user.pastGames)  { totalWPM+= game.wpm } %>
-<h1><%= user.username %></h1>
-<h6><%= user.description %></h6>
-Total games played: <%= user.pastGames.length %>
-Average WPM: <%= (Math.round(totalWPM / user.pastGames.length) ? Math.round(totalWPM / user.pastGames.length) : "No games found!") %>
-<% include('partials/footer.ejs') %>

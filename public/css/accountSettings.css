@@ -1,11 +1,3 @@
-* {
-    margin: 0;
-    padding: 0;
-    --color: rgb(47, 255, 141);
-    --background: rgb(53, 64, 75);
-    --darker-background: rgb(16, 21, 26);
-}
-
 .padding-left-10 {
     padding-left: 10px;
 }
@@ -23,8 +15,6 @@
 
 .username-container {
     display: flex;
-
-
 }
 
 .profile-picture-container {

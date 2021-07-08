@@ -41,7 +41,7 @@ router.get('/user/:username', (req, res) => {
             return res.send(`User ${req.params.username} cannot be found`)
 
         // User exists, render their profile page
-        return res.render('profile.ejs', { user: user })
+        return res.render('user.ejs', { user: user })
     })
 })
 

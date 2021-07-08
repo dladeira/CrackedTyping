@@ -1,0 +1,13 @@
+<%- include('partials/header.ejs') %>
+<link rel="stylesheet" href="/css/user.css" type="text/css">
+
+<% var totalWPM = 0; for (var game of user.pastGames)  { totalWPM+= game.wpm } %>
+<div class="user-container">
+    <p id="username"><%= user.username %></p>
+<p id="description"><%= user.description %></p>
+</div>
+<div class="information-container">
+    <p id="games-played">Total games played: <%= user.pastGames.length %></p>
+    <p id="average-wpm">Average WPM: <%= (Math.round(totalWPM / user.pastGames.length) ? Math.round(totalWPM / user.pastGames.length) : "No games found!") %></p>
+</div>
+<% include('partials/footer.ejs') %>
