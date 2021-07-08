@@ -36,15 +36,19 @@ html, body {
     height: 50px;
     font-size: 30px;
     text-align: center;
-    padding: 5px 10px;
+    padding: 5px 5px;
+    letter-spacing: 1px;
 }
 
-.brand:hover {
-    color: var(--color);
+.err-text {
+    background-color: #2dd410;
+    font-size: inherit;
+    border-radius: 3px;
+    margin-right: 3px;
+    letter-spacing: 2px;
 }
 
 .brand:active {
-    color: var(--color);
     background-color: var(--background)
 }
 

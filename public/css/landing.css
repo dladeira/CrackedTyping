@@ -16,8 +16,16 @@
     text-decoration: none;
 }
 
-.card:hover, .card-description > .darken {
-    color: white;
+.card:not(.unreleased-card)::before {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    content: " ";
+    position: absolute;
+}
+
+.card:hover::before {
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .card-body {
@@ -30,6 +38,7 @@
 
 .card-description {
     font-size: 1.1rem;
+    color: white;
 }
 
 .games-container {

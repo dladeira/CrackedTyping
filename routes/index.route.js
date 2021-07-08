@@ -10,6 +10,14 @@ router.get('/game', (req, res) => {
     res.render('game.ejs')
 })
 
+/*
+    Route works, just has no use as of now
+
+    <form action="/userQuery" method="POST">
+        <input name="query" placeholder="search for user" type="text">
+        <button type="submit">/()</button>
+    </form>
+*/
 router.post('/userQuery/', (req, res) => {
     // Search is case-insensitive
     User.find({ username: new RegExp(req.body.query, 'i') }, (err, users) => {
