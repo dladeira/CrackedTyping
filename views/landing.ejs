@@ -21,15 +21,24 @@
         </div>
     </a>
 </div>
-
 <div class="account-container">
+    <% if (!loggedIn) { %>
+        <div class="locked-container zindex-3">
+            <a class="locked-text">
+                Login to access these menus
+            </a>
+        </div>
+    <% } %>
     <a class="card account-card" href="/account">
         <div class="card-body">
             <div class="card-title">Account</div>
             <div class="card-description">Go to your profile</div>
         </div>
     </a>
-    <a class="card stats-card" href="/game">
+    <a class="card stats-card unreleased-card">
+        <div class="locked-container">
+            <p class="locked-text">Comming soon</p>
+        </div>
         <div class="card-body">
             <div class="card-title">Stats</div>
             <div class="card-description">Explore global statistics</div>

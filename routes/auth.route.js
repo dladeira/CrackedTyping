@@ -5,9 +5,7 @@ const passport = require('../passport.js')
 const { User } = require('../models/index.js')
 const loggedIn = require('../middlewares/loggedIn.js')
 
-router.use(strategyExists)
-
-router.get('/:strategy/login', (req, res) => {
+router.get('/:strategy/login', strategyExists, (req, res) => {
     passport.authenticate(req.params.strategy, {
         scope: [
             'profile',
@@ -16,7 +14,7 @@ router.get('/:strategy/login', (req, res) => {
     })(req, res)
 })
 
-router.get('/:strategy/redirect', (req, res) => {
+router.get('/:strategy/redirect', strategyExists, (req, res) => {
     passport.authenticate(req.params.strategy, {
         successRedirect: req.session.loginRedirect,
         failureRedirect: '/'
@@ -26,7 +24,7 @@ router.get('/:strategy/redirect', (req, res) => {
     })
 })
 
-router.get('/:strategy/unlink', (req, res) => {
+router.get('/:strategy/unlink', strategyExists, (req, res) => {
     var stratergyProperty = req.params.strategy + 'Id'
     if (!req.user[stratergyProperty]) {
         console.log(`User ${req.user.username} attempting to unlink a not linked strategy (${req.params.strategy})`)
@@ -54,7 +52,7 @@ router.get("/logout", loggedIn, (req, res) => {
 
 function strategyExists(req, res, next) {
     if (req.params.strategy) { // Strategy parameter exists (need to verify that it's a valid strategy)
-        for (var stratergy in config.get('auth')) {
+        for (var strategy in config.get('auth')) {
             if (req.params.strategy == strategy)
                 return next()
         }
