@@ -114,10 +114,6 @@
     margin-top: 10px;
 }
 
-.unrelased-card {
-
-}
-
 .unreleased-card:hover {
     color: var(--orange);
 }
