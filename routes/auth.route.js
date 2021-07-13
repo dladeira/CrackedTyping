@@ -16,7 +16,6 @@ router.get('/:strategy/login', strategyExists, (req, res) => {
 
 router.get('/:strategy/redirect', strategyExists, (req, res) => {
     passport.authenticate(req.params.strategy, {
-        successRedirect: req.session.loginRedirect,
         failureRedirect: '/'
     })(req, res, err => {
         if (err) {
