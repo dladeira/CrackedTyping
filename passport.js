@@ -18,7 +18,7 @@ function getStrategyOptions(strategy) {
 
 function getStrategyCallback(strategyProperty) {
     return function strategyCallback(req, accessToken, refreshToken, profile, done) {
-        req.session.loginRedirect = req.user ? '/account' : '/'
+        req.session.loginRedirect = req.user ? '/account/settings' : '/'
         if (req.user) { // User is logged in, link the new strategy
             User.findOne({ _id: req.user._id }, (err, user) => {
                 if (err)

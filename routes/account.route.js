@@ -7,11 +7,15 @@ const config = require('config')
 router.use(loggedIn)
 
 router.get('/', (req, res) => {
-    res.render('account.ejs', { pastGames: req.user.pastGames } )
+    res.render('account.ejs', { user: req.user, ownAccount: true })
 })
 
-router.post('/changeUsername', (req, res) => {
-    var newUsername = req.body.newUsername
+router.get('/settings', (req, res) => {
+    res.render('accountSettings.ejs', { user: req.user })
+})
+
+router.post('/updateAccount', (req, res) => {
+    var newUsername = req.body.username
     if (!newUsername.match(config.get('account.constraints.username'))) {
         console.log(`User ${req.user.username} attempting to bruteforce a invalid username (${newUsername})`)
         return res.send('Invalid username')
@@ -28,14 +32,33 @@ router.post('/changeUsername', (req, res) => {
                 return res.send(err)
             }
 
-            if (usernameExists) {
+            if (usernameExists && (user.username != newUsername)) {
                 console.log(`User ${req.user.username} attempted to bruteforce a duplicate username (${newUsername})`)
                 return res.send("Username exists")
             }
 
             user.username = newUsername
             user.save().then(() => {
-                return res.redirect('/account')
+                var newDescription = req.body.description
+                if (!newDescription.match(config.get('account.constraints.description'))) {
+                    console.log(`User ${req.user.username} attempted to bruteforce a invalid description (${newDescription})`)
+                    return res.send('Invalid description')
+                }
+
+                User.findOne({ _id: req.user._id }, (err, user) => {
+                    if (err) {
+                        console.log(err)
+                        return res.send(err)
+                    }
+                    user.description = newDescription
+                    user.save().then(() => {
+                        res.redirect('/account/settings')
+                    }).catch(err => {
+                        console.log(err)
+                        return res.send('An error has occured, please try again later')
+                    })
+
+                })
             }).catch(err => {
                 console.log(err)
                 return res.send('An error has occured, please try again later')
@@ -44,31 +67,8 @@ router.post('/changeUsername', (req, res) => {
     })
 })
 
-router.post('/changeDescription', (req, res) => {
-    var newDescription = req.body.newDescription
-    if (!newDescription.match(config.get('account.constraints.description'))) {
-        console.log(`User ${req.user.username} attempted to bruteforce a invalid description (${newDescription})`)
-        return res.send('Invalid description')
-    }
-
-    User.findOne({ _id: req.user._id }, (err, user) => {
-        if (err) {
-            console.log(err)
-            return res.send(err)
-        }
-        user.description = newDescription
-        user.save().then(() => {
-            res.redirect('/account')
-        }).catch(err => {
-            console.log(err)
-            return res.send('An error has occured, please try again later')
-        })
-
-    })
-})
-
 router.post('/delete', (req, res) => {
-    User.deleteOne({ _id: req.user._id}, err => {
+    User.deleteOne({ _id: req.user._id }, err => {
         if (err) {
             console.log(err)
             return res.send(err)

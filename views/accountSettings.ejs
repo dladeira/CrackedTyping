@@ -1,0 +1,55 @@
+<%- include('partials/header.ejs') %>
+<link rel="stylesheet" href="/css/account.css" type="text/css">
+<link rel="stylesheet" href="/css/accountSettings.css" type="text/css">
+
+<% var totalWPM = 0; for (var game of user.pastGames)  { totalWPM+= game.wpm } %>
+<form action="/account/updateAccount" method="POST" id="form-js">
+    <div class="user-container">
+        <div class="user-information">
+            <div class="input-row">
+                <input class="username  username-input" type="text" value="<%= user.username %>" name="username" autocomplete="off">
+                <span id="username-status"></span>
+            </div>
+            <div class="input-row">
+                <input class="description description-input" type="text" value="<%= user.description %>" name="description" autocomplete="off">
+                <span id="description-status"></span>
+            </div>
+        </div>
+        <a id="account-btn" href="/account">Account</a>
+    </div>
+    <div class="information-container">
+        <div class="information-row">
+            <p id="games-played">Total games played: <%= user.pastGames.length %></p>
+            <p id="average-wpm">Average WPM: <%= (Math.round(totalWPM / user.pastGames.length) ? Math.round(totalWPM / user.pastGames.length) : "No games found!") %></p>
+        </div>
+        <div class="information-row">
+            <% if (!loggedInGoogle) { %>
+                <p>Google not linked: <a href="/auth/google/login" class="strategy-btn">LINK</a></p>
+            <% }  else { %>
+                <p>Googled linked:
+                    <% if (loggedInGithub) { %>
+                        <a href="/auth/google/unlink" class="strategy-btn">UNLINK</a>
+                    <% } else { %>
+                        ONLY LOGIN
+                    <% } %>
+                </p>
+            <% } %>
+            <% if (!loggedInGithub) { %>
+                <p>Github not linked: <a href="/auth/github/login" class="strategy-btn">LINK</a></p>
+            <% } else { %>
+                <p>Github linked: 
+                    <% if (loggedInGoogle) { %>
+                        <a href="/auth/github/unlink" class="strategy-btn">UNLINK</a>
+                    <% } else { %>
+                        ONLY LOGIN
+                    <% } %></p>
+            <% } %>
+        </div>
+        <div class="information-row">
+            <button id="save-btn" type="submit">Save</button>
+        </div>
+    </div>
+</form>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/accountSettings.js"></script>
+<% include('partials/footer.ejs') %>

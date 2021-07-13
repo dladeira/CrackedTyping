@@ -1,3 +1,6 @@
+// TODO: finishGame func not running when time runs out... ;)
+
+
 // DOM Elements
 var gameStatusElement = document.getElementById("js-status")
 var gameIdElement = document.getElementById("js-id")

@@ -11,11 +11,7 @@
     </head>
     <body>
     <div class="navbar">
-        <a href="/" class="brand">CrackedTyping</a>
-        <form action="/userQuery" method="POST">
-            <input name="query" placeholder="search for user" type="text">
-            <button type="submit">/()</button>
-        </form>
+        <a href="/" class="brand"><span class="err-text">Cracked</span>Typing</a>
         <% if (loggedIn) { %>
             <a href="/auth/logout" class="nav-button-right logout">Log out</a>
         <% } else { %>
@@ -25,7 +21,7 @@
                 <a href="/auth/github/login" class="login-button github-button"><img src="/img/github-logo.svg" alt="G" class="login-logo github-logo">Github</a>
             </div>
         <% } %>
-
     </div>
 
     <h2 class="current-login">Currently logged in as: <%= username %></h2>
+    <div class="container">
