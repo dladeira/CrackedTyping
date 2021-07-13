@@ -9,9 +9,9 @@ io.use(sharedSession(session, { autoSave: true }))
 
 io.on('connection', socket => {
 
-    socket.on('usernameExists', username => {
-        User.findOne({ username: username }, (err, user) => {
-            socket.emit('usernameExists', { username: username, exists: (err || user) })
+    socket.on('usernameExists', data => {
+        User.findOne({ username: data.target }, (err, user) => {
+            socket.emit('usernameExists', { username: data.target, exists: (data.currentUsername != data.target && (err || user)) })
         })
     })
 

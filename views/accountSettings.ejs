@@ -1,76 +1,55 @@
 <%- include('partials/header.ejs') %>
-<link type="text/css" rel="stylesheet" href="/css/accountSettings.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap">  
-<% var totalWPM = 0; for (var game of pastGames)  { totalWPM+= game.wpm } %>
+<link rel="stylesheet" href="/css/account.css" type="text/css">
+<link rel="stylesheet" href="/css/accountSettings.css" type="text/css">
 
-<!-- <p>Username: <%= username %></p>
-<p>Change Username:
-    <form id="changeUsernameForm" action="/account/changeusername" method="POST">
-        <input autocomplete="off" name="newUsername" type="text" value="<%= username %>" id="changeUsernameInput">
-        <button type="submit" id="changeUsernameButton">Change</button>
-        <p id="changeUsernameStatus"></p>
-    </form>
-</p> -->
-<p>Description: <%= description %></p>
-<p>Change Description:
-    <form id="changeDescriptionForm" action="/account/changedescription" method="POST">
-        <input autocomplete="off" name="newDescription" type="text" value="<%= description %>" id="changeDescriptionInput">
-        <button type="submit" id="changeDescriptionButton">Change</button>
-        <p id="changeDescriptionStatus"></p>
-    </form>
-</p>
-<p>Average WPM: <%= (Math.round(totalWPM / pastGames.length) ? Math.round(totalWPM / pastGames.length) : "No games found!") %></p>
-<% if (!loggedInGoogle) { %>
-    <p>Google not linked: <a href="/auth/google/login">LINK</a></p>
-<% }  else { %>
-    <p>Googled linked:
-        <% if (loggedInGithub) { %>
-            <a href="/auth/google/unlink">UNLINK</a>
-        <% } else { %>
-            CAN'T UNLINK ONLY LOGIN
-        <% } %>
-    </p>
-<% } %>
-<% if (!loggedInGithub) { %>
-    <p>Github not linked: <a href="/auth/github/login">LINK</a></p>
-<% } else { %>
-    <p>Github linked: 
-        <% if (loggedInGoogle) { %>
-            <a href="/auth/github/unlink">UNLINK</a>
-        <% } else { %>
-            CAN'T UNLINK ONLY LOGIN
-        <% } %></p>
-<% } %>
-<form action="/account/delete" method="POST">
-    Delete your account<button type="submit">Delete</button>
-</form>
-
-
-    <div class="profile-container-flex">
-        <div class="profile-container">
-            <div class="username-container">
-                <div class="profile-picture-container">
-                    <img class="profile-picture" src="">
-                </div>
-                <div class="user">
-                    <div class="username"><p class="padding-left-10">Username: <%= username %></p></div>
-                    <div class="username-update">
-                        <form id="changeUsernameForm" action="/account/changeusername" method="POST">
-                            <input class="username-change" autocomplete="off" name="newUsername" type="text" placeholder="Change Username" id="changeUsernameInput">
-                            <button type="submit" id="changeUsernameButton">Change</button>
-                        </form>
-                    </div>
-                        <p id="changeDescriptionStatus"></p>
-                        <p id="changeUsernameStatus"></p>
-                </div>
+<% var totalWPM = 0; for (var game of user.pastGames)  { totalWPM+= game.wpm } %>
+<form action="/account/updateAccount" method="POST" id="form-js">
+    <div class="user-container">
+        <div class="user-information">
+            <div class="input-row">
+                <input class="username  username-input" type="text" value="<%= user.username %>" name="username" autocomplete="off">
+                <span id="username-status"></span>
             </div>
-            <div class="description"></div>
-            <div class="statistics"></div>
-            <div class="accounts"></div>
+            <div class="input-row">
+                <input class="description description-input" type="text" value="<%= user.description %>" name="description" autocomplete="off">
+                <span id="description-status"></span>
+            </div>
+        </div>
+        <a id="account-btn" href="/account">Account</a>
+    </div>
+    <div class="information-container">
+        <div class="information-row">
+            <p id="games-played">Total games played: <%= user.pastGames.length %></p>
+            <p id="average-wpm">Average WPM: <%= (Math.round(totalWPM / user.pastGames.length) ? Math.round(totalWPM / user.pastGames.length) : "No games found!") %></p>
+        </div>
+        <div class="information-row">
+            <% if (!loggedInGoogle) { %>
+                <p>Google not linked: <a href="/auth/google/login" class="strategy-btn">LINK</a></p>
+            <% }  else { %>
+                <p>Googled linked:
+                    <% if (loggedInGithub) { %>
+                        <a href="/auth/google/unlink" class="strategy-btn">UNLINK</a>
+                    <% } else { %>
+                        ONLY LOGIN
+                    <% } %>
+                </p>
+            <% } %>
+            <% if (!loggedInGithub) { %>
+                <p>Github not linked: <a href="/auth/github/login" class="strategy-btn">LINK</a></p>
+            <% } else { %>
+                <p>Github linked: 
+                    <% if (loggedInGoogle) { %>
+                        <a href="/auth/github/unlink" class="strategy-btn">UNLINK</a>
+                    <% } else { %>
+                        ONLY LOGIN
+                    <% } %></p>
+            <% } %>
+        </div>
+        <div class="information-row">
+            <button id="save-btn" type="submit">Save</button>
         </div>
     </div>
+</form>
 <script src="/socket.io/socket.io.js"></script>
-<script src="/js/profile.js"></script>
-<%- include('partials/footer.ejs') %>
+<script src="/js/accountSettings.js"></script>
+<% include('partials/footer.ejs') %>

@@ -39,9 +39,13 @@ router.get('/user/:username', (req, res) => {
 
         if (!user) // User does not exist, send error message
             return res.send(`User ${req.params.username} cannot be found`)
-
+        var ownAccount = false;
+        if (req.user) {
+            ownAccount = req.params.username == req.user.username
+        }
+        
         // User exists, render their profile page
-        return res.render('user.ejs', { user: user })
+        return res.render('account.ejs', { user: user, ownAccount: ownAccount })
     })
 })
 
