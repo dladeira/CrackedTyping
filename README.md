@@ -7,15 +7,15 @@ A typing website
 ```
 \ : Landing page
 -game : Join random game and play
--account\ : User profile and settings
---changeUsername : Change username (POST)
---changeDescription : Change description (POST)
---delete : Delete account (POST)
+-account\ : User profile
+--settings: Account settings
 -user\:username : Profile page for the user
 -users\ Search for a user (POST)
 -auth\
---google : Login with Google
+--google: Google authentication
+---login: Login with google
 ---unlink: Unlink Google Strategy
---github : Login with Github
+--github : Github authentication
+---login: Login with github
 ---unlink: Unlink Github Strategy
 ```
