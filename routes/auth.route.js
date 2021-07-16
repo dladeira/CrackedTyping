@@ -15,12 +15,10 @@ router.get('/:strategy/login', strategyExists, (req, res) => {
 })
 
 router.get('/:strategy/redirect', strategyExists, (req, res) => {
-    passport.authenticate(req.params.strategy, {
-        failureRedirect: '/'
-    })(req, res, err => {
+    passport.authenticate(req.params.strategy, {})(req, res, err => {
         if (err) {
             console.log(err)
-            return res.send('An error has occured while trying to log you in, please try again later')
+            return res.redirect('/')
         }
         return res.redirect(req.session.loginRedirect)
     })
@@ -30,7 +28,7 @@ router.get('/:strategy/unlink', strategyExists, (req, res) => {
     var stratergyProperty = req.params.strategy + 'Id'
     if (!req.user[stratergyProperty]) {
         console.log(`User ${req.user.username} attempting to unlink a not linked strategy (${req.params.strategy})`)
-        return res.redirect("/account/settings")
+        return res.redirect('/account/settings')
     }
 
     User.findOne({ [stratergyProperty]: req.user[stratergyProperty] }, (err, user) => {

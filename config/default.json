@@ -36,6 +36,9 @@
         "constraints": {
                 "username": "^[a-zA-Z0-9]{4,20}$",
                 "description": "[^]{0,30}$"
+        },
+        "defaults": {
+            "description": "No description provided"
         }
     }
 }

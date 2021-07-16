@@ -42,11 +42,15 @@ function getStrategyCallback(strategyProperty) {
                 if (err)
                     return done(err)
                 if (created) {
-                    user.username = profile.displayName
-                    user.save().then(user => {
-                        return done(err, user)
-                    }).catch(err => {
-                        return done(err)
+                    getUnusedUsername((username) => {
+                        user.username = username
+                        console.log(username)
+                        user.description = config.get("account.defaults.description")
+                        user.save().then(user => {
+                            return done(err, user)
+                        }).catch(err => {
+                            return done(err)
+                        })
                     })
                 } else {
                     return done(err, user)
@@ -54,6 +58,22 @@ function getStrategyCallback(strategyProperty) {
             })
         }
     }
+}
+
+function getUnusedUsername(callback) {
+    var username = `User${Math.floor(Math.random() * 100000000)}`
+    User.findOne({username: username}, (err, user) => {
+        if (err) {
+            console.log(err)
+            return
+        }
+
+        if (user) // User with username exists
+            getUnusedUsername((username) => {
+                callback(username)
+            })
+        callback(username)
+    })
 }
 
 passport.serializeUser((user, done) => {
