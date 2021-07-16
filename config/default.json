@@ -1,6 +1,7 @@
 {
     "app": {
-        "port": 7300,
+        "httpPort": 7300,
+        "httpsPort": 7300,
         "origin": "https://localhost:7300"
     },
     "mongodb": {

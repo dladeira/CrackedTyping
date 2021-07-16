@@ -1,5 +1,7 @@
 {
     "app": {
+        "httpPort": 8080,
+        "httpsPort": 4433,
         "origin": "https://ladeira.eu"
     }
 }
