@@ -11,18 +11,18 @@
         <script>var username = '<%= username %>'</script>
     </head>
     <body>
-    <div class="navbar">
-        <a href="/" class="brand"><span class="err-text">Cracked</span>Typing</a>
+    <nav>
+        <a href="/" class="brand"><span id="cracked">Cracked</span>Typing</a>
         <% if (loggedIn) { %>
-            <a href="/auth/logout" class="nav-button-right logout">Log out</a>
+            <a href="/auth/logout" class="logout">Log out</a>
         <% } else { %>
-            <div class="nav-button-right">
+            <div class="login-container">
                 <span id="login-text">Log in:</span>
-                <a href="/auth/google/login" class="login-button google-button"><img src="/img/google-logo.svg" alt="G" class="login-logo google-logo">Google</a>
-                <a href="/auth/github/login" class="login-button github-button"><img src="/img/github-logo.svg" alt="G" class="login-logo github-logo">Github</a>
+                <a href="/auth/google/login" class="login-btn login-google"><img src="/img/google-logo.svg" alt="G" class="logo logo-google">Google</a>
+                <a href="/auth/github/login" class="login-btn login-github"><img src="/img/github-logo.svg" alt="G" class="logo logo-github">Github</a>
             </div>
         <% } %>
-    </div>
+    </nav>
 
-    <h2 class="current-login">Currently logged in as: <%= username %></h2>
+    <h2 id="current-login">Currently logged in as: <%= username %></h2>
     <div class="container">

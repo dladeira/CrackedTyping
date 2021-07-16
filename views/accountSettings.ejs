@@ -19,10 +19,6 @@
     </div>
     <div class="information-container">
         <div class="information-row">
-            <p id="games-played">Total games played: <%= user.pastGames.length %></p>
-            <p id="average-wpm">Average WPM: <%= (Math.round(totalWPM / user.pastGames.length) ? Math.round(totalWPM / user.pastGames.length) : "No games found!") %></p>
-        </div>
-        <div class="information-row">
             <% if (!loggedInGoogle) { %>
                 <p>Google not linked: <a href="/auth/google/login" class="strategy-btn">LINK</a></p>
             <% }  else { %>

@@ -23,7 +23,7 @@ html, body {
     color: rgb(189, 189, 189);
 }
 
-.navbar {
+nav {
     background-color: var(--darker-background);
     width: 100%;
     overflow: hidden;
@@ -43,7 +43,11 @@ html, body {
     letter-spacing: 1px;
 }
 
-.err-text {
+.brand:active {
+    background-color: var(--background)
+}
+
+#cracked {
     background-color: #2dd410;
     font-size: inherit;
     border-radius: 3px;
@@ -51,25 +55,18 @@ html, body {
     letter-spacing: 2px;
 }
 
-.brand:active {
-    background-color: var(--background)
-}
-
-.current-login {
-    width: 100%;
-    color: var(--color);
-    text-align: center;
-    border-bottom: solid 3px var(--color);
-    font-size: 20px;
-    background-color: var(--darkest-background);
-}
-
-.nav-button-right {
+.login-container {
     display: flex;
     align-items: center;
 }
 
-.login-button {
+#login-text {
+    font-weight: 900;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.login-btn {
     margin: 0 10px;
     padding: 10px;
     height: 18px;
@@ -85,28 +82,29 @@ html, body {
     border-radius: 10px;
 }
 
-.login-button:hover {
+.login-btn:hover {
     color: var(--color);
 }
 
-.google-button {
+.login-google {
     border-color: red;
 }
 
-.github-button {
+.login-github {
     border-color: white;
 }
 
-.login-logo {
+.logo {
     max-height: 100%;
 }
 
-.google-logo {
+/* Fine-tuning individual logos */
+.logo-google {
     padding-right: 0.7vw;
     padding-top: 1px;
 }
 
-.github-logo {
+.logo-github {
     padding-right: 0.7vw;
 }
 
@@ -128,10 +126,13 @@ html, body {
     background-color: var(--background)
 }
 
-#login-text {
-    font-weight: 900;
+#current-login {
+    width: 100%;
+    color: var(--color);
+    text-align: center;
+    border-bottom: solid 3px var(--color);
     font-size: 20px;
-    margin-right: 10px;
+    background-color: var(--darkest-background);
 }
 
 .container {
