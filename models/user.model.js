@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const config = require('config')
 const findOrCreate = require('mongoose-findorcreate')
 
 const userSchema = new mongoose.Schema({
@@ -7,7 +8,7 @@ const userSchema = new mongoose.Schema({
     username: String,
     avatar: {
         type: String,
-        default: "/img/default-avatar.jpg"
+        default: config.get('account.defaults.avatar')
     },
     description: {
         type: String,

@@ -28,7 +28,7 @@ label:hover::after {
     color: white;
 }
 
-label:hover > #avatar {
+label:hover > .avatar {
     opacity: 0.2;
 }
 

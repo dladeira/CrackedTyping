@@ -61,7 +61,28 @@
 }
 
 #player-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
     list-style-type: none;
+}
+
+.player-card {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+    padding: 5px;
+
+    background-color: var(--background);
+    width: 40%;
+    font-size: 1vw;
+    border: black solid 3px;
+    border-bottom: var(--orange) 3px solid;
+}
+
+.avatar-sm {
+    margin-right: 0.7vw;
 }
 
 #text-input {

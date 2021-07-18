@@ -78,7 +78,7 @@ router.post('/avatar', upload.single('avatar'), (req, res) => {
         }
 
         // Delete old avatar
-        if (user.avatar != '/img/default-avatar.jpg') {
+        if (user.avatar != config.get('account.defaults.avatar')) {
             console.log(`deleting old avatar ${user.avatar}`)
             fs.unlink('public/' + user.avatar, err => {
                 if (err) {

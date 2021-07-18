@@ -69,6 +69,7 @@ class Game {
         this.gameEndCallback = gameEndCallback
         this.text = text
         this.startTime = new Date().getTime() + this.options.startDelay
+        this.deleteDelay = this.options.deleteDelay
 
         setTimeout(() => {
             this.startGame()
