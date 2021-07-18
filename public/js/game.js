@@ -1,14 +1,14 @@
 // DOM Elements
-var gameStatusElement = document.getElementById("js-status")
-var gameIdElement = document.getElementById("js-id")
-var passageElement = document.getElementById("game-passage")
-var gameTextInput = document.getElementById("text-input")
-var textInfoElement = document.getElementById("js-text-info")
-var playerListElement = document.getElementById("player-list")
+var gameStatusElement = document.getElementById('js-status')
+var gameIdElement = document.getElementById('js-id')
+var passageElement = document.getElementById('game-passage')
+var gameTextInput = document.getElementById('text-input')
+var textInfoElement = document.getElementById('js-text-info')
+var playerListElement = document.getElementById('player-list')
 
 var socket = io()
 var currentWordIndex = 0 // Start the user at the first word
-var confirmedText = "" // Text typed correctly locked after space was pressed
+var confirmedText = '' // Text typed correctly locked after space was pressed
 var secondsElapsed = 0 // Seconds of user being able to type
 
 // (milliseconds)
@@ -48,12 +48,12 @@ function bootstrap(game) {
         }
 
         if (gameTimer < 0) { // Hasn't started yet
-            var startingText = "Starting in: " + Math.abs(msToSec(gameTimer))
+            var startingText = 'Starting in: ' + Math.abs(msToSec(gameTimer))
             setGameStatus(startingText, startingText, 0)
         } else if (gameTimer < game.options.gameLength) { // Game is ongoing
             // Prevent changing status if user finished early
             if (gameStage != 2) {
-                setGameStatus("Time left: " + msToSec(game.options.gameLength - gameTimer), "Start typing!", 1)
+                setGameStatus('Time left: ' + msToSec(game.options.gameLength - gameTimer), 'Start typing!', 1)
             }
         } else { // Game ended
             finishGame()
@@ -72,7 +72,7 @@ function bootstrap(game) {
     })
 
     function updatePlayers(players) {
-        var listHTML = ""
+        var listHTML = ''
 
         for (var i = 0; i < players.length; i++) {
             listHTML += `<li class="player-card"><img src="${players[i].avatar}" class="avatar-sm">${players[i].username} : ${players[i].wpm}</li>`
@@ -87,22 +87,22 @@ function bootstrap(game) {
      word
     */
     function updatePassage() { // Each word has it's own <span>
-        var passageHTML = ""
+        var passageHTML = ''
         var correctLettersLeft = getCorrectLetterCount()
         var incorrectLettersLeft = getIncorrectLetterCount()
         var cursorPlaced = false
         for (var letter of Array.from(game.text.passage)) {
-            var classToAdd = ""
+            var classToAdd = ''
             if (correctLettersLeft-- > 0) {
-                var classToAdd = "correctLetter"
+                var classToAdd = 'correctLetter'
             } else if (incorrectLettersLeft-- > 0) {
-                var classToAdd = "incorrectLetter"
+                var classToAdd = 'incorrectLetter'
             }
-            if (classToAdd != "correctLetter" && !cursorPlaced) {
-                passageHTML+= `<span id="cursor">|</span>`
+            if (classToAdd != 'correctLetter' && !cursorPlaced) {
+                passageHTML+= `<span id='cursor'>|</span>`
                 cursorPlaced = true
             }
-            passageHTML += `<span class="${classToAdd}">${letter}</span>`
+            passageHTML += `<span class='${classToAdd}'>${letter}</span>`
         }
         passageElement.innerHTML = passageHTML
     }
@@ -111,10 +111,10 @@ function bootstrap(game) {
         var wordInputed = gameTextInput.value.substring(0, gameTextInput.value.length - 1)
         if (onLastWord())
             wordInputed = gameTextInput.value
-        if (event.data == " " || onLastWord()) {
+        if (event.data == ' ' || onLastWord()) {
             if (getExpectedWord() == wordInputed) {
-                gameTextInput.value = ""
-                confirmedText += wordInputed + " "
+                gameTextInput.value = ''
+                confirmedText += wordInputed + ' '
                 currentWordIndex++
                 if (isTextFinished())
                     finishGame()
@@ -124,11 +124,11 @@ function bootstrap(game) {
     }
 
     function getExpectedWord() {
-        return game.text.passage.split(" ")[currentWordIndex]
+        return game.text.passage.split(' ')[currentWordIndex]
     }
 
     function isTextFinished() {
-        return (currentWordIndex + 1) > game.text.passage.split(" ").length
+        return (currentWordIndex + 1) > game.text.passage.split(' ').length
     }
 
     function finishGame() {
@@ -150,9 +150,9 @@ function bootstrap(game) {
     }
 
     function getWPM() {
-        var wordsTyped = confirmedText.split(" ").length - 1
+        var wordsTyped = confirmedText.split(' ').length - 1
         var wpm = Math.round(wordsTyped / (secondsElapsed / 60))
-        return (isNaN(wpm) || wpm == "Infinity" ? 0 : wpm) // WPM is "Infinity" if secondsElapsed is 0
+        return (isNaN(wpm) || wpm == 'Infinity' ? 0 : wpm) // WPM is 'Infinity' if secondsElapsed is 0
     }
 
     function setGameStatus(status, placeholder, stage) {
@@ -163,7 +163,7 @@ function bootstrap(game) {
         // Only allow typing during the game
         gameTextInput.readOnly = stage != 1
         if (stage != 1)
-            gameTextInput.value = ""
+            gameTextInput.value = ''
     }
 
     function getCorrectLetterCount() {
