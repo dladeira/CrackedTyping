@@ -3,11 +3,12 @@
 <link rel="stylesheet" href="/css/accountSettings.css" type="text/css">
 
 <% var totalWPM = 0; for (var game of user.pastGames)  { totalWPM+= game.wpm } %>
-<form action="/account/updateAccount" method="POST" id="form-js">
+<form action="/account/updateAccount" method="POST" id="form-js" enctype="multipart/form-data">
+    <input type="file" name="avatar" id="avatar-upload" accept="image/*">
     <div class="header-container">
         <div class="user-container">
             <label for="avatar-upload">
-                <img src="<%= user.avatar %>" class="avatar">
+                <img src="<%= user.avatar %>" class="avatar" id="js-avatar">
             </label>
             <div class="user-information">
                 <div class="input-row">
@@ -53,10 +54,6 @@
     </div>
 </form>
 <form id="delete-account" method="POST" action="/account/delete"></form>
-
-<form method="POST" action="/account/avatar" enctype="multipart/form-data">
-    <input type="file" name="avatar" id="avatar-upload" accept="image/*" onchange="form.submit()">
-</form>
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/accountSettings.js"></script>

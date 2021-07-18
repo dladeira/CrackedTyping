@@ -40,6 +40,11 @@ label:hover {
     display: none;
 }
 
+.changedInput {
+    border: 2px solid red !important;
+    color: white !important;
+}
+
 .username-input, .description-input {
     border: 2px solid var(--orange);
     background-color: transparent;
