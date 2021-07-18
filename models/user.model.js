@@ -5,6 +5,10 @@ const userSchema = new mongoose.Schema({
     googleId: String,
     githubId: String,
     username: String,
+    avatar: {
+        type: String,
+        default: "/img/default-avatar.jpg"
+    },
     description: {
         type: String,
         default: ""
@@ -12,7 +16,7 @@ const userSchema = new mongoose.Schema({
     pastGames: [{
         wpm: Number,
         date: Date
-    }]
+    }],
 })
 
 userSchema.plugin(findOrCreate);

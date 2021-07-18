@@ -3,10 +3,13 @@
 <link rel="stylesheet" href="/css/accountSettings.css" type="text/css">
 
 <% var totalWPM = 0; for (var game of user.pastGames)  { totalWPM+= game.wpm } %>
-<div class="user-container">
-    <div class="user-information">
-        <p class="username"><%= user.username %></p>
-        <p class="description"><%= user.description %></p>
+<div class="header-container">
+    <div class="user-container">
+        <img src="<%= user.avatar %>" id="avatar">
+        <div class="user-information">
+            <p class="username"><%= user.username %></p>
+            <p class="description"><%= user.description %></p>
+        </div>
     </div>
     <% if (ownAccount) { %>
     <a id="settings-btn" href="/account/settings">Settings</a>
