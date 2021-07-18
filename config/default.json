@@ -36,7 +36,8 @@
     "account": {
         "constraints": {
                 "username": "^[a-zA-Z0-9]{4,20}$",
-                "description": "[^]{0,30}$"
+                "description": "[^]{0,30}$",
+                "avatarType": "(^image\/)\\w+"
         },
         "defaults": {
             "description": "No description provided",
