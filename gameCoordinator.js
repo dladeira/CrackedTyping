@@ -63,7 +63,7 @@ exports.findGames = findGames
 
 class Game {
     constructor(id, options, text, gameEndCallback) {
-        this.uniqueId = Math.random() * 1000000000; // Game uniqueness check (game ids get recycled)
+        this.uniqueId = Math.random() * 1000000000 // Game uniqueness check (game ids get recycled)
         this.options = options
         this.id = id
         this.gameEndCallback = gameEndCallback
@@ -89,13 +89,17 @@ class Game {
     endGame() {
         console.log(`Game ${this.id} ended`)
         this.text.totalTimesTyped += this.playerCount
+        this.text.totalWPM += this.totalWPM
         this.text.save() // Error handling overrated, doesn't really matter anyways
         for (var player of this.players) {
             if (player.saveData && player.final) {
                 User.findOne({ username: player.username}, (err, user) => {
                     if (err)
                         return console.log(err)
-                    user.pastGames.push({ wpm: player.wpm, date: new Date().getTime() });
+                    user.pastGames.push({
+                        wpm: player.wpm,
+                        date: new Date().getTime()
+                    })
                     user.save().catch(err => { // Now this matters a bit more
                         console.log(err)
                     })
@@ -128,6 +132,14 @@ class Game {
 
     get passage() {
         return this.text.passage
+    }
+
+    get totalWPM() {
+        var wpm = 0
+        for (var player of this.players) {
+            wpm+=player.wpm
+        }
+        return wpm
     }
 
     playerJoined(username) {

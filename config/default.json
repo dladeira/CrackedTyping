@@ -5,7 +5,7 @@
         "origin": "https://localhost:7300"
     },
     "mongodb": {
-        "connectionString": "mongodb://defaultUser:passwordPassport1224@ladeira.eu:1283/CrackedTyping",
+        "connectionString": "mongodb://admin:mediameister5634@ladeira.eu:1283/crackedtyping-dev?authSource=admin",
         "options": {
             "useNewUrlParser": true,
             "useUnifiedTopology": true

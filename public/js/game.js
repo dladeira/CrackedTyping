@@ -3,7 +3,7 @@ var gameStatusElement = document.getElementById("js-status")
 var gameIdElement = document.getElementById("js-id")
 var passageElement = document.getElementById("game-passage")
 var gameTextInput = document.getElementById("text-input")
-var gameTimesTypedElement = document.getElementById("js-times-typed")
+var textInfoElement = document.getElementById("js-text-info")
 var playerListElement = document.getElementById("player-list")
 
 var socket = io()
@@ -33,8 +33,8 @@ socket.on('foundGame', gameFound => {
 function bootstrap(game) {
     console.log(game)
     updatePassage()
-    gameIdElement.innerHTML = `ID: ${game.id}`
-    gameTimesTypedElement.innerHTML = `Total Times Typed ${game.text.totalTimesTyped}`
+    gameIdElement.innerHTML = `Game ID: `
+    textInfoElement.innerHTML = `Times typed: ${game.text.totalTimesTyped}<br>Average WPM: ${Math.round(game.text.totalWPM / game.text.totalTimesTyped) ? Math.round(game.text.totalWPM / game.text.totalTimesTyped) : 0}`
 
     /*
         gameTimer starts at a negative value equivelent to
@@ -90,7 +90,7 @@ function bootstrap(game) {
         var passageHTML = ""
         var correctLettersLeft = getCorrectLetterCount()
         var incorrectLettersLeft = getIncorrectLetterCount()
-        var cursorPlaced = false;
+        var cursorPlaced = false
         for (var letter of Array.from(game.text.passage)) {
             var classToAdd = ""
             if (correctLettersLeft-- > 0) {
@@ -100,7 +100,7 @@ function bootstrap(game) {
             }
             if (classToAdd != "correctLetter" && !cursorPlaced) {
                 passageHTML+= `<span id="cursor">|</span>`
-                cursorPlaced = true;
+                cursorPlaced = true
             }
             passageHTML += `<span class="${classToAdd}">${letter}</span>`
         }
@@ -142,7 +142,7 @@ function bootstrap(game) {
     }
 
     function getTotalTypedText() {
-        return confirmedText + gameTextInput.value;
+        return confirmedText + gameTextInput.value
     }
 
     function msToSec(time) {
@@ -158,7 +158,7 @@ function bootstrap(game) {
     function setGameStatus(status, placeholder, stage) {
         gameStatusElement.innerHTML = status
         gameTextInput.placeholder = placeholder
-        gameStage = stage;
+        gameStage = stage
 
         // Only allow typing during the game
         gameTextInput.readOnly = stage != 1
@@ -167,36 +167,36 @@ function bootstrap(game) {
     }
 
     function getCorrectLetterCount() {
-        var letterCount = 0;
-        var letterArray = Array.from(getTotalTypedText());
-        var passageLetterArray = Array.from(game.text.passage);
+        var letterCount = 0
+        var letterArray = Array.from(getTotalTypedText())
+        var passageLetterArray = Array.from(game.text.passage)
         for (var i in letterArray) {
             if (letterArray[i] == passageLetterArray[i]) {
-                letterCount++;
+                letterCount++
             } else {
-                break;
+                break
             }
         }
-        return letterCount;
+        return letterCount
     }
 
     function getIncorrectLetterCount() {
-        var letterCount = 0;
-        var letterArray = Array.from(getTotalTypedText());
-        var passageLetterArray = Array.from(game.text.passage);
-        var incorrectLetterFound = false;
+        var letterCount = 0
+        var letterArray = Array.from(getTotalTypedText())
+        var passageLetterArray = Array.from(game.text.passage)
+        var incorrectLetterFound = false
         for (var i in letterArray) {
             if (i < getCorrectLetterCount()) // Skip all the correct letters
-                continue;
+                continue
 
             // 2nd condition : If the user has typed more characters than exist, def wrong
             if (letterArray[i] != passageLetterArray[i] || !passageLetterArray[i] || incorrectLetterFound) {
-                incorrectLetterFound++;
-                letterCount++;
+                incorrectLetterFound++
+                letterCount++
             } else {
-                break;
+                break
             }
         }
-        return letterCount;
+        return letterCount
     }
 }

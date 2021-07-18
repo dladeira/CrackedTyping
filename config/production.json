@@ -3,5 +3,8 @@
         "httpPort": 8080,
         "httpsPort": 4433,
         "origin": "https://ladeira.eu"
+    },
+    "mongodb": {
+        "connectionString": "mongodb://defaultUser:passwordPassport1224@ladeira.eu:1283/crackedtyping"
     }
 }
