@@ -71,6 +71,11 @@ router.post('/updateAccount', (req, res) => {
 })
 
 router.post('/avatar', upload.single('avatar'), (req, res) => {
+    if (!req.file.mimetype.match(config.get("account.constraints.avatarType"))) {
+        console.log(`User ${req.user.username} attempting to bruteforce a invalid file (${req.file.mimetype})`)
+        return res.send('Invalid image')
+    }
+
     User.findOne({ _id: req.user._id}, (err, user) => {
         if (err) {
             console.log(err)

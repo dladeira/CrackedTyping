@@ -40,7 +40,7 @@ function formSubmitEvent(event) {
         return false
     }
 
-    setUsernameStatus(usernameExists ? "Username already exists" : "Username available")
+    if (!event) setUsernameStatus(usernameExists ? "Username already exists" : "Username available")
     if (usernameExists) {
         if (event) event.preventDefault()
         return false
