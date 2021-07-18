@@ -2,7 +2,6 @@ var usernameInput = document.getElementsByClassName('username-input')[0]
 var descriptionInput = document.getElementsByClassName('description-input')[0]
 var avatarInput = document.getElementById('avatar-upload')
 var avatarImage = document.getElementById('js-avatar')
-var avatarForm = document.getElementById('js-avatar-form')
 
 var form = document.getElementById('form-js')
 var socket = io()
@@ -29,7 +28,7 @@ descriptionInput.oninput = () => {
     formSubmitEvent(undefined, false)
 }
 
-avatarInput.onchange = event => {
+avatarInput.onchange = () => {
     const [file] = avatarInput.files
     if (file) {
         avatarImage.src = URL.createObjectURL(file)
