@@ -39,7 +39,8 @@
                 "description": "[^]{0,30}$"
         },
         "defaults": {
-            "description": "No description provided"
+            "description": "No description provided",
+            "avatar": "/img/default-avatar.jpg"
         }
     }
 }

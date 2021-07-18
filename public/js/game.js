@@ -1,6 +1,3 @@
-// TODO: finishGame func not running when time runs out... ;)
-
-
 // DOM Elements
 var gameStatusElement = document.getElementById("js-status")
 var gameIdElement = document.getElementById("js-id")
@@ -45,7 +42,6 @@ function bootstrap(game) {
         acts like a normal timer
         */
     var gameTimer = game.timeSinceStart
-
     setInterval(() => {
         if (gameStage == 1) {
             secondsElapsed += intervalDelay / 1000
@@ -79,7 +75,7 @@ function bootstrap(game) {
         var listHTML = ""
 
         for (var i = 0; i < players.length; i++) {
-            listHTML += `<li>${players[i].username} : ${players[i].wpm}</li>`
+            listHTML += `<li class="player-card"><img src="${players[i].avatar}" class="avatar-sm">${players[i].username} : ${players[i].wpm}</li>`
         }
 
         playerListElement.innerHTML = listHTML

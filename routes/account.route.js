@@ -1,8 +1,11 @@
 const express = require('express')
 const router = express.Router()
+const multer = require('multer')
+const upload = multer({ dest: './public/data/avatars', limits: { fileSize: 5 * 1000000}})
 const { User } = require('../models/index.js')
 const loggedIn = require('../middlewares/loggedIn.js')
 const config = require('config')
+const fs = require('fs')
 
 router.use(loggedIn)
 
@@ -24,12 +27,12 @@ router.post('/updateAccount', (req, res) => {
     User.findOne({ _id: req.user._id }, (err, user) => {
         if (err) {
             console.log(err)
-            return res.send(err)
+            return res.send('An error has occured, please try again later')
         }
         User.findOne({ username: newUsername }, (err, usernameExists) => {
             if (err) {
                 console.log(err)
-                return res.send(err)
+                return res.send('An error has occured, please try again later')
             }
 
             if (usernameExists && (user.username != newUsername)) {
@@ -48,7 +51,7 @@ router.post('/updateAccount', (req, res) => {
                 User.findOne({ _id: req.user._id }, (err, user) => {
                     if (err) {
                         console.log(err)
-                        return res.send(err)
+                        return res.send('An error has occured, please try again later')
                     }
                     user.description = newDescription
                     user.save().then(() => {
@@ -67,11 +70,38 @@ router.post('/updateAccount', (req, res) => {
     })
 })
 
+router.post('/avatar', upload.single('avatar'), (req, res) => {
+    User.findOne({ _id: req.user._id}, (err, user) => {
+        if (err) {
+            console.log(err)
+            return res.send('An error has occured, please try again later')
+        }
+
+        // Delete old avatar
+        if (user.avatar != config.get('account.defaults.avatar')) {
+            console.log(`deleting old avatar ${user.avatar}`)
+            fs.unlink('public/' + user.avatar, err => {
+                if (err) {
+                    console.log(err)
+                }
+            })
+        }
+
+        user.avatar = req.file.path.replace('public', '')
+        user.save().then(() => {
+            res.redirect('/account/settings')
+        }).catch(err => {
+            console.log(err)
+            return res.send('An error has occured, please try again later')
+        })
+    })
+})
+
 router.post('/delete', (req, res) => {
     User.deleteOne({ _id: req.user._id }, err => {
         if (err) {
             console.log(err)
-            return res.send(err)
+            return res.send('An error has occured, please try again later')
         }
         req.logout()
         return res.redirect('/')

@@ -4,15 +4,20 @@
 
 <% var totalWPM = 0; for (var game of user.pastGames)  { totalWPM+= game.wpm } %>
 <form action="/account/updateAccount" method="POST" id="form-js">
-    <div class="user-container">
-        <div class="user-information">
-            <div class="input-row">
-                <input class="username  username-input" type="text" value="<%= user.username %>" name="username" autocomplete="off">
-                <span id="username-status"></span>
-            </div>
-            <div class="input-row">
-                <input class="description description-input" type="text" value="<%= user.description %>" name="description" autocomplete="off">
-                <span id="description-status"></span>
+    <div class="header-container">
+        <div class="user-container">
+            <label for="avatar-upload">
+                <img src="<%= user.avatar %>" class="avatar">
+            </label>
+            <div class="user-information">
+                <div class="input-row">
+                    <input class="username  username-input" type="text" value="<%= user.username %>" name="username" autocomplete="off">
+                    <span id="username-status"></span>
+                </div>
+                <div class="input-row">
+                    <input class="description description-input" type="text" value="<%= user.description %>" name="description" autocomplete="off">
+                    <span id="description-status"></span>
+                </div>
             </div>
         </div>
         <a id="account-btn" href="/account">Account</a>
@@ -43,9 +48,16 @@
         </div>
         <div class="information-row">
             <button id="save-btn" type="submit">Save</button>
+            <button id="delete-btn" type="submit" form="delete-account">Delete</button>
         </div>
     </div>
 </form>
+<form id="delete-account" method="POST" action="/account/delete"></form>
+
+<form method="POST" action="/account/avatar" enctype="multipart/form-data">
+    <input type="file" name="avatar" id="avatar-upload" onchange="form.submit()">
+</form>
+
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/accountSettings.js"></script>
 <% include('partials/footer.ejs') %>

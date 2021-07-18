@@ -10,6 +10,36 @@
     font-size: 1.1rem;
 }
 
+label {
+    height: 70px;
+    width: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+label:hover::after {
+    position: absolute;
+    content: 'Edit';
+    z-index: 3;
+    opacity: 2;
+    font-size: 1.2rem;
+    color: white;
+}
+
+label:hover > .avatar {
+    opacity: 0.2;
+}
+
+label:hover {
+    cursor: pointer;
+}
+
+#avatar-upload {
+    display: none;
+}
+
 .username-input, .description-input {
     border: 2px solid var(--orange);
     background-color: transparent;
@@ -44,6 +74,15 @@
     font-size: 1.2rem;
 }
 
-#save-btn:hover {
+#delete-btn {
+    padding: 5px 10px;
+    background-color: transparent;
+    border: 2px solid red;
+    border-radius: 7px;
+    color: white;
+    font-size: 1.2rem;
+}
+
+#save-btn:hover, #delete-btn:hover {
     cursor: pointer;
 }

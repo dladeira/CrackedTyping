@@ -18,13 +18,29 @@ io.on('connection', socket => {
     // Duplicate users is handled by gameCoordinator
     socket.on('findGame', () => {
         gameCoordinator.findUnstartedGame(game => {
-            game.addPlayer({
-                username: socket.handshake.session.username,
-                wpm: 0,
-                saveData: socket.handshake.session.loggedIn,
-                final: false
+            User.findOne({username: socket.handshake.session.username}, (err, user) => {
+                if (err) {
+                    return console.log(err)
+                }
+                if (user) {
+                    game.addPlayer({
+                        username: user.username,
+                        avatar: user.avatar,
+                        wpm: 0,
+                        saveData: true,
+                        final: false
+                    })
+                } else {
+                    game.addPlayer({
+                        username: socket.handshake.session.username,
+                        avatar: config.get('account.defaults.avatar'),
+                        wpm: 0,
+                        saveData: false,
+                        final: false,
+                    })
+                }
+                socket.emit('foundGame', game)
             })
-            socket.emit('foundGame', game)
         })
     })
 
