@@ -55,7 +55,7 @@
 <form id="delete-account" method="POST" action="/account/delete"></form>
 
 <form method="POST" action="/account/avatar" enctype="multipart/form-data">
-    <input type="file" name="avatar" id="avatar-upload" onchange="form.submit()">
+    <input type="file" name="avatar" id="avatar-upload" accept="image/*" onchange="form.submit()">
 </form>
 
 <script src="/socket.io/socket.io.js"></script>
