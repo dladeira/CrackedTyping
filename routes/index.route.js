@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { User } = require('../models/index.js')
+const { User, Text } = require('../models/index.js')
 
 router.get('/', (req, res) => {
     res.render('landing.ejs')
@@ -8,6 +8,41 @@ router.get('/', (req, res) => {
 
 router.get('/game', (req, res) => {
     res.render('game.ejs')
+})
+
+router.get('/stats', (req, res) => {
+    User.find({}, (err, users) => {
+        Text.find({}, (err, texts) => {
+            var totalTimesTyped = 0;
+            var totalWPM = 0;
+            for (text of texts) {
+                totalTimesTyped += text.timesTyped;
+                totalWPM += text.totalWPM
+            }
+            var averageWPM = totalWPM / totalTimesTyped;
+            averageWPM = (averageWPM == "Infinity") || isNaN(averageWPM) ? "0" : averageWPM
+
+            var gamesPlayed = 0;
+            var dates = []
+            for (var user of users) {
+                if (!user.pastGames) return
+                for (var game of user.pastGames) {
+                    if (!dates.includes(game.date)) {
+                        gamesPlayed+=1
+                        dates.push(game.date)
+                    }
+                }
+            }
+    
+            res.render('statistics.ejs', {
+                totalTimesTyped: totalTimesTyped,
+                totalWPM: totalWPM,
+                averageWPM: averageWPM,
+                userCount: users.length,
+                gamesPlayed: gamesPlayed
+            })
+        })
+    })
 })
 
 /*
