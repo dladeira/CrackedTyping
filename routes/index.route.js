@@ -20,7 +20,7 @@ router.get('/stats', (req, res) => {
                 totalWPM += text.totalWPM
             }
             var averageWPM = totalWPM / totalTimesTyped;
-            averageWPM = (averageWPM == "Infinity") || isNaN(averageWPM) ? "0" : averageWPM
+            averageWPM = (averageWPM == "Infinity") || isNaN(averageWPM) ? "0" : Math.round(averageWPM)
 
             var gamesPlayed = 0;
             var dates = []
