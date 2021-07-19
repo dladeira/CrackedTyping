@@ -37,7 +37,7 @@ function bootstrap(game) {
     console.log(game)
     updatePassage()
     gameIdElement.innerHTML = `Game ID: `
-    textInfoElement.innerHTML = `Times typed: ${game.text.totalTimesTyped}<br>Average WPM: ${Math.round(game.text.totalWPM / game.text.totalTimesTyped) ? Math.round(game.text.totalWPM / game.text.totalTimesTyped) : 0}`
+    textInfoElement.innerHTML = `Times typed: ${game.text.timesTyped}<br>Average WPM: ${Math.round(game.text.totalWPM / game.text.timesTyped) ? Math.round(game.text.totalWPM / game.text.timesTyped) : 0}`
 
     /*
         gameTimer starts at a negative value equivelent to

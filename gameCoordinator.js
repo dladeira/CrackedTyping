@@ -88,7 +88,7 @@ class Game {
 
     endGame() {
         console.log(`Game ${this.id} ended`)
-        this.text.totalTimesTyped += this.playerCount
+        this.text.timesTyped += this.playerCount
         this.text.totalWPM += this.totalWPM
         this.text.save() // Error handling overrated, doesn't really matter anyways
         for (var player of this.players) {

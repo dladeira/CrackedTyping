@@ -1,0 +1,57 @@
+.stats-container {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    font-size: 1.1rem;
+}
+
+.stats-row {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-evenly;
+
+    width: 100%;
+
+    margin: 0.5vh 0;
+}
+
+.stats-header {
+    width: 40%;
+
+    font-size: 1.8rem;
+    text-align: center;
+
+    padding-bottom: 0.5vh;
+    margin-bottom: 4vh;
+
+    border-bottom: solid 2px var(--orange);
+    color: white;
+}
+
+.stats-item {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+    align-items: end;
+
+    width: 20%;
+
+    text-align: right;
+    white-space: nowrap;
+}
+
+.stats-key {
+    color: var(--color);
+
+    width: 10%;
+}
+
+.stats-value {
+    color: var(--orange);
+
+    width: 20%;
+}
