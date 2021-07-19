@@ -31,6 +31,9 @@ socket.on('foundGame', gameFound => {
 })
 
 function bootstrap(game) {
+    gameTextInput.onfocusout = gameTextInput.focus
+
+
     console.log(game)
     updatePassage()
     gameIdElement.innerHTML = `Game ID: `
