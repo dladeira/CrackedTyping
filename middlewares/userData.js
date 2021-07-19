@@ -12,6 +12,7 @@ function provideUserData(req, res, next) {
     req.session.loggedIn = req.user ? true : false
 
     res.locals.username = req.session.username
+    res.locals.description = "This is a guest account" // Description gets override if logged in
     res.locals.loggedIn = req.session.loggedIn
 
     if (req.user) { // Logged in
