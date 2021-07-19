@@ -14,7 +14,7 @@
 </div>
 
 <p id="game-passage" class="unselectable"></p>
-<input autofocus autocomplete="off" id="text-input" type="text">
+<input autofocus autocomplete="off" id="text-input" type="text" onfocusout="setTimeout(() => { document.getElementById('text-input').focus() }, 100)">
 
 <!-- Keep scripts in this order (socket.io on top)-->
 <script src="/socket.io/socket.io.js"></script>
