@@ -29,11 +29,20 @@ router.get('/stats', (req, res) => {
                 averageWPM /= textsWritten
                 averageWPM = isNaN(averageWPM) ? 0 : Math.round(averageWPM) // 0 divided by 0
 
+                var wordsTyped = 0
+                var lettersTyped = 0
+                for (var text of texts) {
+                    wordsTyped += text.passage.split(' ').length * text.timesTyped
+                    lettersTyped += text.passage.split('').length * text.timesTyped
+                }
+
                 res.render('statistics.ejs', {
                     textCount: texts.length,
                     averageWPM: averageWPM,
                     userCount: users.length,
-                    gamesPlayed: games.length
+                    gamesPlayed: games.length,
+                    wordsTyped: wordsTyped,
+                    lettersTyped: lettersTyped
                 })
             })
         })

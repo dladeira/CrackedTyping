@@ -4,11 +4,16 @@
     <h1 class="stats-header">Global statistics</h1>
     <div class="stats-row">
         <div class="stats-item"><p class="stats-key">Text count: </p><p class="stats-value"><%= textCount %></p></div>
-        <div class="stats-item"><p class="stats-key">Average WPM: </p><p class="stats-value"><%= averageWPM %></p></div>
+        <div class="stats-item"><p class="stats-key">Accounts created: </p><p class="stats-value"><%= userCount %></p></div>
     </div>
     <div class="stats-row">
         <div class="stats-item"><p class="stats-key">Games played: </p><p class="stats-value"><%= gamesPlayed %></p></div>
-        <div class="stats-item"><p class="stats-key">Accounts created: </p><p class="stats-value"><%= userCount %></p></div>
+        <div class="stats-item"><p class="stats-key">Average WPM: </p><p class="stats-value"><%= averageWPM %></p></div>
+        
+    </div>
+    <div class="stats-row">
+        <div class="stats-item"><p class="stats-key">Words typed: </p><p class="stats-value"><%= wordsTyped %></p></div>
+        <div class="stats-item"><p class="stats-key">Letters typed: </p><p class="stats-value"><%= lettersTyped %></p></div>
     </div>
 </div>
 <%- include('partials/footer.ejs') %>
