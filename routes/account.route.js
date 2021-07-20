@@ -10,7 +10,16 @@ const fs = require('fs')
 router.use(loggedIn)
 
 router.get('/', (req, res) => {
-    res.render('account.ejs', { user: req.user, ownAccount: true })
+    User.getPastGames(req.user._id, (pastGames) => {
+        var averageWPM = 0
+        for (var game of pastGames) {
+            averageWPM += game.player.wpm
+        }
+        averageWPM /= pastGames.length
+        averageWPM = isNaN(averageWPM) ? 0 : Math.round(averageWPM) // 0 divided by 0
+        
+        res.render('account.ejs', { user: req.user, ownAccount: true, averageWPM: averageWPM, gamesPlayed: pastGames.length })
+    })
 })
 
 router.get('/settings', (req, res) => {

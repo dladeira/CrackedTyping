@@ -2,7 +2,6 @@
 <link rel="stylesheet" href="/css/account.css" type="text/css">
 <link rel="stylesheet" href="/css/accountSettings.css" type="text/css">
 
-<% var totalWPM = 0; for (var game of user.pastGames)  { totalWPM+= game.wpm } %>
 <form action="/account/updateAccount" method="POST" id="form-js" enctype="multipart/form-data">
     <input type="file" name="avatar" id="avatar-upload" accept="image/*">
     <div class="header-container">

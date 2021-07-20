@@ -23,9 +23,9 @@
     },
     "game": {
         "defaultOptions": {
-            "startDelay": 5000,
-            "gameLength": 30000,
-            "deleteDelay": 5000
+            "startDelay": 2000,
+            "gameLength": 8000,
+            "deleteDelay": 3000
         },
         "defaultText": {
             "passage": "There has been an error in finding a text so the default text has been provided",

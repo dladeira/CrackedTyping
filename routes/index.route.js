@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { User, Text } = require('../models/index.js')
+const { User, Text, Game } = require('../models/index.js')
 
 router.get('/', (req, res) => {
     res.render('landing.ejs')
@@ -13,33 +13,37 @@ router.get('/game', (req, res) => {
 router.get('/stats', (req, res) => {
     User.find({}, (err, users) => {
         Text.find({}, (err, texts) => {
-            var totalTimesTyped = 0;
-            var totalWPM = 0;
-            for (text of texts) {
-                totalTimesTyped += text.timesTyped;
-                totalWPM += text.totalWPM
-            }
-            var averageWPM = totalWPM / totalTimesTyped;
-            averageWPM = (averageWPM == "Infinity") || isNaN(averageWPM) ? "0" : Math.round(averageWPM)
-
-            var gamesPlayed = 0;
-            var dates = []
-            for (var user of users) {
-                if (!user.pastGames) return
-                for (var game of user.pastGames) {
-                    if (!dates.includes(game.date)) {
-                        gamesPlayed+=1
-                        dates.push(game.date)
+            Game.find({}, (err, games) => {
+                var textsWritten = 0 // Multiple texts can be written per game (more than 1 player)
+                var averageWPM = 0
+                for (var game of games) {
+                    for (var playerObject of game.players) {
+                        textsWritten++
+                        averageWPM+=playerObject.wpm
+                    }
+                    for (var guestObject of game.guests) {
+                        textsWritten++
+                        averageWPM+=guestObject.wpm
                     }
                 }
-            }
-    
-            res.render('statistics.ejs', {
-                totalTimesTyped: totalTimesTyped,
-                totalWPM: totalWPM,
-                averageWPM: averageWPM,
-                userCount: users.length,
-                gamesPlayed: gamesPlayed
+                averageWPM /= textsWritten
+                averageWPM = isNaN(averageWPM) ? 0 : Math.round(averageWPM) // 0 divided by 0
+
+                var wordsTyped = 0
+                var lettersTyped = 0
+                for (var text of texts) {
+                    wordsTyped += text.passage.split(' ').length * text.timesTyped
+                    lettersTyped += text.passage.split('').length * text.timesTyped
+                }
+
+                res.render('statistics.ejs', {
+                    textCount: texts.length,
+                    averageWPM: averageWPM,
+                    userCount: users.length,
+                    gamesPlayed: games.length,
+                    wordsTyped: wordsTyped,
+                    lettersTyped: lettersTyped
+                })
             })
         })
     })

@@ -65,7 +65,7 @@ function bootstrap(game) {
 
     socket.on('dataRequest', () => {
         if (gameStage < 2) { // Game in progress
-            socket.emit('dataResponse', { username: username, gameId: game.id, wpm: getWPM(), gameUniqueId: game.uniqueId, final: false })
+            socket.emit('dataResponse', { username: username, gameId: game.id, wpm: getWPM(), final: false })
         }
     })
 

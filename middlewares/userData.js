@@ -19,6 +19,7 @@ function provideUserData(req, res, next) {
         res.locals.loggedInGoogle = (req.user.googleId != undefined)
         res.locals.loggedInGithub = (req.user.githubId != undefined)
         res.locals.description = req.user.description
+        req.session._id = req.user._id;
     }
     next()
 }
