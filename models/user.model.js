@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.plugin(findOrCreate);
-userSchema.plugin(function getPastGamesPlugin(schema, options) {
+userSchema.plugin(function getPastGamesPlugin(schema) {
     schema.statics.getPastGames = function getPastGames(id, callback) {
         require ('./index.js').Game.find({}, (err, games) => {
             var pastGames = []
