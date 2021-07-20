@@ -13,11 +13,7 @@ const userSchema = new mongoose.Schema({
     description: {
         type: String,
         default: ""
-    },
-    pastGames: [{
-        wpm: Number,
-        date: Date
-    }],
+    }
 })
 
 userSchema.plugin(findOrCreate);

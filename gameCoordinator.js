@@ -1,32 +1,35 @@
-const { Text, User } = require('./models/index.js')
+const mongoose = require('mongoose')
+const { Text, User, Game } = require('./models/index.js')
 const config = require('config')
 
-var gameList = []
+var ongoingGames = []
 
 function createGame(options, callback) {
-    id = findUnusedId()
-
-    getRandomText(text => {
-        var newGame = new Game(id, options, text, () => {
-            gameList.splice(findGameById(id), 1)
+    findUnusedId().then(id => {
+        getRandomText(text => {
+            var newGame = new GameClass(id, options, text, () => {
+                ongoingGames.splice(findGameById(id), 1)
+            })
+            ongoingGames.push(newGame)
+            callback(newGame)
         })
-        gameList.push(newGame)
-        callback(newGame)
     })
 }
 
 function findGameById(id) {
-    for (var game of gameList) {
+    for (var game of ongoingGames) {
         if (game.id == id)
             return game
     }
     return undefined
 }
 
-function findUnusedId() {
-    for (var i = 1; i < 9999; i++) {
+async function findUnusedId() {
+    for (var i = 1; i < 999999999; i++) { // 1 billion possible games
         if (!findGameById(i)) {
-            return i
+            if (!await Game.findOne({id: i}).exec()) { // TODO: Find more time-efficient way of doing this
+                return i;
+            }
         }
     }
     console.log('FATAL ERROR: Ran out of ids! Using random number from 1 to 1 million and praying it hasn\'t been used before')
@@ -34,11 +37,11 @@ function findUnusedId() {
 }
 
 function findGames() {
-    return gameList
+    return ongoingGames
 }
 
 function findUnstartedGame(callback) {
-    for (var game of gameList) {
+    for (var game of ongoingGames) {
         if (game.timeSinceStart < -1000) {
             callback(game)
             return
@@ -61,9 +64,8 @@ exports.findGameById = findGameById
 exports.findUnstartedGame = findUnstartedGame
 exports.findGames = findGames
 
-class Game {
+class GameClass {
     constructor(id, options, text, gameEndCallback) {
-        this.uniqueId = Math.random() * 1000000000 // Game uniqueness check (game ids get recycled)
         this.options = options
         this.id = id
         this.gameEndCallback = gameEndCallback
@@ -91,21 +93,37 @@ class Game {
         this.text.timesTyped += this.playerCount
         this.text.totalWPM += this.totalWPM
         this.text.save() // Error handling overrated, doesn't really matter anyways
+
+        var playersGameArray = []
         for (var player of this.players) {
-            if (player.saveData && player.final) {
-                User.findOne({ username: player.username}, (err, user) => {
-                    if (err)
-                        return console.log(err)
-                    user.pastGames.push({
-                        wpm: player.wpm,
-                        date: new Date().getTime()
-                    })
-                    user.save().catch(err => { // Now this matters a bit more
-                        console.log(err)
-                    })
+            if (!player.saveData || !player.final) continue
+
+            if (player.id) {
+                return playersGameArray.push({
+                    player: player.id,
+                    wpm: player.wpm
                 })
             }
+            playersGameArray.push({ // User is a guest
+                player: {
+                    username: player.username
+                },
+                wpm: player.wpm
+            })
         }
+
+        new Game({
+            id: this.id,
+            players: playersGameArray,
+            date: new Date().getTime()
+        }).save((err) => {
+            if (err)
+                return console.log(err)
+            Game.findOne({}).populate('players.player').exec((err, game) => {
+                console.log(game)
+            })
+        })
+
         setTimeout(() => { // Don't delete game instantly (slow internet connections might finish later)
             this.gameEndCallback() // Sri Lanka internet connection lmao
         }, this.deleteDelay)

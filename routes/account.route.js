@@ -10,7 +10,7 @@ const fs = require('fs')
 router.use(loggedIn)
 
 router.get('/', (req, res) => {
-    res.render('account.ejs', { user: req.user, ownAccount: true })
+    res.render('account.ejs', { user: req.user, ownAccount: true, averageWPM: "Also broken" })
 })
 
 router.get('/settings', (req, res) => {

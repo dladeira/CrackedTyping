@@ -2,7 +2,6 @@
 <link rel="stylesheet" href="/css/account.css" type="text/css">
 <link rel="stylesheet" href="/css/accountSettings.css" type="text/css">
 
-<% var totalWPM = 0; for (var game of user.pastGames)  { totalWPM+= game.wpm } %>
 <div class="header-container">
     <div class="user-container">
         <img src="<%= user.avatar %>" class="avatar">
@@ -17,8 +16,8 @@
 </div>
 <div class="information-container">
     <div class="information-row">
-        <p id="games-played">Total games played: <%= user.pastGames.length %></p>
-        <p id="average-wpm">Average WPM: <%= (Math.round(totalWPM / user.pastGames.length) ? Math.round(totalWPM / user.pastGames.length) : "0") %></p>
+        <p id="games-played">Total games played: Broken<%# user.pastGames.length %></p>
+        <p id="average-wpm">Average WPM: <%= averageWPM %></p>
     </div>
 </div>
 <% include('partials/footer.ejs') %>

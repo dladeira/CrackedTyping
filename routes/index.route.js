@@ -25,7 +25,7 @@ router.get('/stats', (req, res) => {
             var gamesPlayed = 0;
             var dates = []
             for (var user of users) {
-                if (!user.pastGames) return
+                if (!user.pastGames) continue
                 for (var game of user.pastGames) {
                     if (!dates.includes(game.date)) {
                         gamesPlayed+=1
