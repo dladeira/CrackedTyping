@@ -27,7 +27,6 @@ io.on('connection', socket => {
                         username: user.username,
                         avatar: user.avatar,
                         wpm: 0,
-                        saveData: true,
                         final: false,
                         id: socket.handshake.session._id
                     })
@@ -36,7 +35,6 @@ io.on('connection', socket => {
                         username: socket.handshake.session.username,
                         avatar: config.get('account.defaults.avatar'),
                         wpm: 0,
-                        saveData: false,
                         final: false,
                     })
                 }

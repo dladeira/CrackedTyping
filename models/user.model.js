@@ -17,6 +17,24 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.plugin(findOrCreate);
+userSchema.plugin(function getPastGamesPlugin(schema, options) {
+    schema.statics.getPastGames = function getPastGames(id, callback) {
+        require ('./index.js').Game.find({}, (err, games) => {
+            var pastGames = []
+            for (var game of games) {
+                for (var playerObject of game.players) {
+                    if (toString(playerObject.player) == toString(id)) {
+                        var gameObject = game.toObject()
+                        gameObject.player = playerObject
+                        pastGames.push(gameObject)
+                        continue;
+                    }
+                }
+            }
+            callback(pastGames)
+        })
+    }
+})
 
 const User = mongoose.model('User', userSchema)
 

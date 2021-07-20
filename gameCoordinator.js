@@ -95,33 +95,33 @@ class GameClass {
         this.text.save() // Error handling overrated, doesn't really matter anyways
 
         var playersGameArray = []
+        var guestsGameArray = []
         for (var player of this.players) {
-            if (!player.saveData || !player.final) continue
+            if (!player.final) continue
 
             if (player.id) {
-                return playersGameArray.push({
+                playersGameArray.push({
                     player: player.id,
                     wpm: player.wpm
                 })
+            } else {
+                guestsGameArray.push({ // User is a guest
+                    guest: {
+                        username: player.username
+                    },
+                    wpm: player.wpm
+                })
             }
-            playersGameArray.push({ // User is a guest
-                player: {
-                    username: player.username
-                },
-                wpm: player.wpm
-            })
         }
-
+        console.log(guestsGameArray)
         new Game({
             id: this.id,
             players: playersGameArray,
+            guests: guestsGameArray,
             date: new Date().getTime()
         }).save((err) => {
             if (err)
                 return console.log(err)
-            Game.findOne({}).populate('players.player').exec((err, game) => {
-                console.log(game)
-            })
         })
 
         setTimeout(() => { // Don't delete game instantly (slow internet connections might finish later)

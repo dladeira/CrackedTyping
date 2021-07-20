@@ -9,6 +9,12 @@ const gameSchema = new mongoose.Schema({
         },
         wpm: Number
     }],
+    guests: [{
+        guest: {
+            username: String,
+        },
+        wpm: Number
+    }],
     date: Date
 })
 
