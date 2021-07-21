@@ -108,3 +108,6 @@ dist
 
 # User avatars
 public/data/
+
+# Certificates
+certificates/*
