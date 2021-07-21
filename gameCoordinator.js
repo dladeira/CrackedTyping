@@ -94,38 +94,37 @@ class GameClass {
         this.text.totalWPM += this.totalWPM
         this.text.save() // Error handling overrated, doesn't really matter anyways
 
-        var playersGameArray = []
-        var guestsGameArray = []
-        for (var player of this.players) {
-            if (!player.final) continue
-
-            if (player.id) {
-                playersGameArray.push({
-                    player: player.id,
-                    wpm: player.wpm
-                })
-            } else {
-                guestsGameArray.push({ // User is a guest
-                    guest: {
-                        username: player.username
-                    },
-                    wpm: player.wpm
-                })
-            }
-        }
-        console.log(guestsGameArray)
-        new Game({
-            id: this.id,
-            players: playersGameArray,
-            guests: guestsGameArray,
-            date: new Date().getTime()
-        }).save((err) => {
-            if (err)
-                return console.log(err)
-        })
-
         setTimeout(() => { // Don't delete game instantly (slow internet connections might finish later)
-            this.gameEndCallback() // Sri Lanka internet connection lmao
+            var playersGameArray = []
+            var guestsGameArray = []
+            for (var player of this.players) {
+                if (!player.final) continue
+
+                if (player.id) {
+                    playersGameArray.push({
+                        player: player.id,
+                        wpm: player.wpm
+                    })
+                } else {
+                    guestsGameArray.push({ // User is a guest
+                        guest: {
+                            username: player.username
+                        },
+                        wpm: player.wpm
+                    })
+                }
+            }
+            console.log(guestsGameArray)
+            new Game({
+                id: this.id,
+                players: playersGameArray,
+                guests: guestsGameArray,
+                date: new Date().getTime()
+            }).save((err) => {
+                if (err)
+                    return console.log(err)
+            })
+                this.gameEndCallback() // Sri Lanka internet connection lmao
         }, this.deleteDelay)
     }
 
