@@ -17,7 +17,7 @@ async function bootstrap() {
         console.log(`Express listening on port ${config.get('app.port')}`)
     } else {
         server = await https.createServer(serverOptions, app).listen(config.get('app.port'))
-        console.log(`Express listening on port ${config.get('app.httpPort')} (http) and ${config.get('app.httpsPort')} (https)`)
+        console.log(`Express listening on port ${config.get('app.port')}`)
     }
 
     await mongoose.connect(config.get('mongodb.connectionString'), config.get('mongodb.options'))
