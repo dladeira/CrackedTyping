@@ -16,7 +16,11 @@
     <body>
     <nav>
         <a href="/" class="brand"><span id="cracked">Cracked</span>Typing</a>
+
         <% if (loggedIn) { %>
+            <% if (admin) { %>
+            <a href="/control" class="logout">Control Panel</a>
+            <% } %>
             <a href="/auth/logout" class="logout">Log out</a>
         <% } else { %>
             <div class="login-container">

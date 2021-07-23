@@ -1,0 +1,11 @@
+<%- include('partials/header.ejs') %>
+<form action="/control/users" method="POST">
+<% for (var user of users) { %>
+<%= user.username %>
+<input name="<%= user.username %>" type="hidden" <% if (user.admin) { %> value="1" <% } else { %> value="0"<% } %>><input type="checkbox" onclick="this.previousSibling.value=1-this.previousSibling.value" <% if (user.admin) { %> checked <% } %>>
+<button type="submit">Save</button>
+<br>
+<% } %>
+</form>
+
+<%- include('partials/footer.ejs') %>

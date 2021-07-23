@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema({
     },
     keybinds: {
         type: Object /* newGame, mainMenu */
+    },
+    admin: {
+        type: Boolean,
+        default: ""
     }
 })
 

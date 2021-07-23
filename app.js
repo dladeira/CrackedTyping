@@ -3,7 +3,7 @@ const app = express()
 const passport = require('./passport.js')
 const cookieParser = require('cookie-parser')
 const userData = require('./middlewares/userData.js')
-const { indexRouter, authRouter, accountRouter } = require('./routes/index.js')
+const { indexRouter, authRouter, accountRouter, controlRouter } = require('./routes/index.js')
 
 // Parse data from POST requests
 app.use(express.json())
@@ -27,5 +27,6 @@ app.use(userData);
 app.use('/', indexRouter)
 app.use('/auth', authRouter)
 app.use('/account', accountRouter)
+app.use('/control', controlRouter)
 
 module.exports = app
