@@ -13,49 +13,57 @@
     the locations are: "Account" (account-card) and "Stats" (stats-card)
 -->
 
-<div class="games-container" >
-    <a class="card game-card" href="/game">
-        <div class="card-body">
-            <div class="card-title">Join Game</div>
-            <div class="card-description">Continue the typing grind</div>
-        </div>
-    </a>
-</div>
-<div class="account-container">
-    <a class="card account-card"<% if (loggedIn) { %> href="/account"<% } %>>
-        <% if (!loggedIn) { %>
-            <div class="locked-container">
-                <p class="locked-text">
-                    Login to access this option
-                </p>
+<div class="gamemode-row">
+    <div class="gamemode-column margin-right" >
+        <a class="card game-card" href="/game">
+            <div class="card-body">
+                <h1 class="card-title">Join Game</h1>
+                <p class="card-description">Continue the typing grind</p>
             </div>
-        <% } %>
-        <div class="card-body">
-            <div class="card-title">Account</div>
-            <div class="card-description">Go to your profile</div>
+        </a>
+    </div>
+    <div class="gamemode-column margin-left">
+        <a class="card account-card margin-bottom<% if (!loggedIn) { %> locked-card"<% } else { %>" href="/account"<% } %>>
+            <% if (!loggedIn) { %>
+                <div class="locked-container">
+                    <p class="locked-text">
+                        Login to access this option
+                    </p>
+                </div>
+            <% } %>
+            <div class="card-body">
+                <h1 class="card-title">Account</h1>
+                <p class="card-description">Go to your profile</p>
+            </div>
+        </a>
+        <div class="gamemode-row margin-top">
+            <a class="card stats-card margin-right" href="/stats">
+                <div class="card-body">
+                    <h1 class="card-title">Stats</h1>
+                    <p class="card-description">Explore global statistics</p>
+                </div>
+            </a>
+            <a class="card stats-card margin-left" href="/keybinds">
+                <div class="card-body">
+                    <h1 class="card-title">Keybinds</h1>
+                    <p class="card-description">Easy access around the website</p>
+                </div>
+            </a>
         </div>
-    </a>
-    <a class="card stats-card" href="/stats">
-        <div class="card-body">
-            <div class="card-title">Stats</div>
-            <div class="card-description">Explore global statistics</div>
-        </div>
-    </a>
-
-    <!--
-        <a class="card stats-card unreleased-card">
-        <div class="locked-container">
-            <p class="locked-text">Coming soon</p>
-        </div>
-        <div class="card-body">
-            <div class="card-title">Stats</div>
-            <div class="card-description">Explore global statistics</div>
-        </div>
-    </a>
-    -->
+    
+        <!--
+            <a class="card stats-card unreleased-card">
+            <div class="locked-container">
+                <p class="locked-text">Coming soon</p>
+            </div>
+            <div class="card-body">
+                <div class="card-title">Stats</div>
+                <div class="card-description">Explore global statistics</div>
+            </div>
+        </a>
+        -->
+    </div>
 </div>
-
-
 
 </div>
 <%- include('partials/footer.ejs') %>
