@@ -3,7 +3,7 @@ var descriptionInput = document.getElementsByClassName('description-input')[0]
 var avatarInput = document.getElementById('avatar-upload')
 var avatarImage = document.getElementById('js-avatar')
 
-var form = document.getElementById('form-js')
+var form = document.getElementById('account-form')
 var socket = io()
 var usernameExists = false
 

@@ -1,0 +1,72 @@
+.keybind-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+
+    height: 100%;
+}
+
+.keybind {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 20%;
+}
+
+.keybind-name {
+    font-size: 1.2rem;
+    color: white;
+
+    -webkit-user-drag: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.keybind-input {
+    width: 40%;
+
+    padding: 5px;
+
+    border: 1px solid var(--color);
+    border-radius: 5px;
+
+    background-color: transparent;
+    color: white;
+}
+
+.keybind-input:hover {
+    cursor: pointer;
+}
+
+.keybind-input:focus {
+    outline: none;
+    border: 1px solid var(--orange);
+}
+
+#save-container {
+    display: flex;
+    justify-content: center;
+
+    width: 100%;
+
+    margin-top: auto;
+}
+
+#save-btn {
+    padding: 5px 25px;
+
+    border: 1px solid var(--color);
+    border-radius: 5px;
+
+    font-size: 1.4rem;
+    background-color: transparent;
+    color: white;
+}
+
+#save-btn:hover {
+    cursor: pointer;
+}

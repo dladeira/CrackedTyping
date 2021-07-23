@@ -91,3 +91,7 @@ label:hover {
 #save-btn:hover, #delete-btn:hover {
     cursor: pointer;
 }
+
+.control-row {
+    margin-top: auto;
+}

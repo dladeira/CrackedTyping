@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const loggedIn = require('../middlewares/loggedIn.js')
 const { User, Text, Game } = require('../models/index.js')
 
 router.get('/', (req, res) => {
@@ -47,6 +48,23 @@ router.get('/stats', (req, res) => {
             })
         })
     })
+})
+
+router.get('/keybinds', loggedIn, (req, res) => {
+    res.render('keybinds.ejs')
+})
+
+router.post('/keybinds', loggedIn, (req, res) => {
+    req.user.keybinds.newGame = req.body.newGame;
+    req.user.keybinds.mainMenu = req.body.mainMenu;
+    req.user.markModified('keybinds')
+    req.user.save().then(() => {
+        res.redirect('/keybinds')
+    }).catch((err) => {
+        console.log(err)
+        res.send('An error has occured, please try again later')
+    })
+    
 })
 
 /*

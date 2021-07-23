@@ -11,15 +11,24 @@ function provideUserData(req, res, next) {
     req.session.username = req.user ? req.user.username : req.session.guestName
     req.session.loggedIn = req.user ? true : false
 
+    res.locals.loggedIn = req.session.loggedIn
     res.locals.username = req.session.username
     res.locals.description = "This is a guest account" // Description gets override if logged in
-    res.locals.loggedIn = req.session.loggedIn
+
+    res.cookie('newGame', escape('Alt+n'))
+    res.cookie('mainMenu', escape('Alt+m'))
 
     if (req.user) { // Logged in
         res.locals.loggedInGoogle = (req.user.googleId != undefined)
         res.locals.loggedInGithub = (req.user.githubId != undefined)
         res.locals.description = req.user.description
         req.session._id = req.user._id;
+
+        if (req.user.keybinds) { // Override default keybinds with custom keybinds
+            for (var keybind in req.user.keybinds) {
+                res.cookie(keybind, escape(req.user.keybinds[keybind]))
+            }
+        }
     }
     next()
 }
