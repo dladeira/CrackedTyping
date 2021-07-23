@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="/css/account.css" type="text/css">
 <link rel="stylesheet" href="/css/accountSettings.css" type="text/css">
 
-<form action="/account/updateAccount" method="POST" id="form-js" enctype="multipart/form-data">
+<form action="/account/updateAccount" method="POST" id="account-form" enctype="multipart/form-data">
     <input type="file" name="avatar" id="avatar-upload" accept="image/*">
     <div class="header-container">
         <div class="user-container">
@@ -46,14 +46,13 @@
                     <% } %></p>
             <% } %>
         </div>
-        <div class="information-row">
-            <button id="save-btn" type="submit">Save</button>
-            <button id="delete-btn" type="submit" form="delete-account">Delete</button>
-        </div>
     </div>
 </form>
-<form id="delete-account" method="POST" action="/account/delete"></form>
-
+<form id="delete-form" method="POST" action="/account/delete"></form>
+<div class="information-row control-row">
+    <button id="save-btn" type="submit" form="account-form">Save profile</button>
+    <button id="delete-btn" type="submit" form="delete-form">Delete account</button>
+</div>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/accountSettings.js"></script>
 <% include('partials/footer.ejs') %>
