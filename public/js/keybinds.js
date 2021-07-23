@@ -1,5 +1,5 @@
-var newGame = document.getElementById('js-newGame')
-var mainMenu = document.getElementById('js-mainMenu')
+var newGame = document.getElementById('keybind-newGame')
+var mainMenu = document.getElementById('keybind-mainMenu')
 
 newGame.value = getCookie('newGame')
 mainMenu.value = getCookie('mainMenu')

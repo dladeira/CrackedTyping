@@ -1,8 +1,23 @@
 <%- include('partials/header.ejs') %>
-<form id="js-form" action="/keybinds" method="POST">
-    New Game: <input id="js-newGame" name="newGame" type="text" readonly>
-    Main Menu: <input id="js-mainMenu" name="mainMenu" type="text" readonly>
-    <button type="submit">Save</button>
+<link rel="stylesheet" href="/css/keybinds.css" type="text/css">
+<form id="keybind-form" action="/keybinds" method="POST">
+    <div class="keybind-container">
+        <div class="keybind">
+            <p class="keybind-name">
+                New Game:
+            </p>
+            <input class="keybind-input" id="keybind-newGame" name="newGame" type="text" readonly>
+        </div>
+        <div class="keybind">
+            <p class="keybind-name">
+                Main Menu:
+            </p>
+            <input class="keybind-input" id="keybind-mainMenu" name="mainMenu" type="text" readonly>
+        </div>
+    </div>
 </form>
+<div id="save-container">
+    <button type="submit" id="save-btn" form="keybind-form">Save</button>
+</div>
 <%- include('partials/footer.ejs') %>
 <script src="/js/keybinds.js"></script>

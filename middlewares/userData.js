@@ -24,9 +24,10 @@ function provideUserData(req, res, next) {
         res.locals.description = req.user.description
         req.session._id = req.user._id;
 
-        if (req.user.keybinds) {
-            res.cookie('newGame', req.user.keybinds.newGame ? escape(req.user.keybinds.newGame) : escape('Alt+n'))
-            res.cookie('mainMenu', req.user.keybinds.mainMenu ? escape(req.user.keybinds.mainMenu) : escape('Alt+m'))
+        if (req.user.keybinds) { // Override default keybinds with custom keybinds
+            for (var keybind in req.user.keybinds) {
+                res.cookie(keybind, escape(req.user.keybinds[keybind]))
+            }
         }
     }
     next()
