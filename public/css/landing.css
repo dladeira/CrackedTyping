@@ -1,24 +1,27 @@
 .card {
+    display: block;
     position: relative;
+
     height: 100%;
     width: 100%;
+
     border: 2px solid var(--orange);
-    background: #000000;
-    display: block;
-
-    font-family: 'Open Sans', sans-serif;
-    color: var(--orange);
+    
     text-decoration: none;
+    font-family: 'Open Sans', sans-serif;
+    background: #000000;
+    color: var(--orange);
 
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 .card::before {
+    position: absolute;
     height: 100%;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.2);
+
     content: " ";
-    position: absolute;
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 .card:not(.locked-card):hover::before {
@@ -38,12 +41,12 @@
     color: white;
 }
 
-
 .gamemode-row {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 
     height: 100%;
     width: 100%;
@@ -54,6 +57,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 
     height: 100%;
     width: 100%;
@@ -82,16 +86,16 @@
 }
 
 .locked-container {
-    background-color:rgba(0, 0, 0, 0.8);
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
+
     height: 100%;
     width: 100%;
     z-index: 2;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color:rgba(0, 0, 0, 0.8);
 
     -webkit-user-select: none; /* Safari */        
     -moz-user-select: none; /* Firefox */
@@ -100,16 +104,15 @@
 }
 
 .locked-text {
-    max-width: 60%;
     padding: 15px;
-
-    text-align: center;
-
-    color: white;
-    background-color: black;
 
     border: 1px solid white;
     border-radius: 5px;
+
+    font-size: 1.5rem;
+    text-align: center;
+    background-color: black;
+    color: white;
 }
 
 .locked-text:hover {

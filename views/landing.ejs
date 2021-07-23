@@ -23,30 +23,32 @@
         </a>
     </div>
     <div class="gamemode-column margin-left">
-        <a class="card account-card margin-bottom<% if (!loggedIn) { %> locked-card"<% } else { %>" href="/account"<% } %>>
+        <div class="gamemode-row margin-bottom">
             <% if (!loggedIn) { %>
                 <div class="locked-container">
                     <p class="locked-text">
-                        Login to access this option
+                        Login to access these options
                     </p>
                 </div>
             <% } %>
-            <div class="card-body">
-                <h1 class="card-title">Account</h1>
-                <p class="card-description">Go to your profile</p>
-            </div>
-        </a>
+            <a class="card account-card margin-right<% if (!loggedIn) { %> locked-card"<% } else { %>" href="/account"<% } %>>
+                <div class="card-body">
+                    <h1 class="card-title">Account</h1>
+                    <p class="card-description">Go to your profile</p>
+                </div>
+            </a>
+            <a class="card stats-card margin-left<% if (!loggedIn) { %> locked-card"<% } else { %>" href="/keybinds"<% } %>>
+                <div class="card-body">
+                    <h1 class="card-title">Keybinds</h1>
+                    <p class="card-description">Configure website shortcuts</p>
+                </div>
+            </a>
+        </div>
         <div class="gamemode-row margin-top">
-            <a class="card stats-card margin-right" href="/stats">
+            <a class="card stats-card" href="/stats">
                 <div class="card-body">
                     <h1 class="card-title">Stats</h1>
                     <p class="card-description">Explore global statistics</p>
-                </div>
-            </a>
-            <a class="card stats-card margin-left" href="/keybinds">
-                <div class="card-body">
-                    <h1 class="card-title">Keybinds</h1>
-                    <p class="card-description">Easy access around the website</p>
                 </div>
             </a>
         </div>

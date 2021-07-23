@@ -1,0 +1,8 @@
+<%- include('partials/header.ejs') %>
+<form id="js-form" action="/keybinds" method="POST">
+    New Game: <input id="js-newGame" name="newGame" type="text" readonly>
+    Main Menu: <input id="js-mainMenu" name="mainMenu" type="text" readonly>
+    <button type="submit">Save</button>
+</form>
+<%- include('partials/footer.ejs') %>
+<script src="/js/keybinds.js"></script>

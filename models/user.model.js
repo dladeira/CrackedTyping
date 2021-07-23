@@ -13,6 +13,9 @@ const userSchema = new mongoose.Schema({
     description: {
         type: String,
         default: ""
+    },
+    keybinds: {
+        type: Object /* newGame, mainMenu */
     }
 })
 
