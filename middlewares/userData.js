@@ -8,6 +8,7 @@ function provideUserData(req, res, next) {
     if (!req.session.guestName)
         req.session.guestName = `Guest ${Math.floor(Math.random() * 10000)}`
 
+    // Used in socketIO
     req.session.username = req.user ? req.user.username : req.session.guestName
     req.session.loggedIn = req.user ? true : false
 
@@ -22,7 +23,9 @@ function provideUserData(req, res, next) {
         res.locals.loggedInGoogle = (req.user.googleId != undefined)
         res.locals.loggedInGithub = (req.user.githubId != undefined)
         res.locals.description = req.user.description
-        req.session._id = req.user._id;
+        res.locals.admin = req.user.admin
+
+        req.session._id = req.user._id // Used in socketIO
 
         if (req.user.keybinds) { // Override default keybinds with custom keybinds
             for (var keybind in req.user.keybinds) {

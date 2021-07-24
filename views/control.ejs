@@ -1,0 +1,36 @@
+<%- include('partials/header.ejs') %>
+<link rel="stylesheet" href="/css/landing.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap">
+
+<!--
+    There are two containers over here, left and right.
+
+    -- Left is "games-container" and will have gamemodes,
+    currently it is only "Join Game" (game-card)
+
+    -- Right is "account-container" since the locations are
+    personalized to you and you need to be logged in,
+    the locations are: "Account" (account-card) and "Stats" (stats-card)
+-->
+
+<div class="gamemode-row">
+    <div class="gamemode-column margin-right" >
+        <a class="card" href="/control/users">
+            <div class="card-body">
+                <h1 class="card-title">List users</h1>
+                <p class="card-description">Add or remove user's admin</p>
+            </div>
+        </a>
+    </div>
+    <div class="gamemode-column margin-left">
+            <a class="card account-card" href="/control/texts">
+                <div class="card-body">
+                    <h1 class="card-title">Text managment</h1>
+                    <p class="card-description">Created/Edit/Delete texts</p>
+                </div>
+            </a>
+    </div>
+</div>
+
+</div>
+<%- include('partials/footer.ejs') %>
