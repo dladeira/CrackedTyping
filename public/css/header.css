@@ -162,3 +162,13 @@ nav {
     flex-direction: column;
     align-self: center;
 }
+
+.control {
+    border: 1px solid red;
+    border-radius: 10px;
+    font-size: 1.6rem;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: white;
+    margin-right: 5%;
+}
