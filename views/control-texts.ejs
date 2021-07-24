@@ -1,16 +1,24 @@
 <%- include('partials/header.ejs') %>
-<form action="/control/texts" method="POST">
-<% for (var text of texts) { %>
-<input name="<%= text._id %>" type="textarea" value="<%= text.passage %>" style="width: 80%; height: 30px;">
-Delete: <input name="<%= text._id %>-deletePassage" type="checkbox">
-<br>
-<% } %>
-<button type="submit">Save</button>
+<link rel="stylesheet" href="/css/control-texts.css" type="text/css">
+<form action="/control/texts" method="POST" id="text-form">
+    <div class="text-container">
+        <% for (var text of texts) { %>
+            <div class="text">
+                <textarea name="<%= text._id %>"><%= text.passage %></textarea>
+                <div class="delete-text">
+                    Delete: <input name="<%= text._id %>-deletePassage" type="checkbox">
+                </div>
+            </div>
+        <% } %>
+    </div>
+    <button type="submit" id="save-btn">Save</button>
 </form>
 
-<form action="/control/texts/new" method="POST">
-    <input name="passage" type="textarea" style="width: 100%; height: 40px;">
-    <button type="submit">Create new passage</button>
+<form action="/control/texts/new" method="POST" id="create-form">
+    <textarea name="passage">
+
+    </textarea>
+    <button type="submit" id="create-btn">Create<br>passage</button>
 </form>
 
 <%- include('partials/footer.ejs') %>

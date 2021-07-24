@@ -1,0 +1,103 @@
+textarea {
+    border: 1px solid var(--orange);
+    border-radius: 5px;
+
+    background-color: transparent;
+    color: white;
+
+    resize: none;
+
+    padding: 8px;
+}
+
+textarea:focus {
+    outline: none;
+}
+
+#text-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 80%;
+}
+
+.text-container {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+
+    max-height: 85%;
+    width: 100%;
+
+    flex-wrap: wrap;
+    overflow-y: scroll;
+}
+
+.text {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    height: 80px;
+    width: 100%;
+
+    margin: 10px 0;
+
+    color: white;
+}
+
+.text textarea {
+    height: 100%;
+    width: 85%;
+}
+
+.delete-text {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 10%;
+}
+
+#save-btn {
+    margin-top: auto;
+    margin-bottom: 5vh;
+    padding: 5px 10px;
+
+    border: 1px solid red;
+    border-radius: 10px;
+
+    font-size: 1.2rem;
+    background-color: transparent;
+    color: white;
+}
+
+#save-btn:hover {
+    cursor: pointer;
+}
+
+#create-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#create-form textarea {
+    height: 100%;
+    width: 80%;
+}
+
+#create-btn {
+
+    padding: 5px 10px;
+
+    border: 1px solid red;
+    border-radius: 7px;
+
+    font-size: 1.2rem;
+    background-color: transparent;
+    color: white;
+}
