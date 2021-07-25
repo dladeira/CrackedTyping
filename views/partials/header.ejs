@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <script data-ad-client="ca-pub-8893005154186798" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,21 +17,38 @@
     </head>
     <body>
     <nav>
-        <a href="/" class="brand"><span id="cracked">Cracked</span>Typing</a>
+        <div class="brand-container">
+            <a href="/" class="brand"><span class="brand-cracked">Cracked</span>Typing</a>
+        </div>
 
         <% if (loggedIn) { %>
+
             <% if (admin) { %>
-            <a href="/control" class="control">Control Panel</a>
+                <div class="control-container">
+                    <a href="/control" class="btn control-btn">Control</a>
+                </div>
             <% } %>
-            <a href="/auth/logout" class="logout">Log out</a>
+
+            <div class="auth-container">
+                <div class="nav-account">
+                    <div class="nav-account-card">
+                        <img src="<%= avatar %>" class="avatar-sm">
+                        <p id="auth-username"><%= username %></p>
+                    </div>
+                    <div class="nav-account-info">
+                        <a class="account-tab account-tab-logout" href="/auth/logout">Log out</a>
+                    </div>
+                </div>
+            </div>
+
         <% } else { %>
-            <div class="login-container">
-                <span id="login-text">Log in:</span>
-                <a href="/auth/google/login" class="login-btn login-google"><img src="/img/google-logo.svg" alt="G" class="logo logo-google">Google</a>
-                <a href="/auth/github/login" class="login-btn login-github"><img src="/img/github-logo.svg" alt="G" class="logo logo-github">Github</a>
+            <div class="auth-container">
+                <span id="auth-login-text">Log in:</span>
+                <div id="auth-strategies">
+                    <a href="/auth/google/login" class="btn login-btn login-google"><img src="/img/google-logo.svg" alt="G" class="logo">Google</a>
+                <a href="/auth/github/login" class="btn login-btn login-github"><img src="/img/github-logo.svg" alt="G" class="logo">Github</a>
+                </div>
             </div>
         <% } %>
     </nav>
-
-    <h2 id="current-login">Currently logged in as: <%= username %></h2>
     <div class="container">

@@ -118,7 +118,7 @@
     outline: 0 ;
     border: solid white 2px;
     background-color: black;
-    color: var(--color);
+    color: var(--green);
     padding: 10px;
 }
 
@@ -128,5 +128,5 @@
 }
 
 #play-again:hover {
-    color: var(--color);
+    color: var(--green);
 }

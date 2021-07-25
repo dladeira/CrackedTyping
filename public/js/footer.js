@@ -22,3 +22,14 @@ document.onkeydown = (event) => {
         }
     }
 }
+
+var accountNavbar = document.getElementsByClassName('nav-account-card')[0]
+var accountInfo = document.getElementsByClassName('nav-account-info')[0]
+
+accountNavbar.onclick = () => {
+    if (accountInfo.style.opacity == 1) {
+        accountInfo.style.opacity = 0
+    } else {
+        accountInfo.style.opacity = 1
+    }
+}
