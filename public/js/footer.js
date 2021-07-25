@@ -14,8 +14,6 @@ function getKeybind(event) {
 document.onkeydown = (event) => {
     var keybind = getKeybind(event)
     if (!keybind) return; // Control, Alt, or Shift
-    console.log(getCookie('newGame'))
-    console.log(keybind)
     if (keybind == getCookie('newGame')) {
         window.location.pathname = '/game'
     } else if (keybind == getCookie('mainMenu')) {
