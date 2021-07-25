@@ -14,6 +14,15 @@ var secondsElapsed = 0 // Seconds of user being able to type
 // (milliseconds)
 var intervalDelay = 100
 
+String.prototype.replaceLast = function (what, replacement) {
+    if (this.lastIndexOf(what) == this.length - 1) {
+        var pcs = this.split(what);
+        var lastPc = pcs.pop();
+        return pcs.join(what) + replacement + lastPc;
+    }
+    return this;
+};
+
 /*
  gameStage variable acts independently of
  the gameTimer as the user can finish early
@@ -91,9 +100,14 @@ function bootstrap(game) {
     */
     function updatePassage() { // Each word has it's own <span>
         var passageHTML = ''
+        var letters = '';
         var correctLettersLeft = getCorrectLetterCount()
         var incorrectLettersLeft = getIncorrectLetterCount()
+
+        var cursorLetters = ''
+        var postCursorPlacementLetters = ''
         var cursorPlaced = false
+
         for (var letter of Array.from(game.text.passage)) {
             var classToAdd = ''
             if (correctLettersLeft-- > 0) {
@@ -101,12 +115,24 @@ function bootstrap(game) {
             } else if (incorrectLettersLeft-- > 0) {
                 var classToAdd = 'incorrectLetter'
             }
-            if (classToAdd != 'correctLetter' && !cursorPlaced) {
-                passageHTML+= `<span id='cursor'>|</span>`
-                cursorPlaced = true
+            if (classToAdd != 'correctLetter') {
+                if (!cursorPlaced) {
+                    cursorLetters = letters
+                    cursorPlaced = true
+                    postCursorPlacementLetters += letter
+                } else {
+                    postCursorPlacementLetters += letter
+                }
             }
             passageHTML += `<span class='${classToAdd}'>${letter}</span>`
+            letters+= letter
         }
+
+        if (cursorLetters == '' && getCorrectLetterCount() != 0) { // Game ended
+            cursorLetters = letters
+        }
+
+        passageHTML+= `<span id='cursor-container'>${cursorLetters}<span id='cursor'>|</span>${postCursorPlacementLetters}</span>`
         passageElement.innerHTML = passageHTML
     }
 

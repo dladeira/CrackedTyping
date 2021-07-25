@@ -16,10 +16,6 @@
     color: var(--orange);
 }
 
-#cursor {
-    color: white;
-}
-
 .contentWrapper {
     height: 100%;
     width: 100%;
@@ -30,11 +26,40 @@
 }
 
 #game-passage {
-    background-color: black;
-    border: 2px solid white;
+    position: relative;
+
     padding: 2%;
     margin: 2% 0;
+    
+    border: 2px solid white;
+
+
+    font-size: 1.4rem;
+    background-color: black;
     color: rgb(167, 156, 156);
+
+    line-height: 1.8rem;
+}
+
+#cursor-container {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    min-width: 1px;
+    min-height: 31px;
+
+    margin: 2%;
+
+    font-size: 1.4rem;
+    color: transparent;
+}
+
+#cursor {
+    position: absolute;
+
+    border-left: 1px solid white;
 }
 
 #info-container {

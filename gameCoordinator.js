@@ -114,7 +114,6 @@ class GameClass {
                     })
                 }
             }
-            console.log(guestsGameArray)
             new Game({
                 id: this.id,
                 players: playersGameArray,
