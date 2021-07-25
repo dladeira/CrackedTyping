@@ -136,7 +136,7 @@ function bootstrap(game) {
 
     function finishGame() {
         if (gameStage == 2) return // Prevent game from finishing more than once
-        setGameStatus('Game ended! <a id="play-again" href="/game">Continue the grind? (Alt+N)</a>', "Finished!", 2)
+        setGameStatus(`Game ended! <a id="play-again" href="/game">Continue the grind? (${getCookie('newGame')})</a>`, "Finished!", 2)
         socket.emit('dataResponse', { username: username, gameId: game.id, wpm: getWPM(), gameUniqueId: game.uniqueId, final: true })
     }
 
