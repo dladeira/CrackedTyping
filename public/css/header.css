@@ -4,8 +4,6 @@
 
     --green: #17e22f;
     --orange: #f8b600;
-    --hilighted-orange: #ffc62a;
-    --darker-orange: #d89400;
 
     --background: rgb(79, 94, 109);
     --darker-background: rgb(36, 43, 49);
@@ -14,6 +12,10 @@
     --primary-background: rgb(27, 33, 38);
     --secondary-background: rgb(14, 18, 22);
     --nav-background: rgb(14, 18, 22);
+
+    --nav-account-1: rgb(45, 57, 68);
+    --nav-account-2: rgb(37, 47, 56);
+    --nav-account-3: rgb(31, 40, 49);
 
     font-family: 'Open Sans', sans-serif;
 
@@ -127,7 +129,7 @@ nav > * {
     border-radius: 10px;
 
     font-size: 1.4rem;
-    background-color: var(--darker-orange);
+    background-color: var(--nav-account-1);
     color: white;
 
     z-index: 2;
@@ -150,7 +152,7 @@ nav > * {
 
     border-radius: 10px;
 
-    background-color: var(--orange);
+    background-color: var(--nav-account-2);
 
     opacity: 0;
 }
@@ -167,17 +169,17 @@ nav > * {
 
     text-decoration: none;
     font-weight: 900;
-    background-color: var(--hilighted-orange);
+    background-color: var(--nav-account-2);
     color: white;
 }
 
 .account-tab:hover {
     cursor: pointer;
-    background-color: var(--orange);
+    background-color: var(--nav-account-3);
 }
 
 .account-tab:first-child {
-    padding-top: 20px;
+    padding-top: 15px;
 
     border-top: none;
 }
@@ -261,8 +263,9 @@ nav > * {
 
     margin: 0 auto;
     padding: 30px;
-    
-    height: 625px;
+    padding-top: 40px;
+
+    height: 550px;
     max-height: 90%;
     min-height: 60%;
     width: 1200px;
