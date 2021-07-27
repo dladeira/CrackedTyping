@@ -24,6 +24,7 @@ function provideUserData(req, res, next) {
         res.locals.loggedInGithub = (req.user.githubId != undefined)
         res.locals.description = req.user.description
         res.locals.admin = req.user.admin
+        res.locals.avatar = req.user.avatar
 
         req.session._id = req.user._id // Used in socketIO
 

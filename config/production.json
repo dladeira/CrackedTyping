@@ -9,7 +9,7 @@
     "game": {
         "defaultOptions": {
             "startDelay": 5000,
-            "gameLength": 30000,
+            "gameLength": 60000,
             "deleteDelay": 5000
         }
     }

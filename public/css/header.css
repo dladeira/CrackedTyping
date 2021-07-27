@@ -2,101 +2,233 @@
     margin: 0;
     padding: 0;
 
-    --color: #39FF14;
-    --background: rgb(53, 64, 75);
-    --darker-background: rgb(16, 21, 26);
-    --orange: #ffb900;
-    --darkest-background: rgb(7, 10, 12);
+    --green: #17e22f;
+    --orange: #f8b600;
+
+    --background: rgb(49, 61, 73);
+    --darker-background: rgb(27, 36, 46);
+    --darkest-background: rgb(5, 7, 9);
+
+    --primary-background: rgb(20, 26, 29);
+    --secondary-background: rgb(9, 11, 14);
+    --nav-background: rgb(14, 18, 22);
+
+    --nav-account-1: rgb(45, 57, 68);
+    --nav-account-2: rgb(37, 47, 56);
+    --nav-account-3: rgb(31, 40, 49);
 
     font-family: 'Open Sans', sans-serif;
-}
 
-.avatar {
-    height: 70px;
-    width: 70px;
-    border-radius: 50%;
-}
-
-.avatar-sm {
-    height: 35px;
-    width: 35px;
-    border-radius: 50%;
+    box-sizing: border-box;
 }
 
 html {
+    height: 100%;
+
     font-size: 16px;
 }
 
-html, body {
+body {
     height: 100%;
     display: flex;
     flex-direction: column;
 
-    background-color: var(--background);
+    background-image: linear-gradient(to top right, var(--darker-background), var(--background));
     color: rgb(189, 189, 189);
 }
 
-nav {
-    background-color: var(--darker-background);
-    width: 100%;
-    overflow: hidden;
+/*
+  Navbar
+*/
 
+nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    height: 60px;
+    width: 100%;
+
+    border-bottom: 2px solid var(--green);
+
+    background-color: var(--nav-background);
+}
+
+nav > * {
+    height: 100%;
+    width: 360px;
+}
+
+.brand-container, .control-container, .auth-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.brand-container {
+    justify-content: left;
 }
 
 .brand {
-    color: white;
+    padding: 10px 10px;
     text-decoration: none;
-    height: 50px;
-    font-size: 30px;
-    text-align: center;
-    padding: 5px;
     letter-spacing: 1px;
+    font-size: 30px;
+    color: white;
 }
 
-.brand:active {
-    background-color: var(--background)
-}
-
-#cracked {
-    background-color: #2dd410;
-    font-size: inherit;
-    border-radius: 3px;
+.brand-cracked {
     margin-right: 3px;
+
+    border-radius: 3px;
+
+    background-color: #2dd410;
     letter-spacing: 2px;
 }
 
-.login-container {
-    display: flex;
-    align-items: center;
+.control-btn {
+    padding: 5px 10px;
+
+    border: 1px solid red;
+    border-radius: 10px;
+
+    font-size: 1.6rem;
+    text-decoration: none;
+    color: white;
 }
 
-#login-text {
+/*
+  Auth
+*/
+
+.auth-container {
+    justify-content: space-between;
+}
+
+/*
+  Auth (Logged in)
+*/
+
+.nav-account {
+    width: 150px;
+
+    margin-right: 20px;
+    margin-left: auto;
+}
+
+.nav-account-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+    padding: 5px 10px;
+    
+    border-radius: 10px;
+
+    font-size: 1.4rem;
+    background-color: var(--nav-account-1);
+    color: white;
+
+    z-index: 2;
+}
+
+.nav-account-card:hover {
+    cursor: pointer;
+}
+
+.nav-account-info {
+    position: absolute;
+
+    width: 150px;
+
+    margin-right: 20px;
+    margin-left: auto;
+    padding-top: 15px;
+
+    top: 30px;
+
+    border-radius: 10px;
+
+    background-color: var(--nav-account-2);
+
+    opacity: 0;
+}
+
+.account-tab {
+    display: block;
+
+    width: 100%;
+
+    padding: 6px 12px;
+
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+
+    text-decoration: none;
     font-weight: 900;
-    font-size: 20px;
-    margin-right: 10px;
+    background-color: var(--nav-account-2);
+    color: white;
+}
+
+.account-tab:hover {
+    cursor: pointer;
+    background-color: var(--nav-account-3);
+}
+
+.account-tab:first-child {
+    padding-top: 15px;
+
+    border-top: none;
+}
+
+.account-tab:last-child {
+    border-bottom: none;
+    border-radius: 0 0 10px 10px;
+}
+
+.nav-account-card, .account-tab {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/*
+  Auth (Logged out)
+*/
+
+#auth-login-text {
+    font-weight: 900;
+    font-size: 1.2rem;
+}
+
+#auth-strategies {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+
+    width: 80%;
 }
 
 .login-btn {
-    margin: 0 10px;
-    padding: 10px;
-    height: 18px;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    font-size: 20px;
-
     display: flex;
     align-items: center;
 
+    height: 40px;
+
+    padding: 10px;
+    
     border: 2px solid white;
     border-radius: 10px;
-}
 
-.login-btn:hover {
-    color: var(--color);
+    font-size: 20px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
 }
 
 .login-google {
@@ -111,65 +243,63 @@ nav {
     max-height: 100%;
 }
 
-/* Fine-tuning individual logos */
-.logo-google {
+.login-google .logo {
     padding-right: 0.7vw;
     padding-top: 1px;
 }
 
-.logo-github {
+.login-github .logo {
     padding-right: 0.7vw;
 }
 
-.logout {
-    text-decoration: none;
-    color: white;
-    height: 50px;
-    font-size: 30px;
-    text-align: center;
-    padding: 5px 10px;
-}
-
-.logout:hover {
-    color: var(--color);
-}
-
-.logout:active {
-    color: var(--color);
-    background-color: var(--background)
-}
-
-#current-login {
-    width: 100%;
-    color: var(--color);
-    text-align: center;
-    border-bottom: solid 3px var(--color);
-    font-size: 20px;
-    background-color: var(--darkest-background);
-}
+/*
+  Body
+*/
 
 .container {
-    padding: 2%;
-    padding-top: 3%;
-    margin: 0 auto;
-    width: 60%;
-    background-color: var(--darker-background);
-    color: var(--color);
-
-    font-size: 1.3vw;
-    min-height: 50%;
-
     display: flex;
     flex-direction: column;
     align-self: center;
+
+    margin: 0 auto;
+    padding: 40px;
+    padding-top: 50px;
+
+    height: 600px;
+    max-height: 90%;
+    min-height: 60%;
+    width: 1300px;
+    max-width: 90%;
+
+    border: 5px solid var(--secondary-background);
+    border-top: none;
+
+    font-size: 1rem;
+    background-color: var(--primary-background);
+    color: var(--green);
 }
 
-.control {
-    border: 1px solid red;
-    border-radius: 10px;
-    font-size: 1.6rem;
-    padding: 5px 10px;
-    text-decoration: none;
-    color: white;
-    margin-right: 5%;
+/*
+  Global Utility Classes
+*/
+
+.avatar, .avatar-sm {
+    border: 3px solid red;
+    border-radius: 50%;
+}
+
+.avatar {
+    height: 70px;
+    width: 70px;
+}
+
+.avatar-sm {
+    height: 35px;
+    width: 35px;
+
+    border-width: 1.5px;
+}
+
+.btn:hover {
+    background-color: var(--darkest-background);
 }
