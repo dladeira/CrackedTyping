@@ -11,6 +11,10 @@ router.get('/game', (req, res) => {
     res.render('game.ejs')
 })
 
+router.get('/infinite', (req, res) => {
+    res.render('infinite.ejs')
+})
+
 router.get('/stats', (req, res) => {
     User.find({}, (err, users) => {
         Text.find({}, (err, texts) => {
