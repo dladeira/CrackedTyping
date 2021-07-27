@@ -126,7 +126,7 @@ nav > * {
 
     padding: 5px 10px;
     
-    border-radius: 10px;
+    border-radius: 5px;
 
     font-size: 1.4rem;
     background-color: var(--nav-account-1);
@@ -150,7 +150,7 @@ nav > * {
 
     top: 30px;
 
-    border-radius: 10px;
+    border-radius: 5px;
 
     background-color: var(--nav-account-2);
 
