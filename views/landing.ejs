@@ -15,63 +15,42 @@
 
 <div class="gamemode-row">
     <div class="gamemode-column margin-right" >
-        <a class="card game-card margin-bottom" href="/game">
+        <a class="card game-card" href="/game">
             <div class="card-body">
                 <h1 class="card-title">Join Game</h1>
                 <p class="card-description">Continue the typing grind</p>
             </div>
         </a>
-        <a class="card infinite-card margin-top" href="/infinite">
-            <div class="card-body">
-                <h1 class="card-title">Play Infinite</h1>
-                <p class="card-description">Grind away in a endless typing cylce</p>
-            </div>
-        </a>
     </div>
     <div class="gamemode-column margin-left">
-        <div class="gamemode-column">
-            <div class="gamemode-row margin-bottom">
-                <% if (!loggedIn) { %>
-                    <div class="locked-container">
-                        <p class="locked-text">
-                            Login to access these options
-                        </p>
-                    </div>
-                <% } %>
-                <a class="card account-card margin-right<% if (!loggedIn) { %> locked-card"<% } else { %>" href="/account"<% } %>>
-                    <div class="card-body">
-                        <h1 class="card-title">Account</h1>
-                        <p class="card-description">Go to your profile</p>
-                    </div>
-                </a>
-                <a class="card stats-card margin-left<% if (!loggedIn) { %> locked-card"<% } else { %>" href="/keybinds"<% } %>>
-                    <div class="card-body">
-                        <h1 class="card-title">Keybinds</h1>
-                        <p class="card-description">Configure website shortcuts</p>
-                    </div>
-                </a>
-            </div>
-            <div class="gamemode-row margin-top margin-bottom">
-                <a class="card stats-card" href="/stats">
-                    <div class="card-body">
-                        <h1 class="card-title">Stats</h1>
-                        <p class="card-description">Explore global statistics</p>
-                    </div>
-                </a>
-            </div>
-            <div class="gamemode-row margin-top">
-                <div class="gamemode-row margin-top margin-bottom">
-                    <a class="card stats-card unreleased-card">
-                        <div class="locked-container">
-                            <p class="locked-text">Coming soon</p>
-                        </div>
-                        <div class="card-body">
-                            <div class="card-title">Contribute</div>
-                            <div class="card-description">Help grow the website</div>
-                        </div>
-                    </a>
+        <div class="gamemode-row margin-bottom">
+            <% if (!loggedIn) { %>
+                <div class="locked-container">
+                    <p class="locked-text">
+                        Login to access these options
+                    </p>
                 </div>
-            </div>
+            <% } %>
+            <a class="card account-card margin-right<% if (!loggedIn) { %> locked-card"<% } else { %>" href="/account"<% } %>>
+                <div class="card-body">
+                    <h1 class="card-title">Account</h1>
+                    <p class="card-description">Go to your profile</p>
+                </div>
+            </a>
+            <a class="card stats-card margin-left<% if (!loggedIn) { %> locked-card"<% } else { %>" href="/keybinds"<% } %>>
+                <div class="card-body">
+                    <h1 class="card-title">Keybinds</h1>
+                    <p class="card-description">Configure website shortcuts</p>
+                </div>
+            </a>
+        </div>
+        <div class="gamemode-row margin-top">
+            <a class="card stats-card" href="/stats">
+                <div class="card-body">
+                    <h1 class="card-title">Stats</h1>
+                    <p class="card-description">Explore global statistics</p>
+                </div>
+            </a>
         </div>
     
         <!--
