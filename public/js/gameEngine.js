@@ -117,7 +117,7 @@ class Game {
             passageHTML += `<span class='${classToAdd}'>${letter}</span>`
             letters+= letter
         }
-        passageHTML+= `<span id='cursor-container'>${cursorLetters}<span id='cursor'>|</span>${postCursorPlacementLetters}</span>`
+        passageHTML+= `<span class='cursor-container'>${cursorLetters}<span class='cursor'>|</span>${postCursorPlacementLetters}</span>`
         this.passageElement.innerHTML = passageHTML
 
         if (cursorLetters == '' && this.getCorrectLetterCount() != 0) { // Game ended
