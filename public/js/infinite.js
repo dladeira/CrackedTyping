@@ -5,12 +5,8 @@ var startCharacter
 
 socket.on('infiniteText', (infiniteText) => {
     if (!startCharacter) startCharacter = infiniteText.character
-    if ((game.getPassage().length - game.confirmedText.length) < 60) {
-        game.startEngine()
-        game.addPassage(infiniteText.passage)
-    } else {
-        // TODO: Display feedback to user that the game is waiting on him
-    }
+    game.startEngine()
+    game.addPassage(infiniteText.passage)
 })
 
 setInterval(() => {
