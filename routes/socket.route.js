@@ -5,6 +5,7 @@ const session = require('../session.js')
 const gameCoordinator = require('../gameCoordinator.js')
 const { User } = require('../models/index.js')
 
+var infiniteCharacter = 0
 var infinitePlayers = {}
 
 io.use(sharedSession(session, { autoSave: true }))
@@ -19,7 +20,8 @@ setInterval(() => {
 
 setInterval(() => {
     gameCoordinator.getRandomText((text) => {
-        io.emit('infiniteText', ' ' + text.passage)
+        io.emit('infiniteText', { passage: ' ' + text.passage, character: infiniteCharacter })
+        infiniteCharacter += text.passage.length
     })
 }, 4000)
 
@@ -30,7 +32,7 @@ setInterval(() => {
             delete infinitePlayers[player]
         }
     }
-}, 100)
+}, 10)
 
 io.on('connection', socket => {
 
@@ -93,6 +95,7 @@ io.on('connection', socket => {
             if (!infinitePlayers[data.username]) infinitePlayers[data.username] = {}
             infinitePlayers[data.username].sinceLastUpdate = 0
             infinitePlayers[data.username].wpm = data.wpm
+            infinitePlayers[data.username].character = data.character
 
             infinitePlayers[data.username].avatar = user ? user.avatar : config.get('account.defaults.avatar')
 

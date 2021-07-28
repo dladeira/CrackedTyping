@@ -21,7 +21,7 @@
     user-select: none;
 }
 
-#cursor-container {
+.cursor-container {
     display: inline-block;
     position: absolute;
     top: 0;
@@ -36,7 +36,7 @@
     color: transparent;
 }
 
-#cursor {
+.cursor {
     position: absolute;
 
     border-left: 1px solid white;

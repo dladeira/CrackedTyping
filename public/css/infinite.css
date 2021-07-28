@@ -43,3 +43,7 @@
 .avatar-sm {
     margin-right: 0.7vw;
 }
+
+.other-cursor {
+    border-color: gray !important;
+}
