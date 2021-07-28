@@ -78,7 +78,7 @@ game.updatePassage =  function updatePassage() { // Each word has it's own <span
 
     passageHTML+= `<span class='cursor-container'>${cursorLetters}<span class='cursor'>|</span>${postCursorPlacementLetters}</span>`
 
-    if (cursorLocations) {
+    if (game.cursorLocations) {
         for (var cursorLocation of game.cursorPositions) {
             passageHTML+= `<span class='cursor-container'>${letters.substring(0, cursorLocation)}<span class='cursor other-cursor'>|</span>${letters.substring(cursorLocation)}</span>`
         }
