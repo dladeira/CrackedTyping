@@ -23,14 +23,14 @@ socket.on('infiniteUpdate', (infiniteData) => {
 
 function updatePlayers(players) {
     var listHTML = ''
-    var cursorPositions = []
+    
     for (var playerUsername in players) {
         var player = players[playerUsername]
 
         listHTML += `<li class="player-card"><img src="${player.avatar}" class="avatar-sm">${playerUsername} : ${player.wpm}</li>`
 
         if (playerUsername != username) { // Don't render own cursor
-            game.setCursor(player.username, player.character, 5000)
+            game.setCursor(player.username, player.character - startCharacter, 5000)
         }
     }
     playerList.innerHTML = listHTML

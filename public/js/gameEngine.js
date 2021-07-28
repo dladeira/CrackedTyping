@@ -47,7 +47,10 @@ class Game {
         }
 
         setInterval(() => {
-            this.secondsElapsed += this.intervalDelay / 1000
+            if (gameStage == 1) {
+                this.secondsElapsed += this.intervalDelay / 1000
+            }
+            
             this.updatePassage()
 
             for (var cursor in this.cursors) {
@@ -111,13 +114,15 @@ class Game {
     }
 
     /**
-     * @param {string} name - The unique name of the cursor
+     * @description Renders a cursor
+     * 
+     * @param {string} name - The unique name of the cursor ('main' name is reserved for the user's cursor)
      * @param {integer} character - The character that the cursor is currently on
      * @param {integer} timeout - If the cursor isn't updated again in X miliseconds then it gets removed
      */
     setCursor(name, character, timeout) {
         if (this.getCursor(name) == undefined) {
-            this.cursors[name] == {}
+            this.cursors[name] = {}
         }
 
         this.cursors[name].character = character
@@ -133,9 +138,6 @@ class Game {
         var correctLettersLeft = this.getCorrectLetterCount()
         var incorrectLettersLeft = this.getIncorrectLetterCount()
     
-        var cursorLetters = ''
-        var postCursorPlacementLetters = ''
-        var cursorPlaced = false
     
         for (var letter of Array.from(this.passage)) {
             var classToAdd = ''
@@ -144,32 +146,18 @@ class Game {
             } else if (incorrectLettersLeft-- > 0) {
                 var classToAdd = 'incorrectLetter'
             }
-            if (classToAdd != 'correctLetter') {
-                if (!cursorPlaced) {
-                    cursorLetters = letters
-                    cursorPlaced = true
-                    postCursorPlacementLetters += letter
-                } else {
-                    postCursorPlacementLetters += letter
-                }
-            }
             passageHTML += `<span class='${classToAdd}'>${letter}</span>`
             letters+= letter
         }
 
-        if (cursorLetters == '' && this.getCorrectLetterCount() != 0) { // Game ended
-            cursorLetters = letters
-        }
+        this.setCursor('main', Math.max(this.getCorrectLetterCount(), 0))
 
         for (var cursor in this.cursors) {
             var cursorData = this.cursors[cursor]
-
-            if (cursorData.character > 0 || cursorData.character < letters) {
-                passageHTML+= `<span class='cursor-container'>${letters.substring(0, cursorData.character)}<span class='cursor other-cursor'>|</span>${letters.substring(cursorData.character)}</span>`
+            if ((cursorData.character >= 0 && cursorData.character < letters.length) || cursorData.name == 'main') {
+                passageHTML+= `<span class='cursor-container'>${letters.substring(0, cursorData.character)}<span class='cursor ${ (cursorData.name == 'main') ? '' : 'other-cursor'}'>|</span>${letters.substring(cursorData.character)}</span>`
             }
         }
-
-        passageHTML+= `<span class='cursor-container'>${cursorLetters}<span class='cursor'>|</span>${postCursorPlacementLetters}</span>`
         this.passageElement.innerHTML = passageHTML
     }
 
