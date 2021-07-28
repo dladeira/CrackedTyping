@@ -23,17 +23,16 @@ socket.on('infiniteUpdate', (infiniteData) => {
 
 function updatePlayers(players) {
     var listHTML = ''
-    var cursorPositions = []
+    
     for (var playerUsername in players) {
         var player = players[playerUsername]
 
         listHTML += `<li class="player-card"><img src="${player.avatar}" class="avatar-sm">${playerUsername} : ${player.wpm}</li>`
 
         if (playerUsername != username) { // Don't render own cursor
-            cursorPositions.push(player.character - startCharacter)
+            game.setCursor(player.username, player.character - startCharacter, 5000)
         }
     }
-    game.cursorPositions = cursorPositions
     playerList.innerHTML = listHTML
 }
 
@@ -41,51 +40,6 @@ var game = new Game('Welcome to infinite, enjoy the grind.', () => {
     game.textInput.readOnly = 1
 })
 game.startEngine()
-// TODO instead of having cursorLetters and postCursorPlacementLetters use substrings
-game.updatePassage =  function updatePassage() { // Each word has it's own <span>
-    var passageHTML = ''
-    var letters = '';
-    var correctLettersLeft = this.getCorrectLetterCount()
-    var incorrectLettersLeft = this.getIncorrectLetterCount()
-
-    var cursorLetters = ''
-    var postCursorPlacementLetters = ''
-    var cursorPlaced = false
-
-    for (var letter of Array.from(this.passage)) {
-        var classToAdd = ''
-        if (correctLettersLeft-- > 0) {
-            var classToAdd = 'correctLetter'
-        } else if (incorrectLettersLeft-- > 0) {
-            var classToAdd = 'incorrectLetter'
-        }
-        if (classToAdd != 'correctLetter') {
-            if (!cursorPlaced) {
-                cursorLetters = letters
-                cursorPlaced = true
-                postCursorPlacementLetters += letter
-            } else {
-                postCursorPlacementLetters += letter
-            }
-        }
-        passageHTML += `<span class='${classToAdd}'>${letter}</span>`
-        letters+= letter
-    }
-
-    if (cursorLetters == '' && this.getCorrectLetterCount() != 0) { // Game ended
-        cursorLetters = letters
-    }
-
-    passageHTML+= `<span class='cursor-container'>${cursorLetters}<span class='cursor'>|</span>${postCursorPlacementLetters}</span>`
-
-    if (game.cursorLocations) {
-        for (var cursorLocation of game.cursorPositions) {
-            passageHTML+= `<span class='cursor-container'>${letters.substring(0, cursorLocation)}<span class='cursor other-cursor'>|</span>${letters.substring(cursorLocation)}</span>`
-        }
-    }
-
-    this.passageElement.innerHTML = passageHTML
-}
 
 function getCurrentCharacter() {
     return game.getCorrectLetterCount() + startCharacter
