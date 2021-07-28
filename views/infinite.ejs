@@ -1,3 +1,10 @@
 <%- include('partials/header.ejs') %>
-aaaa
+<%- include('partials/gameEngine.ejs') %>
+<ul id="player-list">
+
+</ul>
+
+<!-- Keep scripts in this order (socket.io on top)-->
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/infinite.js"></script>
 <%- include('partials/footer.ejs') %>

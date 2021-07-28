@@ -1,0 +1,8 @@
+<link rel="stylesheet" href="/css/gameEngine.css" type="text/css">
+
+<p id="engine-passage"></p>
+<input autofocus autocomplete="off" id="engine-input" type="text" onfocusout="setTimeout(() => { document.getElementById('engine-input').focus() }, 100)">
+
+<!-- Keep scripts in this order (socket.io on top)-->
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/gameEngine.js"></script>

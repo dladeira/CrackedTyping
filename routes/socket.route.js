@@ -5,7 +5,26 @@ const session = require('../session.js')
 const gameCoordinator = require('../gameCoordinator.js')
 const { User } = require('../models/index.js')
 
+var infinitePlayers = {}
+
 io.use(sharedSession(session, { autoSave: true }))
+
+setInterval(() => {
+    io.emit('dataRequest')
+}, config.get('game.dataCollectionDelay'))
+
+setInterval(() => {
+    io.emit('infiniteText', ' The reason behind the collection of stones on the floor of mars is because they hold much scientific value to humans back on earth.')
+}, 5000)
+
+setInterval(() => {
+    for (var player in infinitePlayers) {
+        infinitePlayers[player].sinceLastUpdate+= 100
+        if (infinitePlayers[player].sinceLastUpdate > 5000) {
+            delete infinitePlayers[player]
+        }
+    }
+}, 100)
 
 io.on('connection', socket => {
 
@@ -52,15 +71,20 @@ io.on('connection', socket => {
 
     socket.on('dataResponse', data => {
         var game = gameCoordinator.findGameById(data.gameId);
+        if (!game) return
         if (game.started) {
             game.setPlayerWPM(data.username, data.wpm, data.final)
         }
         socket.emit('dataResponse', { players: game.players, time: game.timeSinceStart })
     })
 
-    setInterval(() => {
-        io.emit('dataRequest')
-    }, config.get('game.dataCollectionDelay'))
+    socket.on('infiniteUpdate', (data) => {
+        if (!infinitePlayers[data.username]) infinitePlayers[data.username] = {}
+        infinitePlayers[data.username].sinceLastUpdate = 0
+        infinitePlayers[data.username].wpm = data.wpm
+
+        socket.emit('infiniteUpdate', infinitePlayers)
+    })
 })
 
 module.exports = io

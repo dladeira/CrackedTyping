@@ -3,7 +3,6 @@
 <p id="info-text">Game info:</p>
 <div id="info-container">
     <div id="game-stats">
-        <p id="js-id" style="margin: 0">ID: </p>
         <p id="js-text-info" style="margin: 0"></p>
         <p id="js-status" style="margin: 0">Starting in: </p>
     </div>
@@ -13,10 +12,6 @@
     </div>
 </div>
 
-<p id="game-passage" class="unselectable"></p>
-<input autofocus autocomplete="off" id="text-input" type="text" onfocusout="setTimeout(() => { document.getElementById('text-input').focus() }, 100)">
-
-<!-- Keep scripts in this order (socket.io on top)-->
-<script src="/socket.io/socket.io.js"></script>
+<%- include('partials/gameEngine.ejs') %>
 <script src="/js/game.js"></script>
 <%- include('partials/footer.ejs') %>

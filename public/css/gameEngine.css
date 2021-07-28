@@ -1,0 +1,60 @@
+#engine-passage {
+    position: relative;
+
+    padding: 2%;
+    margin: 2% 0;
+    
+    border: 2px solid white;
+
+
+    font-size: 1.4rem;
+    background-color: black;
+    color: rgb(167, 156, 156);
+
+    line-height: 1.8rem;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#cursor-container {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    min-width: 1px;
+    min-height: 31px;
+
+    margin: 2%;
+
+    font-size: 1.4rem;
+    color: transparent;
+}
+
+#cursor {
+    position: absolute;
+
+    border-left: 1px solid white;
+}
+
+#engine-input {
+    outline: 0 ;
+    border: solid white 2px;
+    background-color: black;
+    color: var(--green);
+    padding: 10px;
+}
+
+.incorrectLetter {
+    background-color: red;
+    color: white;
+ }
+ 
+ .correctLetter {
+     color: var(--orange);
+ }
