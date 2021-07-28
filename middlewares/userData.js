@@ -18,6 +18,8 @@ function provideUserData(req, res, next) {
 
     res.cookie('newGame', escape('Alt+n'))
     res.cookie('mainMenu', escape('Alt+m'))
+    console.log(req.user != null)
+    res.cookie('loggedIn', req.user != null)
 
     if (req.user) { // Logged in
         res.locals.loggedInGoogle = (req.user.googleId != undefined)
