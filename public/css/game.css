@@ -1,21 +1,3 @@
-.unselectable {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.incorrectLetter {
-   background-color: red;
-   color: white;
-}
-
-.correctLetter {
-    color: var(--orange);
-}
-
 .contentWrapper {
     height: 100%;
     width: 100%;
@@ -23,43 +5,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-#game-passage {
-    position: relative;
-
-    padding: 2%;
-    margin: 2% 0;
-    
-    border: 2px solid white;
-
-
-    font-size: 1.4rem;
-    background-color: black;
-    color: rgb(167, 156, 156);
-
-    line-height: 1.8rem;
-}
-
-#cursor-container {
-    display: inline-block;
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    min-width: 1px;
-    min-height: 31px;
-
-    margin: 2%;
-
-    font-size: 1.4rem;
-    color: transparent;
-}
-
-#cursor {
-    position: absolute;
-
-    border-left: 1px solid white;
 }
 
 #info-container {
@@ -112,14 +57,6 @@
 
 .avatar-sm {
     margin-right: 0.7vw;
-}
-
-#text-input {
-    outline: 0 ;
-    border: solid white 2px;
-    background-color: black;
-    color: var(--green);
-    padding: 10px;
 }
 
 #play-again {

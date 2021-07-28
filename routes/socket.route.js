@@ -5,7 +5,34 @@ const session = require('../session.js')
 const gameCoordinator = require('../gameCoordinator.js')
 const { User } = require('../models/index.js')
 
+var infiniteCharacter = 0
+var infinitePlayers = {}
+
 io.use(sharedSession(session, { autoSave: true }))
+
+setInterval(() => {
+    io.emit('dataRequest')
+}, config.get('game.dataCollectionDelay'))
+
+/*
+ TODO: Add infinite configuration section
+*/
+
+setInterval(() => {
+    gameCoordinator.getRandomText((text) => {
+        io.emit('infiniteText', { passage: ' ' + text.passage, character: infiniteCharacter })
+        infiniteCharacter += text.passage.length
+    })
+}, 4000)
+
+setInterval(() => {
+    for (var player in infinitePlayers) {
+        infinitePlayers[player].sinceLastUpdate+= 100
+        if (infinitePlayers[player].sinceLastUpdate > 3000) {
+            delete infinitePlayers[player]
+        }
+    }
+}, 10)
 
 io.on('connection', socket => {
 
@@ -52,15 +79,29 @@ io.on('connection', socket => {
 
     socket.on('dataResponse', data => {
         var game = gameCoordinator.findGameById(data.gameId);
+        if (!game) return
         if (game.started) {
             game.setPlayerWPM(data.username, data.wpm, data.final)
         }
         socket.emit('dataResponse', { players: game.players, time: game.timeSinceStart })
     })
 
-    setInterval(() => {
-        io.emit('dataRequest')
-    }, config.get('game.dataCollectionDelay'))
+    socket.on('infiniteUpdate', (data) => {
+        User.findOne({username: socket.handshake.session.username}, (err, user) => {
+            if (err) {
+                return console.log(err)
+            }
+
+            if (!infinitePlayers[data.username]) infinitePlayers[data.username] = {}
+            infinitePlayers[data.username].sinceLastUpdate = 0
+            infinitePlayers[data.username].wpm = data.wpm
+            infinitePlayers[data.username].character = data.character
+
+            infinitePlayers[data.username].avatar = user ? user.avatar : config.get('account.defaults.avatar')
+
+            socket.emit('infiniteUpdate', infinitePlayers)
+        })
+    })
 })
 
 module.exports = io

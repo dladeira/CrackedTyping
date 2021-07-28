@@ -63,6 +63,7 @@ function getRandomText(callback) {
 exports.findGameById = findGameById
 exports.findUnstartedGame = findUnstartedGame
 exports.findGames = findGames
+exports.getRandomText = getRandomText
 
 class GameClass {
     constructor(id, options, text, gameEndCallback) {
