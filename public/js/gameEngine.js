@@ -15,6 +15,7 @@ class Game {
         this.onGameEnd = onGameEnd
         this.engineRunning = false
         this.intervalDelay = 100
+        this.cursors = {}
         
         this.currentWordIndex = 0 // Start the user at the first word
         this.confirmedText = '' // Text typed correctly locked after space was pressed
@@ -48,10 +49,24 @@ class Game {
         setInterval(() => {
             this.secondsElapsed += this.intervalDelay / 1000
             this.updatePassage()
+
+            for (var cursor in this.cursors) {
+                if (this.cursors[cursor].timeout != undefined) {
+                    this.cursors[cursor].timeout -= this.intervalDelay
+                    
+                    if (this.cursors[cursor].timeout < 0) {
+                        delete this.cursors[cursor]
+                    }
+                }
+            }
         }, this.intervalDelay)
 
         this.updatePassage()
     }
+
+    /*
+    Engine manipulation
+    */
 
     startEngine() {
         if (!this.engineRunning) {
@@ -75,6 +90,10 @@ class Game {
         this.textInput.placeholder = status
     }
 
+    /*
+    Passage
+    */
+
     addPassage(text) {
         this.passage+= text
     }
@@ -82,13 +101,33 @@ class Game {
     getPassage() {
         return this.passage
     }
-    
+
     /*
-        Each word has it's own <span> tag to allow styles
-        for individual words and hilighting of the active
-        word
+    Cursors
     */
-    updatePassage() { // Each word has it's own <span>
+
+    getCursor(name) {
+        return this.cursors[name]
+    }
+
+    /**
+     * @param {string} name - The unique name of the cursor
+     * @param {integer} character - The character that the cursor is currently on
+     * @param {integer} timeout - If the cursor isn't updated again in X miliseconds then it gets removed
+     */
+    setCursor(name, character, timeout) {
+        if (this.getCursor(name) == undefined) {
+            this.cursors[name] == {}
+        }
+
+        this.cursors[name].character = character
+        
+        if (timeout) {
+            this.cursors[name].timeout = timeout
+        }
+    }
+    
+    updatePassage() { // Each letter has it's own <span>
         var passageHTML = ''
         var letters = '';
         var correctLettersLeft = this.getCorrectLetterCount()
@@ -117,12 +156,21 @@ class Game {
             passageHTML += `<span class='${classToAdd}'>${letter}</span>`
             letters+= letter
         }
-        passageHTML+= `<span class='cursor-container'>${cursorLetters}<span class='cursor'>|</span>${postCursorPlacementLetters}</span>`
-        this.passageElement.innerHTML = passageHTML
 
         if (cursorLetters == '' && this.getCorrectLetterCount() != 0) { // Game ended
             cursorLetters = letters
         }
+
+        for (var cursor in this.cursors) {
+            var cursorData = this.cursors[cursor]
+
+            if (cursorData.character > 0 || cursorData.character < letters) {
+                passageHTML+= `<span class='cursor-container'>${letters.substring(0, cursorData.character)}<span class='cursor other-cursor'>|</span>${letters.substring(cursorData.character)}</span>`
+            }
+        }
+
+        passageHTML+= `<span class='cursor-container'>${cursorLetters}<span class='cursor'>|</span>${postCursorPlacementLetters}</span>`
+        this.passageElement.innerHTML = passageHTML
     }
 
     getExpectedWord() {
