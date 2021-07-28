@@ -28,7 +28,6 @@ function updatePlayers(players) {
         var player = players[playerUsername]
 
         listHTML += `<li class="player-card"><img src="${player.avatar}" class="avatar-sm">${playerUsername} : ${player.wpm}</li>`
-        console.log(player.character - startCharacter)
 
         if (playerUsername != username) { // Don't render own cursor
             cursorPositions.push(player.character - startCharacter)
@@ -79,9 +78,12 @@ game.updatePassage =  function updatePassage() { // Each word has it's own <span
 
     passageHTML+= `<span class='cursor-container'>${cursorLetters}<span class='cursor'>|</span>${postCursorPlacementLetters}</span>`
 
-    for (var cursorLocation of game.cursorPositions) {
-        passageHTML+= `<span class='cursor-container'>${letters.substring(0, cursorLocation)}<span class='cursor other-cursor'>|</span>${letters.substring(cursorLocation)}</span>`
+    if (cursorLocations) {
+        for (var cursorLocation of game.cursorPositions) {
+            passageHTML+= `<span class='cursor-container'>${letters.substring(0, cursorLocation)}<span class='cursor other-cursor'>|</span>${letters.substring(cursorLocation)}</span>`
+        }
     }
+
     this.passageElement.innerHTML = passageHTML
 }
 
