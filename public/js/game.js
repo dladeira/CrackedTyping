@@ -49,16 +49,12 @@ socket.on('foundGame', gameFound => {
                 game.startEngine()
             }
 
-            if (gameTimer > 4000) {
-                //game.addPassage(' I like potatoes')
-            }
-
             // Prevent changing status if user finished early
             if (gameStage != 2) {
                 setGameStatus('Time left: ' + msToSec(gameFound.options.gameLength - gameTimer), 1)
             }
         } else { // Game ended
-            if (gamestage != 2) { // Only finish the game once
+            if (gameStage != 2) { // Only finish the game once
                 game.stopEngine()
                 socket.emit('dataResponse', { username: username, gameId: gameId, wpm: game.getWPM(), final: true })
                 setGameStatus(`Game ended! <a id="play-again" href="/game">Continue the grind? (${getCookie('newGame')})</a>`, 2)

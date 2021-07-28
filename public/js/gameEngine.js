@@ -78,6 +78,10 @@ class Game {
     addPassage(text) {
         this.passage+= text
     }
+
+    getPassage() {
+        return this.passage
+    }
     
     /*
         Each word has it's own <span> tag to allow styles

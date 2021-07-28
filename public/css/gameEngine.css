@@ -2,7 +2,7 @@
     position: relative;
 
     padding: 2%;
-    margin: 2% 0;
+    margin-bottom: 2%;
     
     border: 2px solid white;
 
@@ -48,6 +48,8 @@
     background-color: black;
     color: var(--green);
     padding: 10px;
+
+    width: 100%;
 }
 
 .incorrectLetter {

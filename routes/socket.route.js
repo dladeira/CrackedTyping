@@ -13,14 +13,20 @@ setInterval(() => {
     io.emit('dataRequest')
 }, config.get('game.dataCollectionDelay'))
 
+/*
+ TODO: Add infinite configuration section
+*/
+
 setInterval(() => {
-    io.emit('infiniteText', ' The reason behind the collection of stones on the floor of mars is because they hold much scientific value to humans back on earth.')
-}, 5000)
+    gameCoordinator.getRandomText((text) => {
+        io.emit('infiniteText', ' ' + text.passage)
+    })
+}, 4000)
 
 setInterval(() => {
     for (var player in infinitePlayers) {
         infinitePlayers[player].sinceLastUpdate+= 100
-        if (infinitePlayers[player].sinceLastUpdate > 5000) {
+        if (infinitePlayers[player].sinceLastUpdate > 3000) {
             delete infinitePlayers[player]
         }
     }
@@ -79,11 +85,19 @@ io.on('connection', socket => {
     })
 
     socket.on('infiniteUpdate', (data) => {
-        if (!infinitePlayers[data.username]) infinitePlayers[data.username] = {}
-        infinitePlayers[data.username].sinceLastUpdate = 0
-        infinitePlayers[data.username].wpm = data.wpm
+        User.findOne({username: socket.handshake.session.username}, (err, user) => {
+            if (err) {
+                return console.log(err)
+            }
 
-        socket.emit('infiniteUpdate', infinitePlayers)
+            if (!infinitePlayers[data.username]) infinitePlayers[data.username] = {}
+            infinitePlayers[data.username].sinceLastUpdate = 0
+            infinitePlayers[data.username].wpm = data.wpm
+
+            infinitePlayers[data.username].avatar = user ? user.avatar : config.get('account.defaults.avatar')
+
+            socket.emit('infiniteUpdate', infinitePlayers)
+        })
     })
 })
 
