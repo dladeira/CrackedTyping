@@ -16,7 +16,8 @@ class Game {
         this.engineRunning = false
         this.intervalDelay = 100
         this.cursors = {}
-        
+        this.startedTyping = false
+
         this.currentWordIndex = 0 // Start the user at the first word
         this.confirmedText = '' // Text typed correctly locked after space was pressed
         this.secondsElapsed = 0 // Seconds of user being able to type
@@ -29,6 +30,11 @@ class Game {
         this.textInput.placeholder = ''
 
         this.textInput.oninput = (event) => {
+            if (!this.startedTyping) {
+                this.setEngineStatus('') // Clear start typing text
+                this.startedTyping = true
+            }
+
             var wordInputed = this.textInput.value.substring(0, this.textInput.value.length - 1)
             if (this.onLastWord())
                 wordInputed = this.textInput.value
@@ -50,7 +56,7 @@ class Game {
             if (gameStage == 1) {
                 this.secondsElapsed += this.intervalDelay / 1000
             }
-            
+
             this.updatePassage()
 
             for (var cursor in this.cursors) {
