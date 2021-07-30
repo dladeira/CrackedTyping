@@ -30,7 +30,12 @@
             "passage": "There has been an error in finding a text so the default text has been provided",
             "timesTyped": 0
         },
-        "dataCollectionDelay": 100
+        "dataCollectionDelay": 100,
+        "infiniteOptions": {
+            "startDelay": 3000,
+            "gameLength": 15000,
+            "deleteDelay": 5000
+        }
     },
     "account": {
         "constraints": {

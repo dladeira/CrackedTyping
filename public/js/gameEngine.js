@@ -53,7 +53,7 @@ class Game {
         }
 
         setInterval(() => {
-            if (gameStage == 1) {
+            if (this.engineRunning == 1) {
                 this.secondsElapsed += this.intervalDelay / 1000
             }
 
@@ -90,7 +90,6 @@ class Game {
         if (this.engineRunning) {
             this.engineRunning = false
             this.textInput.readOnly = 1
-            this.textInput.value = ''
             this.textInput.placeholder = 'Finished!'
         }
     }
@@ -158,11 +157,20 @@ class Game {
 
         this.setCursor('main', Math.max(this.getCorrectLetterCount(), 0))
 
+        var mainData // main cursor gets rendered on top of others
+
         for (var cursor in this.cursors) {
             var cursorData = this.cursors[cursor]
-            if ((cursorData.character >= 0 && cursorData.character < letters.length) || cursorData.name == 'main') {
-                passageHTML+= `<span class='cursor-container'>${letters.substring(0, cursorData.character)}<span class='cursor ${ (cursorData.name == 'main') ? '' : 'other-cursor'}'>|</span>${letters.substring(cursorData.character)}</span>`
+            if ((cursorData.character >= 0 && cursorData.character <= letters.length) || cursor == 'main') {
+                if (cursor == 'main') {
+                    mainData = cursorData
+                    continue
+                }
+                passageHTML+= `<span class='cursor-container'>${letters.substring(0, cursorData.character)}<span class='cursor other-cursor'>|</span>${letters.substring(cursorData.character)}</span>`
             }
+        }
+        if (mainData) {
+            passageHTML+= `<span class='cursor-container'>${letters.substring(0, mainData.character)}<span class='cursor'>|</span>${letters.substring(mainData.character)}</span>`
         }
         this.passageElement.innerHTML = passageHTML
     }
