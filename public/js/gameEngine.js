@@ -11,10 +11,10 @@ String.prototype.replaceLast = (what, replacement) => {
 
 class Game {
     constructor (passage, onGameEnd) {
-        this.passage = passage
+        this.fullPassage = passage.replace(/[\r\n\x0B\x0C\u0085\u2028\u2029]+/g, ' ').replace(/  +/g, ' ')
         this.onGameEnd = onGameEnd
         this.engineRunning = false
-        this.intervalDelay = 100
+        this.intervalDelay = 200
         this.cursors = {}
         this.startedTyping = false
 
@@ -103,11 +103,15 @@ class Game {
     */
 
     addPassage(text) {
-        this.passage+= text
+        this.fullPassage+= text
     }
 
     getPassage() {
-        return this.passage
+        return this.fullPassage
+    }
+
+    getDisplayPassage() {
+        return this.fullPassage.substring(0, this.getCursor('main').character + 200)
     }
 
     /*
@@ -142,20 +146,23 @@ class Game {
         var letters = '';
         var correctLettersLeft = this.getCorrectLetterCount()
         var incorrectLettersLeft = this.getIncorrectLetterCount()
+
+        this.setCursor('main', Math.max(this.getCorrectLetterCount(), 0))
     
-    
-        for (var letter of Array.from(this.passage)) {
+        for (var letter of Array.from(this.getDisplayPassage())) {
             var classToAdd = ''
             if (correctLettersLeft-- > 0) {
                 var classToAdd = 'correctLetter'
             } else if (incorrectLettersLeft-- > 0) {
                 var classToAdd = 'incorrectLetter'
             }
-            passageHTML += `<span class='${classToAdd}'>${letter}</span>`
+            if (classToAdd == '') {
+                passageHTML += `<span class='${classToAdd}' id='passage-scroll'>${letter}</span>`
+            } else {
+                passageHTML += `<span class='${classToAdd}'>${letter}</span>`
+            }
             letters+= letter
         }
-
-        this.setCursor('main', Math.max(this.getCorrectLetterCount(), 0))
 
         var mainData // main cursor gets rendered on top of others
 
@@ -166,25 +173,26 @@ class Game {
                     mainData = cursorData
                     continue
                 }
-                passageHTML+= `<span class='cursor-container'>${letters.substring(0, cursorData.character)}<span class='cursor other-cursor'>|</span>${letters.substring(cursorData.character)}</span>`
+                passageHTML+= `<span class='cursor-container'>${letters.substring(0, cursorData.character)}<span class='cursor other-cursor'>|</span>${letters.substring(cursorData.character, this.getCursor('main').character + 200)}</span>`
             }
         }
         if (mainData) {
-            passageHTML+= `<span class='cursor-container'>${letters.substring(0, mainData.character)}<span class='cursor'>|</span>${letters.substring(mainData.character)}</span>`
+            passageHTML+= `<span class='cursor-container'>${letters.substring(0, mainData.character)}<span class='cursor'>|</span>${letters.substring(mainData.character, this.getCursor('main').character + 200)}</span>`
         }
         this.passageElement.innerHTML = passageHTML
+        document.getElementById('passage-scroll').scrollIntoView()
     }
 
     getExpectedWord() {
-        return this.passage.split(' ')[this.currentWordIndex]
+        return this.fullPassage.split(' ')[this.currentWordIndex]
     }
     
     isTextFinished() {
-        return (this.currentWordIndex + 1) > this.passage.split(' ').length
+        return (this.currentWordIndex + 1) > this.fullPassage.split(' ').length
     }
     
     onLastWord() {
-        return this.getTotalTypedText().split(' ').filter(e => e).length  >= this.passage.split(' ').length
+        return this.getTotalTypedText().split(' ').filter(e => e).length  >= this.fullPassage.split(' ').length
     }
     
     getTotalTypedText() {
@@ -200,7 +208,7 @@ class Game {
     getCorrectLetterCount() {
         var letterCount = 0
         var letterArray = Array.from(this.getTotalTypedText())
-        var passageLetterArray = Array.from(this.passage)
+        var passageLetterArray = Array.from(this.fullPassage)
         for (var i in letterArray) {
             if (letterArray[i] == passageLetterArray[i]) {
                 letterCount++
@@ -214,7 +222,7 @@ class Game {
     getIncorrectLetterCount() {
         var letterCount = 0
         var letterArray = Array.from(this.getTotalTypedText())
-        var passageLetterArray = Array.from(this.passage)
+        var passageLetterArray = Array.from(this.fullPassage)
         var incorrectLetterFound = false
         for (var i in letterArray) {
             if (i < this.getCorrectLetterCount()) // Skip all the correct letters

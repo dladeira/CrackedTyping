@@ -33,7 +33,7 @@
         "dataCollectionDelay": 100,
         "infiniteOptions": {
             "startDelay": 3000,
-            "gameLength": 15000,
+            "gameLength": 30000,
             "deleteDelay": 5000
         }
     },
