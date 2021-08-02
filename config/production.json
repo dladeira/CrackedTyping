@@ -11,6 +11,11 @@
             "startDelay": 5000,
             "gameLength": 60000,
             "deleteDelay": 5000
+        },
+        "infiniteOptions": {
+            "startDelay": 15000,
+            "gameLength": 300000,
+            "deleteDelay": 5000
         }
     }
 }

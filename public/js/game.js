@@ -1,6 +1,5 @@
 var textInfo = document.getElementById('js-text-info')
 var gameStatusElement = document.getElementById('js-status')
-var gameIdElement = document.getElementById('js-id')
 var playerListElement = document.getElementById('player-list')
 
 var gameStage = 0
