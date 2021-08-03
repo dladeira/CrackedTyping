@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const isAdmin = require('../middlewares/isAdmin.js')
-const { User, Text } = require('../models/index.js')
+const { User, Text, Script } = require('../models/index.js')
 
 router.use(isAdmin)
 
@@ -75,6 +75,51 @@ router.post('/texts', (req, res) => {
 
 router.post('/texts/new', (req, res) => {
     new Text({
+        passage: req.body.passage
+    }).save(() => {
+        res.redirect('/control')
+    })
+})
+
+router.get('/scripts', (req, res) => {
+    Script.find({}, (err, scripts) => {
+        if (err) {
+            console.log(err)
+            return res.send('An error has occured, please try again later')
+        }
+
+        res.render('control-scripts.ejs', { scripts: scripts })
+    })
+})
+
+router.post('/scripts', (req, res) => {
+    for (var script in req.body) {
+        if (script.includes('deletePassage'))
+            continue
+        Script.findOne({ _id: script}, (err, mongoScript) => {
+            if (err) {
+                console.log(err)
+                return res.send('An error has occured, please try again later')
+            }
+
+            if (mongoScript) {
+                if (req.body[mongoScript._id + '-deletePassage']) {
+                    Script.deleteOne({ _id: mongoScript._id}, (err) => {
+                        if (err)
+                            console.log(err)
+                    })
+                } else {
+                    mongoScript.passage = req.body[mongoScript._id]
+                    mongoScript.save()
+                }
+            }
+        })
+    }
+    res.redirect('/control')
+})
+
+router.post('/scripts/new', (req, res) => {
+    new Script({
         passage: req.body.passage
     }).save(() => {
         res.redirect('/control')
