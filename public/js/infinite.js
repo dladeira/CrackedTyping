@@ -31,7 +31,7 @@ socket.on('foundInfinite', gameFound => {
         console.log(game.getCorrectLetterCount())
         console.log(game.getPassage().length)
         setGameStatus(`Game ended! <a id="play-again" href="/game">Continue the grind? (${getCookie('newGame')})</a>`, 2)
-    })
+    }, 0, 200)
 
     /*
     gameTimer starts at a negative value equivelent to
