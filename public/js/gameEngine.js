@@ -10,13 +10,16 @@ String.prototype.replaceLast = (what, replacement) => {
 };
 
 class Game {
-    constructor (passage, onGameEnd) {
+    constructor (passage, onGameEnd, characterPrefix, characterSuffix) {
         this.fullPassage = passage.replace(/[\r\n\x0B\x0C\u0085\u2028\u2029]+/g, ' ').replace(/  +/g, ' ')
         this.onGameEnd = onGameEnd
         this.engineRunning = false
         this.intervalDelay = 200
         this.cursors = {}
         this.startedTyping = false
+
+        this.characterPrefix = !isNaN(characterPrefix) ? characterPrefix : 100000000
+        this.characterSuffix = !isNaN(characterSuffix) ? characterSuffix : 100000000
 
         this.currentWordIndex = 0 // Start the user at the first word
         this.confirmedText = '' // Text typed correctly locked after space was pressed
@@ -111,7 +114,17 @@ class Game {
     }
 
     getDisplayPassage() {
-        return this.fullPassage.substring(0, this.getCursor('main').character + 200)
+        if (this.getCursor('main')) {
+            return this.fullPassage.substring(this.getCursor('main').character - this.characterPrefix, this.getCursor('main').character + this.characterSuffix)
+        }
+        return this.fullPassage.substring(0, 200)
+    }
+
+    getLettersHidden() {
+        if (this.getCursor('main')) {
+            return this.getCursor('main').character - this.characterPrefix
+        }
+        return 0
     }
 
     /*
@@ -144,10 +157,9 @@ class Game {
     updatePassage() { // Each letter has it's own <span>
         var passageHTML = ''
         var letters = '';
-        var correctLettersLeft = this.getCorrectLetterCount()
-        var incorrectLettersLeft = this.getIncorrectLetterCount()
-
         this.setCursor('main', Math.max(this.getCorrectLetterCount(), 0))
+        var correctLettersLeft = this.getCorrectLetterCount() - Math.max(0, this.getLettersHidden())
+        var incorrectLettersLeft = this.getIncorrectLetterCount()
     
         for (var letter of Array.from(this.getDisplayPassage())) {
             var classToAdd = ''
@@ -173,14 +185,14 @@ class Game {
                     mainData = cursorData
                     continue
                 }
-                passageHTML+= `<span class='cursor-container'>${letters.substring(0, cursorData.character)}<span class='cursor other-cursor'>|</span>${letters.substring(cursorData.character, this.getCursor('main').character + 200)}</span>`
+                passageHTML+= `<span class='cursor-container'>${letters.substring(0, Math.min(this.characterPrefix, mainData.character))}<span class='cursor other-cursor'>|</span>${letters.substring(Math.min(this.characterPrefix, mainData.character), this.getCursor('main').character + this.characterSuffix)}</span>`
             }
         }
         if (mainData) {
-            passageHTML+= `<span class='cursor-container'>${letters.substring(0, mainData.character)}<span class='cursor'>|</span>${letters.substring(mainData.character, this.getCursor('main').character + 200)}</span>`
+            passageHTML+= `<span class='cursor-container'>${letters.substring(0, Math.min(this.characterPrefix, mainData.character))}<span class='cursor'>|</span>${letters.substring(Math.min(this.characterPrefix, mainData.character), this.getCursor('main').character + this.characterSuffix)}</span>`
         }
         this.passageElement.innerHTML = passageHTML
-        document.getElementById('passage-scroll').scrollIntoView()
+        document.getElementById('passage-scroll').scrollIntoView() // TODO: NULL ERROR
     }
 
     getExpectedWord() {
