@@ -1,0 +1,11 @@
+<%- include('partials/header.ejs') %>
+<div class="submission-container">
+<% for (var contribution of contributions) { %>
+    <div class="submission">
+        <%= contribution.contributionType %> <!-- 0 is a text, 1 is a script-->
+        <%= contribution.contributionValue %>
+        <br>
+    </div>
+<% } %>
+</div>
+<%- include('partials/footer.ejs') %>
