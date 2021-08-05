@@ -2,7 +2,19 @@
 <div class="submission-container">
 <% for (var contribution of contributions) { %>
     <div class="submission">
-        <%= contribution.contributionType %> <!-- 0 is a text, 1 is a script-->
+        <% if (contribution.status == 0) { %>
+            (WAITING) 
+        <% } else if (contribution.status == 1) { %>
+            (ACCEPTED) 
+        <% } else { %>
+            (REJECTED) 
+        <% } %>
+
+        <% if (contribution.contributionType == 0) { %>
+            TEXT:
+        <% } else { %>
+            SCRIPT: 
+        <% } %>
         <%= contribution.contributionValue %>
         <br>
     </div>
