@@ -1,0 +1,46 @@
+<%- include('partials/header.ejs') %>
+<link rel="stylesheet" href="/css/landing.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap">
+
+<!--
+    There are two containers over here, left and right.
+
+    -- Left is "games-container" and will have gamemodes,
+    currently it is only "Join Game" (game-card)
+
+    -- Right is "account-container" since the locations are
+    personalized to you and you need to be logged in,
+    the locations are: "Account" (account-card) and "Stats" (stats-card)
+-->
+
+<div class="gamemode-row">
+    <div class="gamemode-column margin-right">
+        <a class="card" href="/contribute/submissions">
+            <div class="card-body">
+                <h1 class="card-title">View submissions</h1>
+                <p class="card-description">See what suggestions have been accepted/denied</p>
+            </div>
+        </a>
+    </div>
+    <div class="gamemode-column margin-left">
+        <div class="gamemode-column margin-bottom">
+            <a class="card account-card" href="/contribute/text">
+                <div class="card-body">
+                    <h1 class="card-title">Suggest Text</h1>
+                    <p class="card-description">Add a text for submission</p>
+                </div>
+            </a>
+        </div>
+        <div class="gamemode-column margin-top">
+            <a class="card account-card" href="/contribute/script">
+                <div class="card-body">
+                    <h1 class="card-title">Suggest Script</h1>
+                    <p class="card-description">Add a script for submission</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+</div>
+<%- include('partials/footer.ejs') %>

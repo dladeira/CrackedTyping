@@ -1,4 +1,6 @@
 textarea {
+    padding: 8px;
+
     border: 1px solid var(--orange);
     border-radius: 5px;
 
@@ -6,8 +8,6 @@ textarea {
     color: white;
 
     resize: none;
-
-    padding: 8px;
 }
 
 textarea:focus {
@@ -91,7 +91,6 @@ textarea:focus {
 }
 
 #create-btn {
-
     padding: 5px 10px;
 
     border: 1px solid red;

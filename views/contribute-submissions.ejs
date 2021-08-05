@@ -1,0 +1,23 @@
+<%- include('partials/header.ejs') %>
+<div class="submission-container">
+<% for (var contribution of contributions) { %>
+    <div class="submission">
+        <% if (contribution.status == 0) { %>
+            (WAITING) 
+        <% } else if (contribution.status == 1) { %>
+            (ACCEPTED) 
+        <% } else { %>
+            (REJECTED) 
+        <% } %>
+
+        <% if (contribution.contributionType == 0) { %>
+            TEXT:
+        <% } else { %>
+            SCRIPT: 
+        <% } %>
+        <%= contribution.contributionValue %>
+        <br>
+    </div>
+<% } %>
+</div>
+<%- include('partials/footer.ejs') %>

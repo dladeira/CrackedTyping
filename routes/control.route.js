@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const isAdmin = require('../middlewares/isAdmin.js')
-const { User, Text, Script } = require('../models/index.js')
+const { User, Text, Script, Contribution } = require('../models/index.js')
 
 router.use(isAdmin)
 
@@ -123,6 +123,71 @@ router.post('/scripts/new', (req, res) => {
         passage: req.body.passage
     }).save(() => {
         res.redirect('/control')
+    })
+})
+
+router.get('/contributions', (req, res) => {
+    Contribution.find({}, (err, contributions) => {
+        if (err) {
+            console.log(err)
+            return res.send('An error has occured, please try again')
+        }
+        res.render('control-contribution.ejs', { contributions: contributions.filter(contribution => contribution.status == 0)})
+    })
+})
+
+router.post('/contributions/accept', (req, res) => {
+    Contribution.findOne({ _id: req.body.id }, (err, contribution) => {
+        if (err) {
+            console.log(err)
+            return res.send('An error has occured, please try again later')
+        }
+
+        if (!contribution) {
+            console.log('Contribution not found')
+            return res.send('An error has occured, please try again later')
+        }
+
+        switch (contribution.contributionType) {
+            case 0:
+                new Text({
+                    passage: contribution.contributionValue
+                }).save().then(() => {
+                    contribution.status = 1
+                    contribution.save().then(() => {
+                        return res.redirect('/control/contributions')
+                    })
+                })
+                break
+            case 1:
+                new Script({
+                    passage: contribution.contributionValue
+                }).save().then(() => {
+                    contribution.status = 1
+                    contribution.save().then(() => {
+                        return res.redirect('/control/contributions')
+                    })
+                })
+        }
+    })
+})
+
+router.post('/contributions/reject', (req, res) => {
+    Contribution.findOne({ _id: req.body.id }, (err, contribution) => {
+        if (err) {
+            console.log(err)
+            return res.send('An error has occured, please try again later')
+        }
+
+        if (!contribution) {
+            console.log('Contribution not found')
+            return res.send('An error has occured, please try again later')
+        }
+
+        contribution.status = 2
+        contribution.save().then(() => {
+            return res.redirect('/control/contributions')
+        })
     })
 })
 

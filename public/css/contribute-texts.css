@@ -1,0 +1,37 @@
+#text-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin: 10px;
+}
+
+#text-form textarea {
+    width: 100%;
+
+    margin-bottom: 10px;
+    padding: 8px;
+
+    border: 1px solid var(--orange);
+    border-radius: 5px;
+
+    background-color: transparent;
+    color: white;
+
+    resize: none;
+}
+
+#text-form textarea:focus {
+    outline: none;
+}
+
+#text-form button {
+    padding: 5px 10px;
+
+    border: 1px solid orange;
+    border-radius: 7px;
+
+    font-size: 1.2rem;
+    background-color: transparent;
+    color: white;
+}

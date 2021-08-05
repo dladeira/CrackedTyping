@@ -1,0 +1,19 @@
+<%- include ('partials/header.ejs') %>
+<% for (var contribution of contributions) { %>
+    <% if (contribution.contributionType == 0) { %>
+        TEXT:
+    <% } else { %>
+        SCRIPT: 
+    <% } %>
+    <%= contribution.contributionValue %>
+    <form method="POST" action="/control/contributions/accept">
+        <input type="hidden" name="id" value="<%= contribution._id %>">
+        <button type="submit">Accept</button>
+    </form>
+    <form method="POST" action="/control/contributions/reject">
+        <input type="hidden" name="id" value="<%= contribution._id %>">
+        <button type="submit">Reject</button>
+    </form>
+    <br>
+<% } %>
+<%- include ('partials/footer.ejs') %>

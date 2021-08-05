@@ -1,0 +1,10 @@
+<%- include('partials/header.ejs') %>
+<link rel="stylesheet" href="/css/contribute-texts.css" type="text/css">
+<form action="/contribute/script" method="POST" id="text-form">
+    <textarea name="value" placeholder="Type script here" autofocus>
+
+    </textarea>
+    <button type="submit" id="save-btn">Submit script</button>
+</form>
+
+<%- include('partials/footer.ejs') %>
