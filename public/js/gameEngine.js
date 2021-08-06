@@ -159,11 +159,12 @@ class Game {
             this.cursors[name].element = function() {
                 return document.getElementById(`cursor--${this.name}`)
             }
-            this.cursors[name].element().style.transition = 'all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+
             if (name != 'main') {
                 this.cursors[name].element().style.backgroundColor = 'gray'
             } else {
                 this.cursors[name].element().style.zIndex = 1
+                this.cursors[name].element().style.transition = 'all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
             }
         }
 
