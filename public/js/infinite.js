@@ -25,11 +25,8 @@ socket.on('dataRequest', () => {
     }
 })
 socket.on('foundInfinite', gameFound => {
-    console.log(gameFound)
     gameId = gameFound.id
     game = new Game(gameFound.script.passage, () => {
-        console.log(game.getCorrectLetterCount())
-        console.log(game.getPassage().length)
         setGameStatus(`Game ended! <a id="play-again" href="/game">Continue the grind? (${getCookie('newGame')})</a>`, 2)
     }, 0, 200)
 

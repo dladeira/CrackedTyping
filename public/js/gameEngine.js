@@ -71,6 +71,7 @@ class Game {
                     }
                 }
             }
+            this.updateCursors()
         }, this.intervalDelay)
 
         this.updatePassage()
@@ -113,6 +114,14 @@ class Game {
         return this.fullPassage
     }
 
+    getPrefix() {
+        return Math.max(this.getCursor('main').character - this.characterPrefix, 0)
+    }
+
+    getSuffix() {
+        return Math.min(this.getCursor('main').character + this.characterSuffix)
+    }
+
     getDisplayPassage() {
         if (this.getCursor('main')) {
             return this.fullPassage.substring(this.getCursor('main').character - this.characterPrefix, this.getCursor('main').character + this.characterSuffix)
@@ -145,8 +154,12 @@ class Game {
     setCursor(name, character, timeout) {
         if (this.getCursor(name) == undefined) {
             this.cursors[name] = {}
+            this.cursors[name].name = name
             document.getElementById("cursor-container").innerHTML += `<div class="cursor" id="cursor--${name}"></div>`
-            this.cursors[name].element = document.getElementById(`cursor--${name}`)
+            this.cursors[name].element = function() {
+                return document.getElementById(`cursor--${this.name}`)
+            }
+            this.cursors[name].element().style.transition = 'all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
         }
 
         this.cursors[name].character = character
@@ -158,31 +171,26 @@ class Game {
 
 
     updateCursors() {
-        for (var cursor in this.cursors) {
-            var correctLetters = 0
-            var correctLetterWidth = 0
+        for (var cursorName in this.cursors) {
             var currentLetter
+            var cursor = this.cursors[cursorName]
             for (var letterNum in document.getElementsByTagName('letter')) {
                 var letter = document.getElementsByTagName('letter')[letterNum]
 
-                if (letterNum == this.cursors[cursor].character) {
+                if (letterNum == cursor.character - this.getPrefix()) {
                     currentLetter = letter
                     break;
                 }
-                correctLetterWidth += letter.getBoundingClientRect().width
-                correctLetters++
             }
 
-            this.cursors[cursor].element.style.top = `${currentLetter.getBoundingClientRect().top}px`
-            this.cursors[cursor].element.style.left = `${currentLetter.getBoundingClientRect().left}px`
-            this.cursors[cursor].element.style.height = currentLetter.clientHeight + 'px'
-            this.cursors[cursor].element.style.transition = 'all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+            cursor.element().style.top = `${currentLetter.getBoundingClientRect().top}px`
+            cursor.element().style.left = `${currentLetter.getBoundingClientRect().left}px`
+            cursor.element().style.height = currentLetter.clientHeight + 'px'
         }
     }
     
     updatePassage() { // Each letter has it's own <span>
         var passageHTML = ''
-        var letters = '';
         this.setCursor('main', Math.max(this.getCorrectLetterCount(), 0))
         var correctLettersLeft = this.getCorrectLetterCount() - Math.max(0, this.getLettersHidden())
         var incorrectLettersLeft = this.getIncorrectLetterCount()
@@ -193,7 +201,6 @@ class Game {
             passageHTML += `<word>`
             for (var letter of word) {
                 var classToAdd = ''
-                var stylesToAdd = ''
     
                 if (correctLettersLeft-- > 0) {
                     var classToAdd = 'correct'
@@ -206,10 +213,7 @@ class Game {
                     currentLetterPlaced = true
                 }
     
-    
                 passageHTML += `<letter class='${classToAdd}'>${letter == " " ? '&nbsp' : letter}</letter>`
-    
-                letters+= letter
             }
             passageHTML += `</word>`
         }

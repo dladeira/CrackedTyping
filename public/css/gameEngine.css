@@ -1,16 +1,25 @@
+#engine-container {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-between;
+}
+
 #engine-box {
+    height: 100%;
+
     padding: 1%;
     margin-bottom: 2%;
     
     border: 2px solid white;
 
     font-size: 1.4rem;
+    line-height: 1.8rem;
     background-color: black;
     color: rgb(167, 156, 156);
 
-    line-height: 1.8rem;
-
     overflow-y: hidden;
+    box-sizing: border-box;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -23,6 +32,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    align-content: start;
 }
 
 .cursor {
@@ -51,10 +61,14 @@
 word {
     display: flex;
     flex-direction: row;
+
+    height: 1.8rem;
 }
 
 letter {
     display: block;
+
+    height: 1.8rem;
 }
 
 letter.correct {
