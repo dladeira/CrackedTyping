@@ -100,8 +100,7 @@ function createInfinite(options, callback) {
 
 function findInfinite(callback) {
     for (var game of ongoingInfinites) {
-        console.log(game.options.gameLength - game.timeSinceStart)
-        if (game.options.gameLength - game.timeSinceStart < 15000) { // Join game if there is at least 15 seconds left
+        if ((game.options.gameLength - game.timeSinceStart) > 15000) { // Join game if there is at least 15 seconds left
             callback(game)
             return
         }
@@ -306,15 +305,6 @@ class InfiniteClass {
                     })
                 }
             }
-            /*new Game({
-                id: this.id,
-                players: playersGameArray,
-                guests: guestsGameArray,
-                date: new Date().getTime()
-            }).save((err) => {
-                if (err)
-                    return console.log(err)
-            })*/
                 this.gameEndCallback() // Sri Lanka internet connection lmao
         }, this.deleteDelay)
     }

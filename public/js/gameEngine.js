@@ -60,13 +60,13 @@ class Game {
                 this.secondsElapsed += this.intervalDelay / 1000
             }
 
-            this.updatePassage()
 
             for (var cursor in this.cursors) {
                 if (this.cursors[cursor].timeout != undefined) {
                     this.cursors[cursor].timeout -= this.intervalDelay
                     
                     if (this.cursors[cursor].timeout < 0) {
+                        this.cursors[cursor].element.remove()
                         delete this.cursors[cursor]
                     }
                 }
@@ -145,12 +145,38 @@ class Game {
     setCursor(name, character, timeout) {
         if (this.getCursor(name) == undefined) {
             this.cursors[name] = {}
+            document.getElementById("cursor-container").innerHTML += `<div class="cursor" id="cursor--${name}"></div>`
+            this.cursors[name].element = document.getElementById(`cursor--${name}`)
         }
 
         this.cursors[name].character = character
         
         if (timeout) {
             this.cursors[name].timeout = timeout
+        }
+    }
+
+
+    updateCursors() {
+        for (var cursor in this.cursors) {
+            var correctLetters = 0
+            var correctLetterWidth = 0
+            var currentLetter
+            for (var letterNum in document.getElementsByTagName('letter')) {
+                var letter = document.getElementsByTagName('letter')[letterNum]
+
+                if (letterNum == this.cursors[cursor].character) {
+                    currentLetter = letter
+                    break;
+                }
+                correctLetterWidth += letter.getBoundingClientRect().width
+                correctLetters++
+            }
+
+            this.cursors[cursor].element.style.top = `${currentLetter.getBoundingClientRect().top}px`
+            this.cursors[cursor].element.style.left = `${currentLetter.getBoundingClientRect().left}px`
+            this.cursors[cursor].element.style.height = currentLetter.clientHeight + 'px'
+            this.cursors[cursor].element.style.transition = 'all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
         }
     }
     
@@ -160,39 +186,42 @@ class Game {
         this.setCursor('main', Math.max(this.getCorrectLetterCount(), 0))
         var correctLettersLeft = this.getCorrectLetterCount() - Math.max(0, this.getLettersHidden())
         var incorrectLettersLeft = this.getIncorrectLetterCount()
+
+        var currentLetterPlaced = false
+
+        for (var word of this.getDisplayPassage().replaceAll(' ', '// ').split('//')) {
+            passageHTML += `<word>`
+            for (var letter of word) {
+                var classToAdd = ''
+                var stylesToAdd = ''
     
-        for (var letter of Array.from(this.getDisplayPassage())) {
-            var classToAdd = ''
-            if (correctLettersLeft-- > 0) {
-                var classToAdd = 'correctLetter'
-            } else if (incorrectLettersLeft-- > 0) {
-                var classToAdd = 'incorrectLetter'
-            }
-            if (classToAdd == '') {
-                passageHTML += `<span class='${classToAdd}' id='passage-scroll'>${letter}</span>`
-            } else {
-                passageHTML += `<span class='${classToAdd}'>${letter}</span>`
-            }
-            letters+= letter
-        }
-
-        var mainData // main cursor gets rendered on top of others
-
-        for (var cursor in this.cursors) {
-            var cursorData = this.cursors[cursor]
-            if ((cursorData.character >= 0 && cursorData.character <= letters.length) || cursor == 'main') {
-                if (cursor == 'main') {
-                    mainData = cursorData
-                    continue
+                if (correctLettersLeft-- > 0) {
+                    var classToAdd = 'correct'
+                } else if (incorrectLettersLeft-- > 0) {
+                    var classToAdd = 'incorrect'
                 }
-                passageHTML+= `<span class='cursor-container'>${letters.substring(0, Math.min(this.characterPrefix, mainData.character))}<span class='cursor other-cursor'>|</span>${letters.substring(Math.min(this.characterPrefix, mainData.character), this.getCursor('main').character + this.characterSuffix)}</span>`
+    
+                if (classToAdd != 'correct' && !currentLetterPlaced) {
+                    classToAdd+= ' current'
+                    currentLetterPlaced = true
+                }
+    
+    
+                passageHTML += `<letter class='${classToAdd}'>${letter == " " ? '&nbsp' : letter}</letter>`
+    
+                letters+= letter
             }
+            passageHTML += `</word>`
         }
-        if (mainData) {
-            passageHTML+= `<span class='cursor-container'>${letters.substring(0, Math.min(this.characterPrefix, mainData.character))}<span class='cursor'>|</span>${letters.substring(Math.min(this.characterPrefix, mainData.character), this.getCursor('main').character + this.characterSuffix)}</span>`
+
+        if (!currentLetterPlaced) { // The game has ended
+            // Create a fake invisible character at the end so the cursor can stand behind that one
+            passageHTML += `<letter class="current" style="opacity: 0">.</letter>`
         }
+
         this.passageElement.innerHTML = passageHTML
-        document.getElementById('passage-scroll').scrollIntoView() // TODO: NULL ERROR
+
+        this.updateCursors()
     }
 
     getExpectedWord() {
