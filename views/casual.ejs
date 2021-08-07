@@ -1,17 +1,12 @@
 <%- include('partials/header.ejs') %>
 <link rel="stylesheet" href="/css/casual.css" type="text/css">
-<p id="info-text">Game info:</p>
-<div id="info-container">
-    <div id="game-stats">
-        <p id="js-text-info" style="margin: 0"></p>
-        <p id="js-status" style="margin: 0">Starting in: </p>
-    </div>
+<div class="header-container">
+    <p><span class="header-key">Text Global Average WPM:</span> <span class="header-value" id="js-text-info"></span></p>
+    <p id="js-status"></p>
+</div>
+<%- include('partials/gameEngine.ejs') %>
     <div id="players-container">
-        <p id="playersText">Players:</p>
         <ul id="player-list"></ul>
     </div>
-</div>
-
-<%- include('partials/gameEngine.ejs') %>
-<script src="/js/game.js"></script>
+<script src="/js/casual.js"></script>
 <%- include('partials/footer.ejs') %>

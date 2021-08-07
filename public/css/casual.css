@@ -1,42 +1,30 @@
-.contentWrapper {
-    height: 100%;
-    width: 100%;
+.container {
+    justify-content: space-between;
+}
 
+.header-container {
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
 }
 
-#info-container {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 6%;
+.header-key {
     color: white;
 }
 
-#game-stats, #players-container {
-    width: 50%;
+#js-status {
+    min-width: 15%;
 }
 
-#game-stats {
-    font-size: 1.1rem;
-}
-
-#info-text {
-    text-align: center;
-    padding-bottom: 0.5%;
-    margin-bottom: 3%;
-    border-bottom: 2px solid var(--orange);
-    color: white;
-}
-
-#playersText {
-    text-align: center;
+.header-value {
+    color: var(--orange);
 }
 
 #player-list {
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-evenly;
     flex-wrap: wrap;
 
     list-style-type: none;
@@ -45,14 +33,16 @@
 .player-card {
     display: flex;
     align-items: center;
-    margin: 10px;
-    padding: 5px;
 
-    background-color: var(--background);
-    width: 40%;
-    font-size: 1vw;
-    border: black solid 3px;
-    border-bottom: var(--orange) 3px solid;
+    width: fit-content;
+    width: -moz-fit-content;
+
+    margin: 10px;
+    padding: 10px 20px;
+
+    text-align: center;
+    font-size: 1.1rem;
+    color: white;
 }
 
 .avatar-sm {

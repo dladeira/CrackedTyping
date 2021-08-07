@@ -281,6 +281,7 @@ nav > * {
 .avatar, .avatar-sm {
     border: 3px solid red;
     border-radius: 50%;
+    margin: 7px;
 }
 
 .avatar {
