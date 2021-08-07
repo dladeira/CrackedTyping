@@ -41,7 +41,6 @@ socket.on('foundInfinite', gameFound => {
             if (gameTimer < 0) { // Hasn't started yet
                 var startingText = 'Starting in: ' + Math.abs(msToSec(gameTimer))
                 setGameStatus(startingText, 0)
-                game.setEngineStatus(startingText)
             } else if (gameTimer < gameFound.options.gameLength) { // Game is ongoing
                 if (gameStage == 0) { // Game just started
                     game.startEngine()

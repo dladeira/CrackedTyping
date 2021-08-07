@@ -238,6 +238,8 @@ class Game {
         if (alert == undefined) {
             alertElement.style.opacity = 0
             return
+        } else {
+            alertElement.style.opacity = 1
         }
     
         alertElement.innerHTML = alert
