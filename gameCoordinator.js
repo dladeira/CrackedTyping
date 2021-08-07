@@ -245,12 +245,13 @@ class GameClass {
         return true
     }
 
-    setPlayerWPM(username, wpm, final) {
+    setPlayerWPM(username, wpm, final, character) {
         for (var player of this.players) {
             if (player.username == username) {
                 if (!this.playerFinished(username)) {
                     player.wpm = wpm
                     player.final = final
+                    player.character = character
                 }
             }
         }
