@@ -27,7 +27,7 @@ socket.on('dataRequest', () => {
 socket.on('foundInfinite', gameFound => {
     gameId = gameFound.id
     game = new Game(gameFound.script.passage, () => {
-        setGameStatus(`Game ended! <a id="play-again" href="/game">Continue the grind? (${getCookie('newGame')})</a>`, 2)
+        setGameStatus(`Game ended! <a id="play-again" href="/infinite">Continue the grind? (${getCookie('newGame')})</a>`, 2)
     }, 0, 200)
 
     /*
@@ -54,7 +54,7 @@ socket.on('foundInfinite', gameFound => {
             } else { // Game ended
                 if (gameStage != 2) { // Only finish the game once
                     game.stopEngine()
-                    setGameStatus(`Game ended! <a id="play-again" href="/game">Continue the grind? (${getCookie('newGame')})</a>`, 2)
+                    setGameStatus(`Game ended! <a id="play-again" href="/infinite">Continue the grind? (${getCookie('newGame')})</a>`, 2)
                 }
             }
         }

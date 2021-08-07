@@ -15,7 +15,7 @@ document.onkeydown = (event) => {
     var keybind = getKeybind(event)
     if (!keybind) return; // Control, Alt, or Shift
     if (keybind == getCookie('newGame')) {
-        window.location.pathname = '/game'
+        window.location.pathname = '/casual'
     } else if (keybind == getCookie('mainMenu')) {
         if (window.location.pathname != '/') {
             window.location.pathname = '/'

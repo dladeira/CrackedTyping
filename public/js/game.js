@@ -30,7 +30,7 @@ socket.on('foundGame', gameFound => {
     gameId = gameFound.id
     game = new Game(gameFound.text.passage, () => {
         socket.emit('dataResponse', { username: username, gameId: gameId, wpm: game.getWPM(), final: true, character: game.getCorrectLetterCount() })
-        setGameStatus(`Game ended! <a id="play-again" href="/game">Continue the grind? (${getCookie('newGame')})</a>`, 2)
+        setGameStatus(`Game ended! <a id="play-again" href="/casual">Continue the grind? (${getCookie('newGame')})</a>`, 2)
     })
 
     /*
@@ -57,7 +57,7 @@ socket.on('foundGame', gameFound => {
             if (gameStage != 2) { // Only finish the game once
                 game.stopEngine()
                 socket.emit('dataResponse', { username: username, gameId: gameId, wpm: game.getWPM(), final: true, character: game.getCorrectLetterCount() })
-                setGameStatus(`Game ended! <a id="play-again" href="/game">Continue the grind? (${getCookie('newGame')})</a>`, 2)
+                setGameStatus(`Game ended! <a id="play-again" href="/casual">Continue the grind? (${getCookie('newGame')})</a>`, 2)
             }
         }
     }, intervalDelay)
