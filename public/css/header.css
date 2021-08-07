@@ -12,10 +12,7 @@
     --primary-background: rgb(20, 26, 29);
     --secondary-background: rgb(9, 11, 14);
     --nav-background: rgb(14, 18, 22);
-
-    --nav-account-1: rgb(45, 57, 68);
-    --nav-account-2: rgb(37, 47, 56);
-    --nav-account-3: rgb(31, 40, 49);
+    --nav-background-2: rgb(25, 30, 37);
 
     font-family: 'Open Sans', sans-serif;
 
@@ -129,7 +126,7 @@ nav > * {
     border-radius: 5px;
 
     font-size: 1.4rem;
-    background-color: var(--nav-account-1);
+    background-color: transparent;
     color: white;
 
     z-index: 2;
@@ -146,15 +143,12 @@ nav > * {
 
     margin-right: 20px;
     margin-left: auto;
-    padding-top: 15px;
 
-    top: 30px;
-
-    border-radius: 5px;
-
-    background-color: var(--nav-account-2);
+    top: 60px;
 
     opacity: 0;
+
+    z-index: 2;
 }
 
 .account-tab {
@@ -169,13 +163,14 @@ nav > * {
 
     text-decoration: none;
     font-weight: 900;
-    background-color: var(--nav-account-2);
+    background-color: var(--nav-background);
+
     color: white;
 }
 
 .account-tab:hover {
     cursor: pointer;
-    background-color: var(--nav-account-3);
+    background-color: var(--nav-background-2);
 }
 
 .account-tab:first-child {

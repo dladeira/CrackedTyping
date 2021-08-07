@@ -10,6 +10,9 @@
     text-decoration: none;
     font-family: 'Open Sans', sans-serif;
     background: #000000;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     color: var(--orange);
 
     box-sizing: border-box;
@@ -68,10 +71,32 @@
 }
 
 .game-card {
-    background-image:  linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/img/keyboard.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: auto 100%;
+    background-image:  linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/img/covers/casual.jpg");
+}
+
+.keybinds-card {
+    background-position: 50% 0%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.78)), url("/img/covers/keybinds.jpg");
+}
+
+.stats-card {
+    background-position: 50% 45%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/img/covers/statistics.jpg");
+}
+
+.contribute-card {
+    background-position: 50% 60%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/img/covers/contribute.jpg")
+}
+
+.account-card {
+    background-position: 0% 50%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url("/img/covers/account.jpg")
+}
+
+.infinite-card {
+    background-position: 50% 50%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/img/covers/infinite.jpg");
 }
 
 .margin-top {
