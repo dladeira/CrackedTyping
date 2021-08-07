@@ -85,7 +85,6 @@ io.on('connection', socket => {
 
     socket.on('dataResponse', data => {
         var game = gameCoordinator.findGameById(data.gameId)
-        console.log(game.players)
         if (!game) return
         if (game.started) {
             game.setPlayerWPM(data.username, data.wpm, data.final, data.character)
