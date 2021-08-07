@@ -1,0 +1,59 @@
+.container {
+    justify-content: space-between;
+}
+
+.header-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-key {
+    color: white;
+}
+
+#js-status {
+    min-width: 15%;
+}
+
+.header-value {
+    color: var(--orange);
+}
+
+#player-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+
+    list-style-type: none;
+}
+
+.player-card {
+    display: flex;
+    align-items: center;
+
+    width: fit-content;
+    width: -moz-fit-content;
+
+    margin: 10px;
+    padding: 10px 20px;
+
+    text-align: center;
+    font-size: 1.1rem;
+    color: white;
+}
+
+.avatar-sm {
+    margin-right: 0.7vw;
+}
+
+#play-again {
+    color: var(--orange);
+    text-decoration: none;
+}
+
+#play-again:hover {
+    color: var(--green);
+}

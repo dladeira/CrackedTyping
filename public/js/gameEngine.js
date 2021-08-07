@@ -16,7 +16,6 @@ class Game {
         this.engineRunning = false
         this.intervalDelay = 200
         this.cursors = {}
-        this.startedTyping = false
 
         this.characterPrefix = !isNaN(characterPrefix) ? characterPrefix : 100000000
         this.characterSuffix = !isNaN(characterSuffix) ? characterSuffix : 100000000
@@ -33,11 +32,6 @@ class Game {
         this.textInput.placeholder = ''
 
         this.textInput.oninput = (event) => {
-            if (!this.startedTyping) {
-                this.setEngineStatus('') // Clear start typing text
-                this.startedTyping = true
-            }
-
             var wordInputed = this.textInput.value.substring(0, this.textInput.value.length - 1)
             if (this.onLastWord())
                 wordInputed = this.textInput.value
@@ -96,10 +90,6 @@ class Game {
             this.textInput.readOnly = 1
             this.textInput.placeholder = 'Finished!'
         }
-    }
-    
-    setEngineStatus(status) {
-        this.textInput.placeholder = status
     }
 
     /*
@@ -164,7 +154,11 @@ class Game {
                 this.cursors[name].element().style.backgroundColor = 'gray'
             } else {
                 this.cursors[name].element().style.zIndex = 1
-                this.cursors[name].element().style.transition = 'all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                this.cursors[name].element().style.opacity = 0
+                setTimeout(() => {
+                    this.cursors[name].element().style.opacity = 1
+                    this.cursors[name].element().style.transition = 'all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                }, 300)
             }
         }
 
@@ -234,6 +228,27 @@ class Game {
 
         this.updateCursors()
     }
+
+    /*
+    Alert
+    */
+    setAlert(alert) {
+        var alertElement = document.getElementById("alert")
+    
+        if (alert == undefined) {
+            alertElement.style.opacity = 0
+            return
+        } else {
+            alertElement.style.opacity = 1
+        }
+    
+        alertElement.innerHTML = alert
+    }
+
+
+    /*
+    Helper methods
+    */
 
     getExpectedWord() {
         return this.fullPassage.split(' ')[this.currentWordIndex]

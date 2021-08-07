@@ -1,0 +1,12 @@
+<%- include('partials/header.ejs') %>
+<link rel="stylesheet" href="/css/casual.css" type="text/css">
+<div class="header-container">
+    <p><span class="header-key">Text Global Average WPM:</span> <span class="header-value" id="js-text-info"></span></p>
+    <p id="js-status"></p>
+</div>
+<%- include('partials/gameEngine.ejs') %>
+    <div id="players-container">
+        <ul id="player-list"></ul>
+    </div>
+<script src="/js/casual.js"></script>
+<%- include('partials/footer.ejs') %>

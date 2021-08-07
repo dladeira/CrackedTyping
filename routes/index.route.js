@@ -7,8 +7,8 @@ router.get('/', (req, res) => {
     res.render('landing.ejs')
 })
 
-router.get('/game', (req, res) => {
-    res.render('game.ejs')
+router.get('/casual', (req, res) => {
+    res.render('casual.ejs')
 })
 
 router.get('/infinite', (req, res) => {
