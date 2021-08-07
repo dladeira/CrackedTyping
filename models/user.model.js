@@ -15,7 +15,8 @@ const userSchema = new mongoose.Schema({
         default: ""
     },
     keybinds: {
-        type: Object /* newGame, mainMenu */
+        type: Object, /* newGame, mainMenu */
+        default: {}
     },
     admin: {
         type: Boolean,
