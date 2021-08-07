@@ -63,7 +63,7 @@ router.post('/keybinds', loggedIn, (req, res) => {
     req.user.keybinds.mainMenu = req.body.mainMenu;
     req.user.markModified('keybinds')
     req.user.save().then(() => {
-        res.redirect('/keybinds')
+        res.redirect('/')
     }).catch((err) => {
         console.log(err)
         res.send('An error has occured, please try again later')
