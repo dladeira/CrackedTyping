@@ -22,7 +22,7 @@
     },
     "game": {
         "defaultOptions": {
-            "startDelay": 2000,
+            "startDelay": 6000,
             "gameLength": 8000,
             "deleteDelay": 3000
         },
@@ -32,7 +32,7 @@
         },
         "dataCollectionDelay": 100,
         "infiniteOptions": {
-            "startDelay": 3000,
+            "startDelay": 6000,
             "gameLength": 30000,
             "deleteDelay": 5000
         }

@@ -21,7 +21,7 @@ socket.on('dataResponse', data => {
 socket.on('dataRequest', () => {
     if (gameId && game) {
         if (gameStage < 2) { // Game in progress
-            socket.emit('dataResponse', { username: username, gameId: gameId, wpm: game.getWPM(), final: false })
+            socket.emit('dataResponse', { username: username, gameId: gameId, wpm: game.getWPM(), final: false, character: game.getCorrectLetterCount() })
         }
     }
 })
@@ -29,6 +29,7 @@ socket.on('foundGame', gameFound => {
     textInfo.innerHTML = `Times typed: ${gameFound.text.timesTyped}<br>Average WPM: ${Math.round(gameFound.text.totalWPM / gameFound.text.timesTyped) ? Math.round(gameFound.text.totalWPM / gameFound.text.timesTyped) : 0}`
     gameId = gameFound.id
     game = new Game(gameFound.text.passage, () => {
+        socket.emit('dataResponse', { username: username, gameId: gameId, wpm: game.getWPM(), final: true, character: game.getCorrectLetterCount() })
         setGameStatus(`Game ended! <a id="play-again" href="/game">Continue the grind? (${getCookie('newGame')})</a>`, 2)
     })
 
@@ -55,7 +56,7 @@ socket.on('foundGame', gameFound => {
         } else { // Game ended
             if (gameStage != 2) { // Only finish the game once
                 game.stopEngine()
-                socket.emit('dataResponse', { username: username, gameId: gameId, wpm: game.getWPM(), final: true })
+                socket.emit('dataResponse', { username: username, gameId: gameId, wpm: game.getWPM(), final: true, character: game.getCorrectLetterCount() })
                 setGameStatus(`Game ended! <a id="play-again" href="/game">Continue the grind? (${getCookie('newGame')})</a>`, 2)
             }
         }
@@ -67,6 +68,11 @@ function updatePlayers(players) {
 
     for (var i = 0; i < players.length; i++) {
         listHTML += `<li class="player-card"><img src="${players[i].avatar}" class="avatar-sm">${players[i].username} : ${players[i].wpm}</li>`
+    }
+
+    for (var player of players) {
+        if (player.username == username) continue
+        game.setCursor(player.username, player.character)
     }
 
     playerListElement.innerHTML = listHTML

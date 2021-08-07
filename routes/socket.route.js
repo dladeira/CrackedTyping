@@ -32,14 +32,16 @@ io.on('connection', socket => {
                         avatar: user.avatar,
                         wpm: 0,
                         final: false,
-                        id: socket.handshake.session._id
+                        id: socket.handshake.session._id,
+                        character: 0
                     })
                 } else {
                     game.addPlayer({
                         username: socket.handshake.session.username,
                         avatar: config.get('account.defaults.avatar'),
                         wpm: 0,
-                        final: false
+                        final: false,
+                        character: 0
                     })
                 }
                 socket.emit('foundGame', game)
@@ -82,16 +84,17 @@ io.on('connection', socket => {
     */
 
     socket.on('dataResponse', data => {
-        var game = gameCoordinator.findGameById(data.gameId);
+        var game = gameCoordinator.findGameById(data.gameId)
+        console.log(game.players)
         if (!game) return
         if (game.started) {
-            game.setPlayerWPM(data.username, data.wpm, data.final)
+            game.setPlayerWPM(data.username, data.wpm, data.final, data.character)
         }
         socket.emit('dataResponse', { players: game.players, time: game.timeSinceStart })
     })
 
     socket.on('infiniteResponse', data => {
-        var game = gameCoordinator.findInfiniteById(data.gameId);
+        var game = gameCoordinator.findInfiniteById(data.gameId)
         if (!game) return
         if (game.started) {
             game.setPlayerWPM(data.username, data.wpm, data.final, data.character)
