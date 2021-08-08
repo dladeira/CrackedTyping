@@ -64,6 +64,10 @@ Borders
 Text
 */
 
+.txt-lg {
+    font-size: 2rem;
+}
+
 .txt-md {
     font-size: 1.4rem;
 }

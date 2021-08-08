@@ -2,30 +2,15 @@
 <link rel="stylesheet" href="/css/landing.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap">
 
-<!--
-    There are two containers over here, left and right.
-
-    -- Left is "games-container" and will have gamemodes,
-    currently it is only "Join Game" (game-card)
-
-    -- Right is "account-container" since the locations are
-    personalized to you and you need to be logged in,
-    the locations are: "Account" (account-card) and "Stats" (stats-card)
--->
-
 <div class="gamemode-row">
     <div class="gamemode-column margin-right" >
-        <a class="card game-card margin-bottom" href="/casual">
-            <div class="card-body">
-                <h1 class="card-title">Casual</h1>
-                <p class="card-description">Play against players online</p>
-            </div>
+        <a class="card card-game margin-bottom" href="/casual">
+            <h1 class="txt-lg">Casual</h1>
+            <p class="txt-sm">Play against players online</p>
         </a>
-        <a class="card infinite-card margin-top" href="/infinite">
-            <div class="card-body">
-                <h1 class="card-title">Infinite</h1>
-                <p class="card-description">Grind away in a infinite typing cycle</p>
-            </div>
+        <a class="card card-infinite margin-top" href="/infinite">
+            <h1 class="txt-lg">Infinite</h1>
+            <p class="txt-sm">Grind away in a infinite typing cycle</p>
         </a>
     </div>
     <div class="gamemode-column margin-left">
@@ -33,52 +18,44 @@
             <div class="gamemode-row margin-bottom">
                 <% if (!loggedIn) { %>
                     <div class="locked-container">
-                        <p class="locked-text">
+                        <p>
                             Login to access these options
                         </p>
                     </div>
                 <% } %>
-                <a class="card account-card margin-right<% if (!loggedIn) { %> locked-card"<% } else { %>" href="/account"<% } %>>
-                    <div class="card-body">
-                        <h1 class="card-title">Account</h1>
-                        <p class="card-description">Go to your profile</p>
-                    </div>
+                <a class="card card-account margin-right<% if (!loggedIn) { %> locked-card"<% } else { %>" href="/account"<% } %>>
+                    <h1 class="txt-lg">Account</h1>
+                    <p class="txt-sm">Go to your profile</p>
                 </a>
-                <a class="card keybinds-card margin-left<% if (!loggedIn) { %> locked-card"<% } else { %>" href="/keybinds"<% } %>>
-                    <div class="card-body">
-                        <h1 class="card-title">Keybinds</h1>
-                        <p class="card-description">Configure website shortcuts</p>
-                    </div>
+                <a class="card card-keybidns margin-left<% if (!loggedIn) { %> locked-card"<% } else { %>" href="/keybinds"<% } %>>
+                    <h1 class="txt-lg">Keybinds</h1>
+                    <p class="txt-sm">Configure website shortcuts</p>
                 </a>
             </div>
             <div class="gamemode-row margin-top margin-bottom">
-                <a class="card stats-card" href="/stats">
-                    <div class="card-body">
-                        <h1 class="card-title">Stats</h1>
-                        <p class="card-description">Explore global statistics</p>
-                    </div>
+                <a class="card card-stats" href="/stats">
+                    <h1 class="txt-lg">Stats</h1>
+                    <p class="txt-sm">Explore global statistics</p>
                 </a>
             </div>
             <div class="gamemode-row margin-top">
                 <div class="gamemode-row margin-top margin-bottom">
-                    <a class="card contribute-card" href="/contribute">
-                        <div class="card-body">
-                            <div class="card-title">Contribute</div>
-                            <div class="card-description">Help grow the website</div>
-                        </div>
+                    <a class="card card-contribute" href="/contribute">
+                        <h1 class="txt-lg">Contribute</h1>
+                        <p class="txt-sm">Help grow the website</p>
                     </a>
                 </div>
             </div>
         </div>
     
         <!--
-            <a class="card stats-card unreleased-card">
+        <a class="card stats-card unreleased-card">
             <div class="locked-container">
                 <p class="locked-text">Coming soon</p>
             </div>
             <div class="card-body">
-                <div class="card-title">Stats</div>
-                <div class="card-description">Explore global statistics</div>
+                <div class="txt-lg">Stats</div>
+                <div class="txt-sm">Explore global statistics</div>
             </div>
         </a>
         -->
