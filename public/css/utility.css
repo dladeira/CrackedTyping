@@ -1,0 +1,73 @@
+/*
+Avatars
+*/
+
+.avatar, .avatar-sm {
+    border: 3px solid red;
+    border-radius: 50%;
+    margin: 7px;
+}
+
+.avatar {
+    height: 70px;
+    width: 70px;
+}
+
+.avatar-sm {
+    height: 35px;
+    width: 35px;
+
+    border-width: 1.5px;
+}
+
+/*
+Buttons
+*/
+
+.btn {
+    padding: 5px 10px;
+
+    border: 1px solid white;
+    border-radius: 10px;
+
+    font-size: 1.6rem;
+    font-weight: normal;
+    text-decoration: none;
+    color: white;
+}
+
+.btn-red {
+    border-color: red;
+}
+
+.btn-orange {
+    border-color: var(--orange);
+}
+
+.btn-green {
+    border-color: var(--green);
+}
+
+.btn:hover {
+    background-color: var(--darkest-background);
+}
+
+/*
+Borders
+*/
+
+.border-md {
+    border-width: 2px;
+}
+
+/*
+Text
+*/
+
+.txt-md {
+    font-size: 1.4rem;
+}
+
+.txt-sm {
+    font-size: 1.1rem;
+}

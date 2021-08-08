@@ -9,10 +9,10 @@
     --darker-background: rgb(27, 36, 46);
     --darkest-background: rgb(5, 7, 9);
 
-    --primary-background: rgb(20, 26, 29);
-    --secondary-background: rgb(9, 11, 14);
+    --container-background: rgb(20, 26, 29);
+    --container-outline: rgb(9, 11, 14);
     --nav-background: rgb(14, 18, 22);
-    --nav-background-2: rgb(25, 30, 37);
+    --account-tab-hover: rgb(25, 30, 37);
 
     font-family: 'Open Sans', sans-serif;
 
@@ -31,7 +31,7 @@ body {
     flex-direction: column;
 
     background-image: linear-gradient(to top right, var(--darker-background), var(--background));
-    color: rgb(189, 189, 189);
+    color: white;
 }
 
 /*
@@ -52,15 +52,13 @@ nav {
 }
 
 nav > * {
-    height: 100%;
-    width: 360px;
-}
-
-.brand-container, .control-container, .auth-container {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+
+    height: 100%;
+    width: 360px;
 }
 
 .brand-container {
@@ -75,24 +73,13 @@ nav > * {
     color: white;
 }
 
-.brand-cracked {
+.brand cracked {
     margin-right: 3px;
 
     border-radius: 3px;
 
     background-color: #2dd410;
     letter-spacing: 2px;
-}
-
-.control-btn {
-    padding: 5px 10px;
-
-    border: 1px solid red;
-    border-radius: 10px;
-
-    font-size: 1.6rem;
-    text-decoration: none;
-    color: white;
 }
 
 /*
@@ -107,14 +94,14 @@ nav > * {
   Auth (Logged in)
 */
 
-.nav-account {
+.account-container {
     width: 150px;
 
     margin-right: 20px;
     margin-left: auto;
 }
 
-.nav-account-card {
+.account-nav {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -125,18 +112,19 @@ nav > * {
     
     border-radius: 5px;
 
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     background-color: transparent;
     color: white;
 
     z-index: 2;
 }
 
-.nav-account-card:hover {
+.account-nav:hover {
     cursor: pointer;
 }
 
-.nav-account-info {
+.account-menu {
+    display: none;
     position: absolute;
 
     width: 150px;
@@ -145,8 +133,6 @@ nav > * {
     margin-left: auto;
 
     top: 60px;
-
-    opacity: 0;
 
     z-index: 2;
 }
@@ -158,11 +144,7 @@ nav > * {
 
     padding: 6px 12px;
 
-    border-top: 1px solid white;
-    border-bottom: 1px solid white;
-
     text-decoration: none;
-    font-weight: 900;
     background-color: var(--nav-background);
 
     color: white;
@@ -170,21 +152,14 @@ nav > * {
 
 .account-tab:hover {
     cursor: pointer;
-    background-color: var(--nav-background-2);
-}
-
-.account-tab:first-child {
-    padding-top: 15px;
-
-    border-top: none;
+    background-color: var(--account-tab-hover);
 }
 
 .account-tab:last-child {
-    border-bottom: none;
     border-radius: 0 0 10px 10px;
 }
 
-.nav-account-card, .account-tab {
+.account-menu, .account-tab {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -195,12 +170,7 @@ nav > * {
   Auth (Logged out)
 */
 
-#auth-login-text {
-    font-weight: 900;
-    font-size: 1.2rem;
-}
-
-#auth-strategies {
+.login-container {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -209,42 +179,33 @@ nav > * {
     width: 80%;
 }
 
-.login-btn {
+.login-text {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: rgb(189, 189, 189);
+}
+
+.btn-login {
     display: flex;
     align-items: center;
 
     height: 40px;
 
     padding: 10px;
-    
-    border: 2px solid white;
-    border-radius: 10px;
 
-    font-size: 20px;
-    text-align: center;
+    border-width: 2px;
+
     text-decoration: none;
-    color: white;
-}
-
-.login-google {
-    border-color: red;
-}
-
-.login-github {
-    border-color: white;
 }
 
 .logo {
-    max-height: 100%;
+    height: 100%;
+
+    padding-right: 0.7vw;
 }
 
-.login-google .logo {
-    padding-right: 0.7vw;
+.logo-g {
     padding-top: 1px;
-}
-
-.login-github .logo {
-    padding-right: 0.7vw;
 }
 
 /*
@@ -266,36 +227,10 @@ nav > * {
     width: 1300px;
     max-width: 90%;
 
-    border: 5px solid var(--secondary-background);
+    border: 5px solid var(--container-outline);
     border-top: none;
 
     font-size: 1rem;
-    background-color: var(--primary-background);
+    background-color: var(--container-background);
     color: var(--green);
-}
-
-/*
-  Global Utility Classes
-*/
-
-.avatar, .avatar-sm {
-    border: 3px solid red;
-    border-radius: 50%;
-    margin: 7px;
-}
-
-.avatar {
-    height: 70px;
-    width: 70px;
-}
-
-.avatar-sm {
-    height: 35px;
-    width: 35px;
-
-    border-width: 1.5px;
-}
-
-.btn:hover {
-    background-color: var(--darkest-background);
 }
