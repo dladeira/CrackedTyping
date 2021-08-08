@@ -25,7 +25,7 @@
 
         <% if (loggedIn && admin) { %>
             <div class="control-container">
-                <a href="/control" class="btn btn-red">Control</a>
+                <a href="/control" class="btn-short btn-red">Control</a>
             </div>
         <% } %>
 
@@ -44,8 +44,8 @@
         <% } else { %>
             <span class="login-text">Log in:</span>
             <div class="login-container">
-                <a href="/auth/google/login" class="btn btn-red btn-login txt-sm"><img src="/img/google-logo.svg" alt="G" class="logo logo-g">Google</a>
-                <a href="/auth/github/login" class="btn btn-login txt-sm"><img src="/img/github-logo.svg" alt="G" class="logo logo-gh">Github</a>
+                <a href="/auth/google/login" class="btn-short btn-red btn-login txt-sm"><img src="/img/google-logo.svg" alt="G" class="logo logo-g">Google</a>
+                <a href="/auth/github/login" class="btn-short btn-login txt-sm"><img src="/img/github-logo.svg" alt="G" class="logo logo-gh">Github</a>
             </div>
         <% } %>
         </div>

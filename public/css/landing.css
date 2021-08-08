@@ -28,17 +28,15 @@ Cards
     padding: 0 16px;
 }
 
-/*
-Create bright up hover effect when hovering over cards
-*/
-
+/* Bright up effect on card hover */
 .card::before {
     position: absolute;
     height: 100%;
     width: 100%;
 
-    content: "";
     background-color: rgba(0, 0, 0, 0.2);
+
+    content: "";
 }
 
 .card:not(.locked-card, .unreleased-card):hover::before {

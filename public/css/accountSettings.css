@@ -1,56 +1,56 @@
-#account-btn {
-    margin-right: 1vw;
-    padding: 7px;
-    color: white;
-    background-color: transparent;
-    border: var(--green) solid 2px;
-    border-radius: 10px;
-    text-decoration: none;
-
-    font-size: 1.1rem;
-}
+/*
+Avatar
+*/
 
 label {
-    height: 70px;
-    width: 70px;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    height: 70px;
+    width: 70px;
+    
     border-radius: 50%;
+}
+
+/* Edit and darken effect on avatar hover */
+label:hover {
+    cursor: pointer;
 }
 
 label:hover::after {
     position: absolute;
-    content: 'Edit';
-    z-index: 3;
-    opacity: 2;
+    
     font-size: 1.2rem;
     color: white;
+
+
+    content: "Edit";
+    opacity: 1;
+    z-index: 3;
 }
 
 label:hover > .avatar {
     opacity: 0.2;
 }
 
-label:hover {
-    cursor: pointer;
-}
 
-#avatar-upload {
+/* Label replaces default file upload*/
+input[type="file"] {
     display: none;
 }
 
-.changedInput {
-    border: 2px solid red !important;
-    color: white !important;
-}
+/*
+Username and description
+*/
 
-.username-input, .description-input {
+.input {
     border: 2px solid var(--orange);
+
     background-color: transparent;
 }
 
-.username-input:focus, .description-input:focus {
+.input:focus {
     outline: none;
 }
 
@@ -65,33 +65,13 @@ label:hover {
     font-size: 0.9rem;
 }
 
-.strategy-btn {
-    text-decoration: none;
-    color: white;
-}
-
-#save-btn {
-    padding: 5px 10px;
-    background-color: transparent;
-    border: 2px solid var(--green);
-    border-radius: 7px;
-    color: white;
-    font-size: 1.2rem;
-}
-
-#delete-btn {
-    padding: 5px 10px;
-    background-color: transparent;
+.input-modified {
     border: 2px solid red;
-    border-radius: 7px;
     color: white;
-    font-size: 1.2rem;
 }
 
-#save-btn:hover, #delete-btn:hover {
-    cursor: pointer;
-}
 
+/* Save profile and delete account btns*/
 .control-row {
     margin-top: auto;
 }

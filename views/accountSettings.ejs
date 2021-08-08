@@ -3,46 +3,46 @@
 <link rel="stylesheet" href="/css/accountSettings.css" type="text/css">
 
 <form action="/account/updateAccount" method="POST" id="account-form" enctype="multipart/form-data">
-    <input type="file" name="avatar" id="avatar-upload" accept="image/*">
+    <input type="file" name="avatar" id="avatar" accept="image/*">
     <div class="header-container">
         <div class="user-container">
-            <label for="avatar-upload">
+            <label for="avatar">
                 <img src="<%= user.avatar %>" class="avatar" id="js-avatar">
             </label>
             <div class="user-information">
                 <div class="input-row">
-                    <input class="username  username-input" type="text" value="<%= user.username %>" name="username" autocomplete="off">
+                    <input class="username input input-username" type="text" value="<%= user.username %>" name="username" autocomplete="off">
                     <span id="username-status"></span>
                 </div>
                 <div class="input-row">
-                    <input class="description description-input" type="text" value="<%= user.description %>" name="description" autocomplete="off">
+                    <input class="description input input-description" type="text" value="<%= user.description %>" name="description" autocomplete="off">
                     <span id="description-status"></span>
                 </div>
             </div>
         </div>
-        <a id="account-btn" href="/account">Account</a>
+        <a class="btn-green" href="/account">Account</a>
     </div>
     <div class="information-container">
         <div class="information-row">
             <% if (!loggedInGoogle) { %>
-                <p>Google not linked: <a href="/auth/google/login" class="strategy-btn">LINK</a></p>
+                <p><span class="key">Google not linked:</span> <a href="/auth/google/login"><span class="value">LINK</span></a></p>
             <% }  else { %>
-                <p>Googled linked:
+                <p><span class="key">Google linked:</span>
                     <% if (loggedInGithub) { %>
-                        <a href="/auth/google/unlink" class="strategy-btn">UNLINK</a>
+                        <a href="/auth/google/unlink"><span class="value">UNLINK</span></a>
                     <% } else { %>
-                        ONLY LOGIN
+                        <span class="err">ONLY LOGIN</span>
                     <% } %>
                 </p>
             <% } %>
             <% if (!loggedInGithub) { %>
-                <p>Github not linked: <a href="/auth/github/login" class="strategy-btn">LINK</a></p>
+                <p><span class="key">Github not linked:</span> <a href="/auth/github/login"><span class="value">LINK</span></a></p>
             <% } else { %>
                 <p>Github linked: 
                     <% if (loggedInGoogle) { %>
-                        <a href="/auth/github/unlink" class="strategy-btn">UNLINK</a>
+                        <a href="/auth/github/unlink"><span class="value">UNLINK</span></a>
                     <% } else { %>
-                        ONLY LOGIN
+                        <span class="err">ONLY LOGIN</span>
                     <% } %></p>
             <% } %>
         </div>
@@ -50,8 +50,8 @@
 </form>
 <form id="delete-form" method="POST" action="/account/delete"></form>
 <div class="information-row control-row">
-    <button id="save-btn" type="submit" form="account-form">Save profile</button>
-    <button id="delete-btn" type="submit" form="delete-form">Delete account</button>
+    <button class="btn-green" type="submit" form="account-form">Save profile</button>
+    <button class="btn-red" type="submit" form="delete-form">Delete account</button>
 </div>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/accountSettings.js"></script>

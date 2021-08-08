@@ -1,9 +1,29 @@
 /*
+Variables
+*/
+* {
+    --green: #17e22f;
+    --orange: #f8b600;
+    --red: rgb(255, 38, 0);
+
+    --background: rgb(49, 61, 73);
+    --darker-background: rgb(27, 36, 46);
+    --darkest-background: rgb(5, 7, 9);
+
+    --container-background: rgb(20, 26, 29);
+    --container-outline: rgb(9, 11, 14);
+    --nav-background: rgb(14, 18, 22);
+    --account-tab-hover: rgb(25, 30, 37);
+
+    font-family: 'Open Sans', sans-serif;
+}
+
+/*
 Avatars
 */
 
 .avatar, .avatar-sm {
-    border: 3px solid red;
+    border: 3px solid var(--red);
     border-radius: 50%;
     margin: 7px;
 }
@@ -24,20 +44,30 @@ Avatars
 Buttons
 */
 
-.btn {
-    padding: 5px 10px;
+.btn, .btn-short, .btn-red, .btn-orange, .btn-green {
+    padding: 8px 10px;
 
     border: 1px solid white;
     border-radius: 10px;
 
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: normal;
     text-decoration: none;
+    background-color: transparent;
     color: white;
 }
 
+.btn:hover, .btn-short:hover, .btn-red:hover, .btn-orange:hover, .btn-green:hover {
+    background-color: var(--darkest-background);
+    cursor: pointer;
+}
+
+.btn-short {
+    padding: 5px 10px;
+}
+
 .btn-red {
-    border-color: red;
+    border-color: var(--red);
 }
 
 .btn-orange {
@@ -46,10 +76,6 @@ Buttons
 
 .btn-green {
     border-color: var(--green);
-}
-
-.btn:hover {
-    background-color: var(--darkest-background);
 }
 
 /*
@@ -74,4 +100,28 @@ Text
 
 .txt-sm {
     font-size: 1.1rem;
+}
+
+.txt-white {
+    color: white;
+}
+
+.txt-orange {
+    color: var(--orange);
+}
+
+/*
+Text coloring
+*/
+
+span.key {
+    color: white;
+}
+
+span.value {
+    color: var(--orange);
+}
+
+span.err {
+    color: var(--red);
 }
