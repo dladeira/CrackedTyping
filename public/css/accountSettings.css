@@ -69,9 +69,3 @@ Username and description
     border: 2px solid red;
     color: white;
 }
-
-
-/* Save profile and delete account btns*/
-.control-row {
-    margin-top: auto;
-}

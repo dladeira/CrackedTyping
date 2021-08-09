@@ -125,3 +125,43 @@ span.value {
 span.err {
     color: var(--red);
 }
+
+/*
+Inputs
+*/
+
+.area, .area-orange {
+    margin-bottom: 10px;
+    padding: 8px;
+
+    border: 1px solid white;
+    border-radius: 5px;
+
+    background-color: transparent;
+    color: white;
+
+    resize: none;
+}
+
+.area-orange {
+    border-color: var(--orange);
+}
+
+.area:focus, .area-orange:focus {
+    outline: none;
+}
+
+/*
+Element positioning
+*/
+
+.control-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+
+    width: 100%;
+
+    margin-top: auto;
+}
