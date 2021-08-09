@@ -1,10 +1,11 @@
 <%- include('partials/header.ejs') %>
 <link rel="stylesheet" href="/css/contribute-texts.css" type="text/css">
 <form action="/contribute/script" method="POST" id="text-form">
-    <textarea name="value" placeholder="Type script here" autofocus>
-
-    </textarea>
-    <button type="submit" id="save-btn">Submit script</button>
+    <textarea name="value" class="area-orange" placeholder="Type script here" autocomplete="off" autofocus></textarea>
+    <div class="control-row">
+        <a href="/contribute" class="btn-green">Go back</a>
+        <button type="submit" class="btn-orange">Submit script</button>
+    </div>
 </form>
-
+<script src="/js/contribute-text.js"></script>
 <%- include('partials/footer.ejs') %>

@@ -4,20 +4,23 @@
 
 <div class="header-container">
     <div class="user-container">
-        <img src="<%= user.avatar %>" class="avatar">
+        <!-- Label is used to sync img position with accountSettings.ejs-->
+        <label>
+            <img src="<%= user.avatar %>" class="avatar">
+        </label>
         <div class="user-information">
             <p class="username"><%= user.username %></p>
             <p class="description"><%= user.description %></p>
         </div>
     </div>
     <% if (ownAccount) { %>
-    <a id="settings-btn" href="/account/settings">Settings</a>
+    <a class="btn-orange" href="/account/settings">Settings</a>
     <% } %>
 </div>
 <div class="information-container">
     <div class="information-row">
-        <p id="games-played">Total games played: <%= gamesPlayed %></p>
-        <p id="average-wpm">Average WPM: <%= averageWPM %></p>
+        <p><span class="key">Total games played:</span> <span class="value"><%= gamesPlayed %></span></p>
+        <p><span class="key">Average WPM:</span> <span class="value"><%= averageWPM %></span></p>
     </div>
 </div>
-<% include('partials/footer.ejs') %>
+<%- include('partials/footer.ejs') %>

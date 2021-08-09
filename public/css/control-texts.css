@@ -1,24 +1,13 @@
-textarea {
-    padding: 8px;
-
-    border: 1px solid var(--orange);
-    border-radius: 5px;
-
-    background-color: transparent;
-    color: white;
-
-    resize: none;
-}
-
-textarea:focus {
-    outline: none;
-}
-
 #text-form {
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 80%;
+}
+
+#text-form button {
+    margin-top: auto;
+    margin-bottom: 5vh;
 }
 
 .text-container {
@@ -43,8 +32,6 @@ textarea:focus {
     width: 100%;
 
     margin: 10px 0;
-
-    color: white;
 }
 
 .text textarea {
@@ -61,23 +48,6 @@ textarea:focus {
     width: 10%;
 }
 
-#save-btn {
-    margin-top: auto;
-    margin-bottom: 5vh;
-    padding: 5px 10px;
-
-    border: 1px solid red;
-    border-radius: 10px;
-
-    font-size: 1.2rem;
-    background-color: transparent;
-    color: white;
-}
-
-#save-btn:hover {
-    cursor: pointer;
-}
-
 #create-form {
     display: flex;
     flex-direction: row;
@@ -88,15 +58,4 @@ textarea:focus {
 #create-form textarea {
     height: 100%;
     width: 80%;
-}
-
-#create-btn {
-    padding: 5px 10px;
-
-    border: 1px solid red;
-    border-radius: 7px;
-
-    font-size: 1.2rem;
-    background-color: transparent;
-    color: white;
 }

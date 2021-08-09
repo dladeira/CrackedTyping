@@ -1,5 +1,5 @@
-var usernameInput = document.getElementsByClassName('username-input')[0]
-var descriptionInput = document.getElementsByClassName('description-input')[0]
+var usernameInput = document.getElementsByClassName('input-username')[0]
+var descriptionInput = document.getElementsByClassName('input-description')[0]
 var avatarInput = document.getElementById('avatar-upload')
 var avatarImage = document.getElementById('js-avatar')
 
@@ -11,9 +11,9 @@ form.onsubmit = formSubmitEvent
 
 usernameInput.oninput = () => {
     if (usernameInput.value != username) {
-        usernameInput.classList.add('changedInput')
+        usernameInput.classList.add('input-modified')
     } else {
-        usernameInput.classList.remove('changedInput')
+        usernameInput.classList.remove('input-modified')
     }
 
     socket.emit('usernameExists', { currentUsername: username, target: usernameInput.value })
@@ -21,9 +21,9 @@ usernameInput.oninput = () => {
 
 descriptionInput.oninput = () => {
     if (descriptionInput.value != description) {
-        descriptionInput.classList.add('changedInput')
+        descriptionInput.classList.add('input-modified')
     } else {
-        descriptionInput.classList.remove('changedInput')
+        descriptionInput.classList.remove('input-modified')
     }
     formSubmitEvent(undefined, false)
 }
@@ -32,7 +32,7 @@ avatarInput.onchange = () => {
     const [file] = avatarInput.files
     if (file) {
         avatarImage.src = URL.createObjectURL(file)
-        avatarImage.classList.add('changedInput')
+        avatarImage.classList.add('input-modified')
     }
 }
 

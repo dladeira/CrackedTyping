@@ -4,21 +4,19 @@
     <div class="text-container">
         <% for (var text of texts) { %>
             <div class="text">
-                <textarea name="<%= text._id %>"><%= text.passage %></textarea>
+                <textarea class="area-orange" name="<%= text._id %>"><%= text.passage %></textarea>
                 <div class="delete-text">
                     Delete: <input name="<%= text._id %>-deletePassage" type="checkbox">
                 </div>
             </div>
         <% } %>
     </div>
-    <button type="submit" id="save-btn">Save</button>
+    <button type="submit" class="btn-red">Save</button>
 </form>
 
 <form action="/control/texts/new" method="POST" id="create-form">
-    <textarea name="passage">
-
-    </textarea>
-    <button type="submit" id="create-btn">Create<br>passage</button>
+    <textarea class="area-orange" name="passage"></textarea>
+    <button type="submit" class="btn-red">Create<br>passage</button>
 </form>
 
 <%- include('partials/footer.ejs') %>

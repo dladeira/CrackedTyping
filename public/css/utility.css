@@ -1,0 +1,167 @@
+/*
+Variables
+*/
+* {
+    --green: #17e22f;
+    --orange: #f8b600;
+    --red: rgb(255, 38, 0);
+
+    --background: rgb(49, 61, 73);
+    --darker-background: rgb(27, 36, 46);
+    --darkest-background: rgb(5, 7, 9);
+
+    --container-background: rgb(20, 26, 29);
+    --container-outline: rgb(9, 11, 14);
+    --nav-background: rgb(14, 18, 22);
+    --account-tab-hover: rgb(25, 30, 37);
+
+    font-family: 'Open Sans', sans-serif;
+}
+
+/*
+Avatars
+*/
+
+.avatar, .avatar-sm {
+    border: 3px solid var(--red);
+    border-radius: 50%;
+    margin: 7px;
+}
+
+.avatar {
+    height: 70px;
+    width: 70px;
+}
+
+.avatar-sm {
+    height: 35px;
+    width: 35px;
+
+    border-width: 1.5px;
+}
+
+/*
+Buttons
+*/
+
+.btn, .btn-short, .btn-red, .btn-orange, .btn-green {
+    padding: 8px 10px;
+
+    border: 1px solid white;
+    border-radius: 10px;
+
+    font-size: 1.4rem;
+    font-weight: normal;
+    text-decoration: none;
+    background-color: transparent;
+    color: white;
+}
+
+.btn:hover, .btn-short:hover, .btn-red:hover, .btn-orange:hover, .btn-green:hover {
+    background-color: var(--darkest-background);
+    cursor: pointer;
+}
+
+.btn-short {
+    padding: 5px 10px;
+}
+
+.btn-red {
+    border-color: var(--red);
+}
+
+.btn-orange {
+    border-color: var(--orange);
+}
+
+.btn-green {
+    border-color: var(--green);
+}
+
+/*
+Borders
+*/
+
+.border-md {
+    border-width: 2px;
+}
+
+/*
+Text
+*/
+
+.txt-lg {
+    font-size: 2rem;
+}
+
+.txt-md {
+    font-size: 1.4rem;
+}
+
+.txt-sm {
+    font-size: 1.1rem;
+}
+
+.txt-white {
+    color: white;
+}
+
+.txt-orange {
+    color: var(--orange);
+}
+
+/*
+Text coloring
+*/
+
+span.key {
+    color: white;
+}
+
+span.value {
+    color: var(--orange);
+}
+
+span.err {
+    color: var(--red);
+}
+
+/*
+Inputs
+*/
+
+.area, .area-orange {
+    margin-bottom: 10px;
+    padding: 8px;
+
+    border: 1px solid white;
+    border-radius: 5px;
+
+    background-color: transparent;
+    color: white;
+
+    resize: none;
+}
+
+.area-orange {
+    border-color: var(--orange);
+}
+
+.area:focus, .area-orange:focus {
+    outline: none;
+}
+
+/*
+Element positioning
+*/
+
+.control-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+
+    width: 100%;
+
+    margin-top: auto;
+}

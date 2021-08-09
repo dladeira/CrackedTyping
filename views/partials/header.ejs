@@ -6,7 +6,9 @@
         <script data-ad-client="ca-pub-8893005154186798" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap">  
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap">
+
+        <link type="text/css" rel="stylesheet" href="/css/utility.css">
         <link type="text/css" rel="stylesheet" href="/css/header.css">
 
         <!-- Keep script at bottom of <head> container to prevent flash of unstyled content -->
@@ -18,37 +20,34 @@
     <body>
     <nav>
         <div class="brand-container">
-            <a href="/" class="brand"><span class="brand-cracked">Cracked</span>Typing</a>
+            <a href="/" class="brand"><cracked>Cracked</cracked>Typing</a>
         </div>
 
-        <% if (loggedIn) { %>
-
-            <% if (admin) { %>
-                <div class="control-container">
-                    <a href="/control" class="btn control-btn">Control</a>
-                </div>
-            <% } %>
-
-            <div class="auth-container">
-                <div class="nav-account">
-                    <div class="nav-account-card">
-                        <p id="auth-username"><%= username %></p>
-                        <img src="<%= avatar %>" class="avatar-sm">
-                    </div>
-                    <div class="nav-account-info">
-                        <a class="account-tab account-tab-logout" href="/auth/logout">Log out</a>
-                    </div>
-                </div>
-            </div>
-
-        <% } else { %>
-            <div class="auth-container">
-                <span id="auth-login-text">Log in:</span>
-                <div id="auth-strategies">
-                    <a href="/auth/google/login" class="btn login-btn login-google"><img src="/img/google-logo.svg" alt="G" class="logo">Google</a>
-                <a href="/auth/github/login" class="btn login-btn login-github"><img src="/img/github-logo.svg" alt="G" class="logo">Github</a>
-                </div>
+        <% if (loggedIn && admin) { %>
+            <div class="control-container">
+                <a href="/control" class="btn-short btn-red">Control</a>
             </div>
         <% } %>
+
+
+        <div class="auth-container">
+        <% if (loggedIn) { %>
+            <div class="account-container">
+                <div class="account-nav">
+                    <%= username %>
+                    <img src="<%= avatar %>" class="avatar-sm">
+                </div>
+                <div class="account-menu txt-sm">
+                    <a class="account-tab" href="/auth/logout">Log out</a>
+                </div>
+            </div>
+        <% } else { %>
+            <span class="login-text">Log in:</span>
+            <div class="login-container">
+                <a href="/auth/google/login" class="btn-short btn-red btn-login txt-sm"><img src="/img/google-logo.svg" alt="G" class="logo logo-g">Google</a>
+                <a href="/auth/github/login" class="btn-short btn-login txt-sm"><img src="/img/github-logo.svg" alt="G" class="logo logo-gh">Github</a>
+            </div>
+        <% } %>
+        </div>
     </nav>
     <div class="container">
