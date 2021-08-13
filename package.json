@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "build": "npm i",
+    "test": "nodemon --ext '*'",
     "production": "export NODE_ENV=production && npm start"
   },
   "repository": {
