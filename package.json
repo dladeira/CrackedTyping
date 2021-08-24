@@ -4,10 +4,8 @@
   "description": "A typing website",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "build": "npm i",
-    "test": "nodemon --ext '*'",
-    "production": "export NODE_ENV=production && npm start"
+    "start": "export NODE_ENV=production && npm start",
+    "test": "nodemon --ext '*'"
   },
   "repository": {
     "type": "git",
@@ -17,7 +15,7 @@
     "CrackedTyping"
   ],
   "author": "dladeira",
-  "license": "MIT",
+  "license": "GPLv3",
   "bugs": {
     "url": "https://github.com/dladeira/CrackedTyping/issues"
   },
