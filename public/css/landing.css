@@ -1,3 +1,7 @@
+/*
+Cards
+*/
+
 .card {
     display: block;
     position: relative;
@@ -8,45 +12,83 @@
     border: 2px solid var(--orange);
     
     text-decoration: none;
-    font-family: 'Open Sans', sans-serif;
     background: #000000;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    color: var(--orange);
-
-    box-sizing: border-box;
+    color: white;
 }
 
+.card h1 {
+    color: var(--orange);
+    padding: 10px 0px 2px 16px;
+}
+
+.card p {
+    padding: 0 16px;
+}
+
+/* Bright up effect on card hover */
 .card::before {
     position: absolute;
     height: 100%;
     width: 100%;
 
-    content: " ";
     background-color: rgba(0, 0, 0, 0.2);
-}
 
-.locked-card::before {
-    background-color: rgba(0, 0, 0, 0.6);
+    content: "";
 }
 
 .card:not(.locked-card, .unreleased-card):hover::before {
     background-color: rgba(0, 0, 0, 0);
 }
 
-.card-body {
-    padding: 1rem;
+/*
+Locked cards
+*/
+
+.locked-card::before {
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
-.card-title {
-    font-size: 2rem;
+.locked-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+
+    height: 100%;
+    width: 100%;
+
+    background-color: rgba(0, 0, 0, 0.5);
+
+    z-index: 2;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-.card-description {
-    font-size: 1.1rem;
+.locked-container p {
+    padding: 15px;
+
+    border: 1px solid white;
+    border-radius: 5px;
+
+    font-size: 1.5rem;
+    text-align: center;
+    background-color: black;
     color: white;
 }
+
+.locked-container p:hover {
+    cursor: default;
+}
+
+/*
+Rows and columns
+*/
 
 .gamemode-row {
     display: flex;
@@ -70,35 +112,6 @@
     width: 100%;
 }
 
-.game-card {
-    background-image:  linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/img/covers/casual.jpg");
-}
-
-.keybinds-card {
-    background-position: 50% 0%;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.78)), url("/img/covers/keybinds.jpg");
-}
-
-.stats-card {
-    background-position: 50% 45%;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/img/covers/statistics.jpg");
-}
-
-.contribute-card {
-    background-position: 50% 60%;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/img/covers/contribute.jpg")
-}
-
-.account-card {
-    background-position: 0% 50%;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url("/img/covers/account.jpg")
-}
-
-.infinite-card {
-    background-position: 50% 50%;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/img/covers/infinite.jpg");
-}
-
 .margin-top {
     margin-top: 10px;
 }
@@ -114,37 +127,35 @@
     margin-left: 10px;
 }
 
-.locked-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
+/*
+Card backgrounds
+*/
 
-    height: 100%;
-    width: 100%;
-
-    background-color: rgba(0, 0, 0, 0.5);
-
-    z-index: 2;
-
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+.card-game {
+    background-image:  linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/img/covers/casual.jpg");
 }
 
-.locked-text {
-    padding: 15px;
-
-    border: 1px solid white;
-    border-radius: 5px;
-
-    font-size: 1.5rem;
-    text-align: center;
-    background-color: black;
-    color: white;
+.card-keybinds {
+    background-position: 50% 0%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.78)), url("/img/covers/keybinds.jpg");
 }
 
-.locked-text:hover {
-    cursor: default;
+.card-stats {
+    background-position: 50% 45%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/img/covers/statistics.jpg");
+}
+
+.card-contribute {
+    background-position: 50% 60%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/img/covers/contribute.jpg")
+}
+
+.card-account {
+    background-position: 0% 50%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url("/img/covers/account.jpg")
+}
+
+.card-infinite {
+    background-position: 50% 50%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/img/covers/infinite.jpg");
 }

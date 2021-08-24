@@ -24,8 +24,8 @@ document.onkeydown = (event) => {
 }
 
 if (getCookie('loggedIn') != 'false') {
-    var accountNavbar = document.getElementsByClassName('nav-account-card')[0]
-    var accountInfo = document.getElementsByClassName('nav-account-info')[0]
+    var accountNavbar = document.getElementsByClassName('account-nav')[0]
+    var accountInfo = document.getElementsByClassName('account-menu')[0]
 
     var ignoreNavClose = false
 
@@ -40,17 +40,17 @@ if (getCookie('loggedIn') != 'false') {
             ignoreNavClose = false
         }, 150)
 
-        if (accountInfo.style.opacity == 1) {
-            accountInfo.style.opacity = 0
+        if (accountInfo.style.display == 'block') {
+            accountInfo.style.display = 'none'
         } else {
-            accountInfo.style.opacity = 1
+            accountInfo.style.display = 'block'
         }
     }
 
     document.body.onclick = event => {
         if (!ignoreNavClose) {
-            if (accountInfo.style.opacity == 1) {
-                accountInfo.style.opacity = 0
+            if (accountInfo.style.display == 'block') {
+                accountInfo.style.display = 'none'
             }
         }
     }

@@ -4,21 +4,19 @@
     <div class="text-container">
         <% for (var script of scripts) { %>
             <div class="text">
-                <textarea name="<%= script._id %>"><%= script.passage %></textarea>
+                <textarea class="area-orange" name="<%= script._id %>"><%= script.passage %></textarea>
                 <div class="delete-text">
                     Delete: <input name="<%= script._id %>-deletePassage" type="checkbox">
                 </div>
             </div>
         <% } %>
     </div>
-    <button type="submit" id="save-btn">Save</button>
+    <button type="submit" class="btn-red">Save</button>
 </form>
 
 <form action="/control/scripts/new" method="POST" id="create-form">
-    <textarea name="passage">
-
-    </textarea>
-    <button type="submit" id="create-btn">Create<br>script</button>
+    <textarea class="area-orange" name="passage"></textarea>
+    <button type="submit" class="btn-red">Create<br>script</button>
 </form>
 
 <%- include('partials/footer.ejs') %>
