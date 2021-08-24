@@ -9,10 +9,12 @@ CrackedTyping is a typing website that helps you increase your word count from a
 
 ## Getting started
 
-First install all the required packages
-```npm i```
+First, install all the required packages
+```
+npm i
+```
 
-Create a `.env` file
+Then create a `.env` file and fill out all the required fields (take a look at the exemplar below)
 ```
 MONGO_STRING=
 
@@ -23,8 +25,12 @@ GITHUB_ID=
 GITHUB_SECRET=
 ```
 
-Start the server in development mode
-```npm test```
+Finally, start the server in development mode
+```
+npm test
+```
 
-Or start in production mode (if you're hosting your own website)
-```npm start```
+or start in production mode (if you're hosting your own website)
+```
+npm start
+```
