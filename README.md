@@ -10,7 +10,7 @@ CrackedTyping is a typing website that helps you increase your word count from a
 ## Getting started
 
 First install all the required packages
-`npm i`
+```npm i```
 
 Create a `.env` file
 ```
@@ -24,7 +24,7 @@ GITHUB_SECRET=
 ```
 
 Start the server in development mode
-`npm test`
+```npm test```
 
 Or start in production mode (if you're hosting your own website)
-`npm start`
+```npm start```
