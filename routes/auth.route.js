@@ -52,9 +52,8 @@ router.get("/logout", loggedIn, (req, res) => {
 
 function strategyExists(req, res, next) {
     if (req.params.strategy) { // Strategy parameter exists (need to verify that it's a valid strategy)
-        for (var strategy in config.get('auth')) {
-            if (req.params.strategy == strategy)
-                return next()
+        if (process.env[`${req.params.strategy.toUpperCase()}_ID`]) {
+            return next()
         }
         return res.send('Invalid login strategy')
     } else { // Strategy parameter does not exist (no need to verify)

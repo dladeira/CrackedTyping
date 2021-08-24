@@ -10,8 +10,8 @@ const session = require('express-session')({
         maxAge: 1000 * 60 * 60 * 24 * 4
     },
     store: MongoStore.create({
-        mongoUrl: config.get('mongodb.connectionString'),
-        mongoOptions: config.get('mongodb.options')
+        mongoUrl: process.env.MONGO_STRING,
+        mongoOptions: config.get('mongoOptions')
     })
 })
 
