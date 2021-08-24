@@ -1,24 +1,11 @@
 {
     "app": {
         "port": 7300,
-        "origin": "https://localhost:7300"
+        "origin": "http://localhost:7300"
     },
-    "mongodb": {
-        "connectionString": "mongodb://admin:mediameister5634@ladeira.eu:1283/crackedtyping-dev?authSource=admin",
-        "options": {
+    "mongoOptions": {
             "useNewUrlParser": true,
             "useUnifiedTopology": true
-        }
-    },
-    "auth": {
-        "google": {
-            "clientId": "623304601185-t4a290j6gqoblliedq90c9nfir84sm5e.apps.googleusercontent.com",
-            "clientSecret": "wI-nbUfmJrIOdzZlBX5lF0Fw"
-        },
-        "github" : {
-            "clientId": "d4d413105f6aa015ffb3",
-            "clientSecret": "24628de04064459fd160e525d255f474c5c6390b"
-        }
     },
     "game": {
         "defaultOptions": {

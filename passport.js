@@ -9,8 +9,8 @@ passport.use(new GithubStrategy(getStrategyOptions('github'), getStrategyCallbac
 
 function getStrategyOptions(strategy) {
     return {
-        clientID: config.get(`auth.${strategy}.clientId`),
-        clientSecret: config.get(`auth.${strategy}.clientSecret`),
+        clientID: process.env[`${strategy.toUpperCase()}_ID`],
+        clientSecret: process.env[`${strategy.toUpperCase()}_SECRET`],
         callbackURL: config.get('app.origin') + `/auth/${strategy}/redirect`,
         passReqToCallback: true
     }

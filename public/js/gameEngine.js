@@ -26,10 +26,13 @@ class Game {
 
         this.textInput = document.getElementById('engine-input')
         this.passageElement = document.getElementById('engine-passage')
+        this.passageWrapper = document.getElementById('engine-passage-wrapper')
 
         this.textInput.readOnly = 1
         this.textInput.value = ''
         this.textInput.placeholder = ''
+        setInterval(() => { this.textInput.focus()} , 100)
+        setInterval(() => { this.updatePassage() }, 500)
 
         this.textInput.oninput = (event) => {
             var wordInputed = this.textInput.value.substring(0, this.textInput.value.length - 1)
@@ -199,6 +202,7 @@ class Game {
         var currentLetterPlaced = false
 
         for (var word of this.getDisplayPassage().replaceAll(' ', '// ').split('//')) {
+
             passageHTML += `<word>`
             for (var letter of word) {
                 var classToAdd = ''
@@ -225,6 +229,29 @@ class Game {
         }
 
         this.passageElement.innerHTML = passageHTML
+
+
+        /*
+        We can optimize the engine using this but I am currently too lazy
+        */
+        var hiddenTopLetters = 0
+        var hiddenBottomLetters = 0
+        for (var letterNum in document.getElementsByTagName("letter")) {
+            if (isNaN(letterNum)) {
+                continue
+            }
+            var letterArray = document.getElementsByTagName("letter")
+
+            if (this.isLetterHiddenBottom(letterArray[letterNum])) {
+                hiddenBottomLetters++
+            }
+
+            if (this.isLetterHiddenTop(letterArray[letterNum])) {
+                hiddenTopLetters++
+            }
+        }
+
+        document.getElementsByClassName("current")[0].scrollIntoView()
 
         this.updateCursors()
     }
@@ -304,5 +331,29 @@ class Game {
             }
         }
         return letterCount
+    }
+    
+    isLetterVisible(el) {
+        var eRect = el.getBoundingClientRect()
+        var pRect = this.passageElement.getBoundingClientRect()
+        var isVisible = (eRect.top < pRect.bottom) && (eRect.bottom > pRect.top);
+        return isVisible;
+    }
+
+    isLetterHiddenTop(el) {
+        var eRect = el.getBoundingClientRect()
+        var pRect = this.passageWrapper.getBoundingClientRect()
+        return eRect.bottom < pRect.top;
+    }
+
+    isLetterHiddenBottom(el) {
+        var eRect = el.getBoundingClientRect()
+        var pRect = this.passageWrapper.getBoundingClientRect()
+        return eRect.top > pRect.bottom;
+    }
+
+    getLettersLeft() {
+        console.log(this.fullPassage.length - this.getCorrectLetterCount())
+        return this.fullPassage.length - this.getCorrectLetterCount()
     }
 }

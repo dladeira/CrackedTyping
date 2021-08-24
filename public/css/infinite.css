@@ -7,43 +7,12 @@
 }
 
 #engine-container {
-    width: 70%
+    height: 100%;
+    width: 20%
 }
 
 #engine-passage {
-    height: 80%;
+    height: 10%;
 
     margin-top: 0 !important;
-}
-
-#player-list {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    flex-wrap: wrap;
-
-    width: 20%;
-
-    list-style-type: none;
-}
-
-.player-card {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    padding: 5px;
-
-    background-color: var(--background);
-    width: 100%;
-    font-size: 1vw;
-    border: black solid 3px;
-    border-bottom: var(--orange) 3px solid;
-}
-
-.avatar-sm {
-    margin-right: 0.7vw;
-}
-
-.other-cursor {
-    border-color: gray !important;
 }
