@@ -87,12 +87,25 @@ nav > * {
     margin-left: auto;
 }
 
+.account-container-logged-in {
+    /*
+    If the user is logged in start the username alignment
+    at the end so it's pushed onto the screen
+    */
+
+    display: flex;
+    justify-content: end;
+}
+
 .account-nav {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     position: relative;
+
+    width: fit-content;
+    width: -moz-fit-content;
 
     padding: 5px 10px;
     
