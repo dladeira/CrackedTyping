@@ -6,7 +6,7 @@ const session = require('express-session')({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        sameSite: 'strict',
+        sameSite: 'lax',
         maxAge: 1000 * 60 * 60 * 24 * 4
     },
     store: MongoStore.create({
