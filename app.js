@@ -23,8 +23,8 @@ app.use(passport.session())
 // Pass userData to EJS
 app.use(userData)
 
-// Trust proxies in a production enviroment
-app.set('trust proxy', app.get('env') == 'production')
+// Trust the first proxy in a production enviroment
+app.set('trust proxy', app.get('env') == 'production' ? 1 : false)
 
 // Routes
 app.use('/', indexRouter)
