@@ -21,13 +21,12 @@ label:hover {
 label:hover::after {
     position: absolute;
     
+    opacity: 1;
     font-size: 1.2rem;
     color: white;
 
-
-    content: "Edit";
-    opacity: 1;
     z-index: 3;
+    content: "Edit";
 }
 
 label:hover > .avatar {

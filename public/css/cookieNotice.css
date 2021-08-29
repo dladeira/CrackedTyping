@@ -1,9 +1,47 @@
-#cookiebar {
-    background-color: var(--darker-background);
-    width: 100%;
-    overflow: hidden;
+#cookie-wrapper {
     position: absolute;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+
     bottom: 0;
+
+    width: 100%;
+
+    background-color: var(--darker-background);
+}
+
+
+#cookie-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 800px;
+
+    padding: 10px;
+
+    background-color: var(--darker-background);
+}
+
+#cookie-text {
+    width: 80%;
+}
+
+#cookie-control {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    height: 100%;
+    width: 15%;
+}
+
+#cookie-accept, #cookie-decline {
+    padding: 5px 2px;
+
+    font-size: 1rem;
+}
+
+#cookie-accept {
+    margin-bottom: 10px;
 }

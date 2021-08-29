@@ -31,6 +31,7 @@ Cards
 /* Bright up effect on card hover */
 .card::before {
     position: absolute;
+
     height: 100%;
     width: 100%;
 
@@ -52,10 +53,10 @@ Locked cards
 }
 
 .locked-container {
+    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
 
     height: 100%;
     width: 100%;
