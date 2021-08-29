@@ -5,6 +5,7 @@
     align-items: center;
   
     height: 100%;
+    width: 100%;
 
     box-sizing: border-box;
 }
@@ -13,7 +14,7 @@
     display: flex;
     align-items: center;
 
-    height: 50%;
+    height: 100%;
 
     padding: 1%;
     
@@ -43,6 +44,8 @@
     align-content: start;
 
     height: 100%;
+
+    padding-top: 20px;
 
     overflow-y: hidden;
 }

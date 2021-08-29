@@ -2,14 +2,22 @@ var socket = io()
 
 String.prototype.replaceLast = (what, replacement) => {
     if (this.lastIndexOf(what) == this.length - 1) {
-        var pcs = this.split(what);
-        var lastPc = pcs.pop();
-        return pcs.join(what) + replacement + lastPc;
+        var pcs = this.split(what)
+        var lastPc = pcs.pop()
+        return pcs.join(what) + replacement + lastPc
     }
-    return this;
-};
+    return this
+}
 
 class Game {
+
+    /**
+     * Create a game
+     * @param {String} passage - The passage to type
+     * @param {Function} onGameEnd - The function to run at the end of the game
+     * @param {Number} characterPrefix - The amount of characters to display before the cursor
+     * @param {Number} characterSuffix - The amount of characters to display after the cursor
+     */
     constructor (passage, onGameEnd, characterPrefix, characterSuffix) {
         this.fullPassage = passage.replace(/[\r\n\x0B\x0C\u0085\u2028\u2029]+/g, ' ').replace(/  +/g, ' ')
         this.onGameEnd = onGameEnd
@@ -31,8 +39,10 @@ class Game {
         this.textInput.readOnly = 1
         this.textInput.value = ''
         this.textInput.placeholder = ''
+
+        this.hiddenTopLetters = 0
+
         setInterval(() => { this.textInput.focus()} , 100)
-        setInterval(() => { this.updatePassage() }, 500)
 
         this.textInput.oninput = (event) => {
             var wordInputed = this.textInput.value.substring(0, this.textInput.value.length - 1)
@@ -68,7 +78,7 @@ class Game {
                     }
                 }
             }
-            this.updateCursors()
+            //this.updatePassage() // KEEP THIS COMMENTED WHEN DEBUGGING
         }, this.intervalDelay)
 
         this.updatePassage()
@@ -78,6 +88,9 @@ class Game {
     Engine manipulation
     */
 
+    /**
+     * Start the game engine
+     */
     startEngine() {
         if (!this.engineRunning) {
             this.engineRunning = true
@@ -87,6 +100,9 @@ class Game {
         }
     }
     
+    /**
+     * Stop the game engine
+     */
     stopEngine() {
         if (this.engineRunning) {
             this.engineRunning = false
@@ -99,29 +115,52 @@ class Game {
     Passage
     */
 
+    /**
+     * Add text to the passage
+     * @param {String} text - The text to add
+     */
     addPassage(text) {
-        this.fullPassage+= text
+        if (this.engineRunning) {
+            this.fullPassage+= text
+        }
     }
 
+    /**
+     * Get the passage
+     * @returns {String} The passage
+     */
     getPassage() {
         return this.fullPassage
     }
 
+    /**
+     * Get the amount of characters to display before the cursor
+     * @returns {Number}
+     */
     getPrefix() {
         return Math.max(this.getCursor('main').character - this.characterPrefix, 0)
     }
 
+    /**
+     * Get the amount of characters to display after the cursor
+     * @returns {Number}
+     */
     getSuffix() {
         return Math.min(this.getCursor('main').character + this.characterSuffix)
     }
 
+    /**
+     * Get the displayed passage
+     * @returns {String}
+     */
     getDisplayPassage() {
-        if (this.getCursor('main')) {
-            return this.fullPassage.substring(this.getCursor('main').character - this.characterPrefix, this.getCursor('main').character + this.characterSuffix)
-        }
-        return this.fullPassage.substring(0, 200)
+        return this.fullPassage.substring(this.hiddenTopLetters, this.fullPassage.length)
     }
 
+    /**
+     * Get the amount of letters hidden
+     * @returns {Number}
+     */
     getLettersHidden() {
         if (this.getCursor('main')) {
             return this.getCursor('main').character - this.characterPrefix
@@ -133,13 +172,17 @@ class Game {
     Cursors
     */
 
+    /**
+     * Get a cursor
+     * @param {String} name - Name of the cursor
+     * @returns {Object} The cursor
+     */
     getCursor(name) {
         return this.cursors[name]
     }
 
     /**
-     * @description Renders a cursor
-     * 
+     * Get a cursor
      * @param {string} name - The unique name of the cursor ('main' name is reserved for the user's cursor)
      * @param {integer} character - The character that the cursor is currently on
      * @param {integer} timeout - If the cursor isn't updated again in X miliseconds then it gets removed
@@ -172,17 +215,19 @@ class Game {
         }
     }
 
-
+    /**
+     * Display/update all the cursors in the game
+     */
     updateCursors() {
         for (var cursorName in this.cursors) {
             var currentLetter
             var cursor = this.cursors[cursorName]
-            for (var letterNum in document.getElementsByTagName('letter')) {
+            for (var letterNum in Array.from(document.getElementsByTagName('letter'))) {
                 var letter = document.getElementsByTagName('letter')[letterNum]
 
-                if (letterNum == cursor.character - this.getPrefix()) {
+                if (letterNum == cursor.character) {
                     currentLetter = letter
-                    break;
+                    break
                 }
             }
 
@@ -193,6 +238,9 @@ class Game {
         }
     }
     
+    /**
+     * Update the passage
+     */
     updatePassage() { // Each letter has it's own <span>
         var passageHTML = ''
         this.setCursor('main', Math.max(this.getCorrectLetterCount(), 0))
@@ -202,7 +250,6 @@ class Game {
         var currentLetterPlaced = false
 
         for (var word of this.getDisplayPassage().replaceAll(' ', '// ').split('//')) {
-
             passageHTML += `<word>`
             for (var letter of word) {
                 var classToAdd = ''
@@ -229,36 +276,28 @@ class Game {
         }
 
         this.passageElement.innerHTML = passageHTML
+        document.getElementsByClassName("current")[0].scrollIntoView()
+        this.updateCursors()
 
-
-        /*
-        We can optimize the engine using this but I am currently too lazy
-        */
-        var hiddenTopLetters = 0
-        var hiddenBottomLetters = 0
+        var currentlyHiddenTopLetters = 0
         for (var letterNum in document.getElementsByTagName("letter")) {
             if (isNaN(letterNum)) {
                 continue
             }
             var letterArray = document.getElementsByTagName("letter")
 
-            if (this.isLetterHiddenBottom(letterArray[letterNum])) {
-                hiddenBottomLetters++
-            }
-
             if (this.isLetterHiddenTop(letterArray[letterNum])) {
-                hiddenTopLetters++
+                currentlyHiddenTopLetters++
             }
         }
-
-        document.getElementsByClassName("current")[0].scrollIntoView()
-
-        this.updateCursors()
+        this.hiddenTopLetters += currentlyHiddenTopLetters
+        this.confirmedText = this.confirmedText.substring(currentlyHiddenTopLetters)
     }
 
-    /*
-    Alert
-    */
+    /**
+     * Display an alert
+     * @param {String} alert - The text to display
+     */
     setAlert(alert) {
         var alertElement = document.getElementById("alert")
     
@@ -302,7 +341,7 @@ class Game {
     getCorrectLetterCount() {
         var letterCount = 0
         var letterArray = Array.from(this.getTotalTypedText())
-        var passageLetterArray = Array.from(this.fullPassage)
+        var passageLetterArray = Array.from(this.getDisplayPassage())
         for (var i in letterArray) {
             if (letterArray[i] == passageLetterArray[i]) {
                 letterCount++
@@ -316,7 +355,7 @@ class Game {
     getIncorrectLetterCount() {
         var letterCount = 0
         var letterArray = Array.from(this.getTotalTypedText())
-        var passageLetterArray = Array.from(this.fullPassage)
+        var passageLetterArray = Array.from(this.getDisplayPassage())
         var incorrectLetterFound = false
         for (var i in letterArray) {
             if (i < this.getCorrectLetterCount()) // Skip all the correct letters
@@ -336,24 +375,23 @@ class Game {
     isLetterVisible(el) {
         var eRect = el.getBoundingClientRect()
         var pRect = this.passageElement.getBoundingClientRect()
-        var isVisible = (eRect.top < pRect.bottom) && (eRect.bottom > pRect.top);
-        return isVisible;
+        var isVisible = (eRect.top < pRect.bottom) && (eRect.bottom > pRect.top)
+        return isVisible
     }
 
     isLetterHiddenTop(el) {
         var eRect = el.getBoundingClientRect()
         var pRect = this.passageWrapper.getBoundingClientRect()
-        return eRect.bottom < pRect.top;
+        return eRect.bottom < pRect.top
     }
 
     isLetterHiddenBottom(el) {
         var eRect = el.getBoundingClientRect()
         var pRect = this.passageWrapper.getBoundingClientRect()
-        return eRect.top > pRect.bottom;
+        return eRect.top > pRect.bottom
     }
 
     getLettersLeft() {
-        console.log(this.fullPassage.length - this.getCorrectLetterCount())
-        return this.fullPassage.length - this.getCorrectLetterCount()
+        return this.getDisplayPassage().length - this.getCorrectLetterCount()
     }
 }

@@ -1,18 +1,8 @@
-#game-container {
+.engine-wrapper {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    justify-content: row;
+    align-items: start;
 
-    height: 100%;
-}
-
-#engine-container {
-    height: 100%;
-    width: 20%
-}
-
-#engine-passage {
-    height: 10%;
-
-    margin-top: 0 !important;
+    height: 100px;
+    width: 100px;
 }
