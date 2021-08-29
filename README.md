@@ -31,6 +31,8 @@ npm test
 ```
 
 or start in production mode (if you're hosting your own website)
+
+**NOTE: A https enabled proxy is required**
 ```
 npm start
 ```
