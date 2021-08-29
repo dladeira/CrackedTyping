@@ -23,6 +23,8 @@ GOOGLE_SECRET=
 
 GITHUB_ID=
 GITHUB_SECRET=
+
+SESSION_SECRET-
 ```
 
 Finally, start the server in development mode
@@ -31,6 +33,8 @@ npm test
 ```
 
 or start in production mode (if you're hosting your own website)
+
+**NOTE: A https enabled proxy is required**
 ```
 npm start
 ```

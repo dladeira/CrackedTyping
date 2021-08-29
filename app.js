@@ -21,7 +21,10 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // Pass userData to EJS
-app.use(userData);
+app.use(userData)
+
+// Trust the first proxy in a production enviroment
+app.set('trust proxy', app.get('env') == 'production' ? 1 : false)
 
 // Routes
 app.use('/', indexRouter)
