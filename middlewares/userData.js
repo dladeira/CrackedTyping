@@ -16,9 +16,9 @@ function provideUserData(req, res, next) {
     res.locals.username = req.session.username
     res.locals.description = "This is a guest account" // Description gets override if logged in
 
-    res.cookie('newGame', escape('Alt+n'), { sameSite: 'strict', secure: true})
-    res.cookie('mainMenu', escape('Alt+m'), { sameSite: 'strict', secure: true})
-    res.cookie('loggedIn', req.user != null, { sameSite: 'none', secure: true})
+    res.cookie('newGame', escape('Alt+n'), { sameSite: 'strict', secure: true, secure: true })
+    res.cookie('mainMenu', escape('Alt+m'), { sameSite: 'strict', secure: true, secure: true })
+    res.cookie('loggedIn', req.user != null, { sameSite: 'strict', secure: true, secure: true })
 
     if (req.user) { // Logged in
         res.locals.loggedInGoogle = (req.user.googleId != undefined)
