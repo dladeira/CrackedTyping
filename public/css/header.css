@@ -126,12 +126,12 @@ nav > * {
     display: none;
     position: absolute;
 
+    top: 60px;
+
     width: 150px;
 
     margin-right: 20px;
     margin-left: auto;
-
-    top: 60px;
 
     z-index: 2;
 }

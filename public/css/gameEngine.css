@@ -49,6 +49,7 @@
 
 #engine-input {
     position: absolute;
+    
     top: -200px;
 
     height: 5px;
@@ -56,12 +57,11 @@
 
     padding: 10px;
 
+    opacity: 1;
     outline: 0;
     border: none;
     background-color: black;
     color: var(--green);
-
-    opacity: 1;
 }
 
 .cursor {
@@ -92,11 +92,10 @@
 
     border-radius: 15px;
 
+    opacity: 0;
     font-size: 2rem;
     background-color: var(--darker-background);
     color: var(--orange);
-
-    opacity: 0;
 
     transition: opacity 0.2s linear;
 }

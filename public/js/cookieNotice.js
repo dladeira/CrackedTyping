@@ -22,19 +22,20 @@ function getCookie(cname) {
 }
 
 function hideCookieBar() {
-    document.getElementById("cookiebar").style.display = "none"
+    document.getElementById("cookie-bar").style.display = "none"
 }
 
-document.getElementById("acceptCookiesButton").onclick = () => {
+document.getElementById("cookie-accept").onclick = () => {
     setCookie("cookiesAccepted", true, 365)
     hideCookieBar()
 }
 
-document.getElementById("declineCookiesButton").onclick = () => {
+document.getElementById("cookie-decline").onclick = () => {
     // i hope this is a legal way of preventing people from denying cookies
     window.location.href = "about:blank"
 }
 
+// Hide the bar if cookies are accepted
 if (getCookie("cookiesAccepted")) {
     hideCookieBar()
 }
