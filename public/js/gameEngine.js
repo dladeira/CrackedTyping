@@ -3,30 +3,50 @@ class Game {
     /**
      * Create a game
      * @param {String} passage - The passage to type
-     * @param {Function} onGameEnd - The function to run at the end of the game
+     * @param {Function} onGameEnd - Callback to run at gameEnd
      */
     constructor(passage, onGameEnd) {
         this.fullPassage = passage.replace(/[\r\n\x0B\x0C\u0085\u2028\u2029]+/g, ' ').replace(/  +/g, ' ')
         this.onGameEnd = onGameEnd
         this.engineRunning = false
-        this.intervalDelay = 200
         this.cursors = {}
-
+        this.hiddenTopLetters = 0
         this.currentWordIndex = 0 // Start the user at the first word
         this.confirmedText = '' // Text typed correctly locked after space was pressed
         this.secondsElapsed = 0 // Seconds of user being able to type
 
-        this.textInput = document.getElementById('engine-input')
         this.passageElement = document.getElementById('engine-passage')
         this.passageWrapper = document.getElementById('engine-passage-wrapper')
+
+        this.setupTextInput('engine-input')
+        this.setupEngineTick(200)
+        this.updatePassage()
+    }
+
+    /**
+     * Setup the engine tick
+     * @param {Number} intervalDelay How often in milliseconds to tick the engine
+     */
+    setupEngineTick(intervalDelay) {
+        setInterval(() => {
+            if (this.engineRunning == 1)
+                this.secondsElapsed += intervalDelay / 1000
+
+            this.updateCursors(intervalDelay)
+            this.updatePassage()
+        }, intervalDelay)
+    }
+
+    /**
+     * Setup the text input
+     */
+    setupTextInput(documentId) {
+        this.textInput = document.getElementById(documentId)
+        setInterval(() => { this.textInput.focus()} , 100)
 
         this.textInput.readOnly = 1
         this.textInput.value = ''
         this.textInput.placeholder = ''
-
-        this.hiddenTopLetters = 0
-
-        setInterval(() => { this.textInput.focus()} , 100)
 
         this.textInput.oninput = (event) => {
             var wordInputed = this.textInput.value.substring(0, this.textInput.value.length - 1)
@@ -43,32 +63,7 @@ class Game {
             }
             this.updatePassage()
         }
-
-        setInterval(() => {
-            if (this.engineRunning == 1) {
-                this.secondsElapsed += this.intervalDelay / 1000
-            }
-
-
-            for (var cursor in this.cursors) {
-                if (this.cursors[cursor].timeout != undefined) {
-                    this.cursors[cursor].timeout -= this.intervalDelay
-                    
-                    if (this.cursors[cursor].timeout < 0) {
-                        document.getElementById(`cursor--${cursor}`).remove()
-                        delete this.cursors[cursor]
-                    }
-                }
-            }
-            //this.updatePassage() // KEEP THIS COMMENTED WHEN DEBUGGING
-        }, this.intervalDelay)
-
-        this.updatePassage()
     }
-
-    /*
-    Engine manipulation
-    */
 
     /**
      * Start the game engine
@@ -93,26 +88,14 @@ class Game {
         }
     }
 
-    /*
-    Passage
-    */
-
     /**
      * Add text to the passage
      * @param {String} text - The text to add
      */
-    addPassage(text) {
+    addTextToPassage(text) {
         if (this.engineRunning) {
             this.fullPassage+= text
         }
-    }
-
-    /**
-     * Get the passage
-     * @returns {String} The passage
-     */
-    getPassage() {
-        return this.fullPassage
     }
 
     /**
@@ -120,7 +103,7 @@ class Game {
      * @returns {String}
      */
     getDisplayPassage() {
-        return this.fullPassage.substring(this.hiddenTopLetters, this.fullPassage.length)
+        return this.fullPassage.substring(this.hiddenTopLetters)
     }
 
     /*
@@ -129,7 +112,7 @@ class Game {
 
     /**
      * Get a cursor
-     * @param {String} name - Name of the cursor
+     * @param {String} name Name of the cursor
      * @returns {Object} The cursor
      */
     getCursor(name) {
@@ -138,12 +121,12 @@ class Game {
 
     /**
      * Set a cursor
-     * @param {string} name The unique name of the cursor ('main' is reserved for the user's cursor)
-     * @param {integer} character The character that the cursor is currently on
-     * @param {integer} timeout If the cursor isn't set again in X miliseconds then it gets removed
+     * @param {String} name The unique name of the cursor ('main' is reserved for the user's cursor)
+     * @param {Number} character The character that the cursor is currently on
+     * @param {Number} timeout If the cursor isn't set again in X miliseconds then it gets removed
      */
     setCursor(name, character, timeout) {
-        if (!this.getCursor(name)) { // Create a new cursor
+        if (!this.cursors[name]) { // Create a new cursor
             this.cursors[name] = {} // Create the cursor object
             this.cursors[name].name = name // Set the name
             document.getElementById("cursor-container").innerHTML += `<div class="cursor" id="cursor--${name}"></div>` //  Add cursor to cursor-container
@@ -171,8 +154,9 @@ class Game {
 
     /**
      * Display/update all the cursors in the game
+     * @param {Number} timeoutTick The amount of seconds to tick in cursor timeouts
      */
-    updateCursors() {
+    updateCursors(timeoutTick = 0) {
         for (var cursorName in this.cursors) {
             var currentLetter
             var cursor = this.cursors[cursorName]
@@ -193,6 +177,14 @@ class Game {
                 console.log(`FATAL: Current letter not found for cursor ${cursorName}`)
             }
 
+            if (cursor.timeout != undefined) {
+                cursor.timeout -= this.timeoutTick
+                
+                if (cursor.timeout <= 0) {
+                    document.getElementById(`cursor--${cursor}`).remove()
+                    delete this.cursors[cursorName]
+                }
+            }
         }
     }
     
@@ -238,7 +230,6 @@ class Game {
 
         this.passageElement.innerHTML = passageHTML // Set the new passageHTML
         document.getElementsByClassName("current")[0].scrollIntoView() // Scroll the current letter into view
-        this.updateCursors() // Update the cursor positions
         this.updateHiddenLetters() // Hide all the letters that are not visible to improve optimization
         
     }
