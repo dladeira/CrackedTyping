@@ -62,6 +62,7 @@ class Game {
                 }
             }
             this.updatePassage()
+            this.updateCursors()
         }
     }
 
@@ -178,7 +179,7 @@ class Game {
             }
 
             if (cursor.timeout != undefined) {
-                cursor.timeout -= this.timeoutTick
+                cursor.timeout -= timeoutTick
                 
                 if (cursor.timeout <= 0) {
                     document.getElementById(`cursor--${cursor}`).remove()

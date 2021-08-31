@@ -1,0 +1,45 @@
+.gameboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    height: 100%;
+    width: 100%;
+}
+
+.info-column, .side-column, .main-column {
+    border: 2px solid var(--alt-gray);
+
+    background-color: var(--darkest-background);
+}
+
+.main-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    height: 55%;
+    width: 100%;
+}
+
+.main-column {
+    height: 100%;
+    width: 55%;
+}
+
+.side-column {
+    height: 100%;
+    width: 20%;
+}
+
+.alt-row {
+    height: 40%;
+    width: 100%;
+}
+
+.info-column {
+    height: 100%;
+    width: 100%;
+}

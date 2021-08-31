@@ -1,7 +1,23 @@
 <%- include('partials/header.ejs') %>
 <link rel="stylesheet" href="/css/infinite.css" type="text/css">
-<div class="engine-wrapper">
-    <%- include('partials/gameEngine.ejs') %>
+<link rel="stylesheet" href="/css/gameboard.css" type="text/css">
+<div class="gameboard">
+    <div class="main-row">
+        <div class="side-column">
+
+        </div>
+        <div class="engine-wrapper main-column">
+            <%- include('partials/gameEngine.ejs') %>
+        </div>
+        <div class="side-column">
+            
+        </div>
+    </div>
+    <div class="alt-row">
+        <div class="info-column">
+            
+        </div>
+    </div>
 </div>
 
 <!-- Keep scripts in this order (socket.io on top)-->
