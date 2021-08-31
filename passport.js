@@ -5,7 +5,10 @@ const GithubStrategy = require('passport-github').Strategy // Github Strategy on
 const { User }  = require('./models/index.js')
 
 passport.use(new GoogleStrategy(getStrategyOptions('google'), getStrategyCallback('googleId')))
-passport.use(new GithubStrategy(getStrategyOptions('github'), getStrategyCallback('githubId')))
+
+if (app.get('env') == 'production') {
+    passport.use(new GithubStrategy(getStrategyOptions('github'), getStrategyCallback('githubId')))
+}
 
 function getStrategyOptions(strategy) {
     return {

@@ -14,7 +14,12 @@ First, install all the required packages
 npm i
 ```
 
-Then create a `.env` file and fill out all the required fields (take a look at the exemplar below)
+Install nodemon (required for development enviroments)
+```
+npm i -g nodemon
+```
+
+Then create a `.env` file and fill out all the required fields (take a look at the exemplar below) (github is optional on non-production enviroments)
 ```
 MONGO_STRING=
 
