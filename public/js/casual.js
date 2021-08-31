@@ -3,6 +3,7 @@ var gameStatusElement = document.getElementById('js-status')
 var playerListElement = document.getElementById('player-list')
 
 var gameStage = 0
+var socket = io()
 
 // (milliseconds)
 var intervalDelay = 100
