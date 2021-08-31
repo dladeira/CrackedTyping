@@ -7,8 +7,7 @@ const session = require('express-session')({
     saveUninitialized: false,
     cookie: {
         sameSite: 'lax',
-        maxAge: 1000 * 60 * 60 * 24 * 4,
-        secure: process.env.NODE_ENV == 'production'
+        maxAge: 1000 * 60 * 60 * 24 * 4
     },
     store: MongoStore.create({
         mongoUrl: process.env.MONGO_STRING,
