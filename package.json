@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/dladeira/CrackedTyping#readme",
   "dependencies": {
+    "chart.js": "^3.5.1",
     "config": "^3.3.6",
     "connect-mongo": "^4.4.1",
     "cookie-parser": "^1.4.5",

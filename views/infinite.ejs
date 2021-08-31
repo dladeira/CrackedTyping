@@ -15,12 +15,15 @@
     </div>
     <div class="alt-row">
         <div class="info-column">
-            
+            <canvas id="chart" height="100%" width="100%>
+
+            </canvas>
         </div>
     </div>
 </div>
 
 <!-- Keep scripts in this order (socket.io on top)-->
 <script src="/socket.io/socket.io.js"></script>
+<script src="/node_modules/chart.js/dist/chart.min.js"></script>
 <script src="/js/infinite.js"></script>
 <%- include('partials/footer.ejs') %>

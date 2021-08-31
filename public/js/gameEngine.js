@@ -5,7 +5,7 @@ class Game {
      * @param {String} passage - The passage to type
      * @param {Function} onGameEnd - Callback to run at gameEnd
      */
-    constructor(passage, onGameEnd) {
+    constructor(passage, onGameEnd = () => {}) {
         this.fullPassage = passage.replace(/[\r\n\x0B\x0C\u0085\u2028\u2029]+/g, ' ').replace(/  +/g, ' ')
         this.onGameEnd = onGameEnd
         this.engineRunning = false
@@ -396,7 +396,8 @@ class Game {
     isLetterHiddenTop(ltr) {
         var lRect = ltr.getBoundingClientRect() // Letter ClientRectangle
         var pRect = this.passageWrapper.getBoundingClientRect() // Passage ClientRectangle
-        return lRect.bottom < pRect.top // Whether the bottom of the letter is above the top of the rectangle
+        return lRect.bottom < (pRect.top - lRect.height * 1.5) // Whether the bottom of the letter is above the top of the rectangle
+        // (Remove the height of a letter * 1.5 to keep one row of text hidden because of engine limitations)
     }
 
     /**
