@@ -29,7 +29,7 @@ GOOGLE_SECRET=
 GITHUB_ID=
 GITHUB_SECRET=
 
-SESSION_SECRET-
+SESSION_SECRET=
 ```
 
 Finally, start the server in development mode
