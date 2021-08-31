@@ -6,7 +6,7 @@ const { User }  = require('./models/index.js')
 
 passport.use(new GoogleStrategy(getStrategyOptions('google'), getStrategyCallback('googleId')))
 
-if (app.get('env') == 'production') {
+if (process.env.NODE_ENV == 'production') {
     passport.use(new GithubStrategy(getStrategyOptions('github'), getStrategyCallback('githubId')))
 }
 
