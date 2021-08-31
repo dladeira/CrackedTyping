@@ -1,32 +1,16 @@
-var socket = io()
-
-String.prototype.replaceLast = (what, replacement) => {
-    if (this.lastIndexOf(what) == this.length - 1) {
-        var pcs = this.split(what)
-        var lastPc = pcs.pop()
-        return pcs.join(what) + replacement + lastPc
-    }
-    return this
-}
-
 class Game {
 
     /**
      * Create a game
      * @param {String} passage - The passage to type
      * @param {Function} onGameEnd - The function to run at the end of the game
-     * @param {Number} characterPrefix - The amount of characters to display before the cursor
-     * @param {Number} characterSuffix - The amount of characters to display after the cursor
      */
-    constructor (passage, onGameEnd, characterPrefix, characterSuffix) {
+    constructor(passage, onGameEnd) {
         this.fullPassage = passage.replace(/[\r\n\x0B\x0C\u0085\u2028\u2029]+/g, ' ').replace(/  +/g, ' ')
         this.onGameEnd = onGameEnd
         this.engineRunning = false
         this.intervalDelay = 200
         this.cursors = {}
-
-        this.characterPrefix = !isNaN(characterPrefix) ? characterPrefix : 100000000
-        this.characterSuffix = !isNaN(characterSuffix) ? characterSuffix : 100000000
 
         this.currentWordIndex = 0 // Start the user at the first word
         this.confirmedText = '' // Text typed correctly locked after space was pressed
@@ -48,15 +32,13 @@ class Game {
             var wordInputed = this.textInput.value.substring(0, this.textInput.value.length - 1)
             if (this.onLastWord())
                 wordInputed = this.textInput.value
+
             if (event.data == ' ' || this.onLastWord()) {
                 if (this.getExpectedWord() == wordInputed) {
                     this.textInput.value = ''
                     this.confirmedText += wordInputed + ' '
                     this.currentWordIndex++
-                    if (this.isTextFinished()) {
-                        this.onGameEnd()
-                        this.stopEngine()
-                    }
+                    this.textFinishedCheck()
                 }
             }
             this.updatePassage()
@@ -73,7 +55,7 @@ class Game {
                     this.cursors[cursor].timeout -= this.intervalDelay
                     
                     if (this.cursors[cursor].timeout < 0) {
-                        this.cursors[cursor].element.remove()
+                        document.getElementById(`cursor--${cursor}`).remove()
                         delete this.cursors[cursor]
                     }
                 }
@@ -134,38 +116,11 @@ class Game {
     }
 
     /**
-     * Get the amount of characters to display before the cursor
-     * @returns {Number}
-     */
-    getPrefix() {
-        return Math.max(this.getCursor('main').character - this.characterPrefix, 0)
-    }
-
-    /**
-     * Get the amount of characters to display after the cursor
-     * @returns {Number}
-     */
-    getSuffix() {
-        return Math.min(this.getCursor('main').character + this.characterSuffix)
-    }
-
-    /**
      * Get the displayed passage
      * @returns {String}
      */
     getDisplayPassage() {
         return this.fullPassage.substring(this.hiddenTopLetters, this.fullPassage.length)
-    }
-
-    /**
-     * Get the amount of letters hidden
-     * @returns {Number}
-     */
-    getLettersHidden() {
-        if (this.getCursor('main')) {
-            return this.getCursor('main').character - this.characterPrefix
-        }
-        return 0
     }
 
     /*
@@ -182,37 +137,36 @@ class Game {
     }
 
     /**
-     * Get a cursor
-     * @param {string} name - The unique name of the cursor ('main' name is reserved for the user's cursor)
-     * @param {integer} character - The character that the cursor is currently on
-     * @param {integer} timeout - If the cursor isn't updated again in X miliseconds then it gets removed
+     * Set a cursor
+     * @param {string} name The unique name of the cursor ('main' is reserved for the user's cursor)
+     * @param {integer} character The character that the cursor is currently on
+     * @param {integer} timeout If the cursor isn't set again in X miliseconds then it gets removed
      */
     setCursor(name, character, timeout) {
-        if (this.getCursor(name) == undefined) {
-            this.cursors[name] = {}
-            this.cursors[name].name = name
-            document.getElementById("cursor-container").innerHTML += `<div class="cursor" id="cursor--${name}"></div>`
+        if (!this.getCursor(name)) { // Create a new cursor
+            this.cursors[name] = {} // Create the cursor object
+            this.cursors[name].name = name // Set the name
+            document.getElementById("cursor-container").innerHTML += `<div class="cursor" id="cursor--${name}"></div>` //  Add cursor to cursor-container
+
+            // Create function for retreving the cursor DOM element
             this.cursors[name].element = function() {
                 return document.getElementById(`cursor--${this.name}`)
             }
 
-            if (name != 'main') {
-                this.cursors[name].element().style.backgroundColor = 'gray'
-            } else {
+            if (name == 'main') { // Main cursor (the important one)
                 this.cursors[name].element().style.zIndex = 1
                 this.cursors[name].element().style.opacity = 0
                 setTimeout(() => {
                     this.cursors[name].element().style.opacity = 1
                     this.cursors[name].element().style.transition = 'all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
                 }, 300)
+            } else { // Not main cursor (make it gray)
+                this.cursors[name].element().style.backgroundColor = 'gray'
             }
         }
 
-        this.cursors[name].character = character
-        
-        if (timeout) {
-            this.cursors[name].timeout = timeout
-        }
+        this.cursors[name].character = character // Set the character
+        this.cursors[name].timeout = timeout // Set timeout if there is one
     }
 
     /**
@@ -225,15 +179,19 @@ class Game {
             for (var letterNum in Array.from(document.getElementsByTagName('letter'))) {
                 var letter = document.getElementsByTagName('letter')[letterNum]
 
-                if (letterNum == cursor.character) {
+                if (letterNum == (cursor.character - this.hiddenTopLetters)) {
                     currentLetter = letter
                     break
                 }
             }
 
-            cursor.element().style.top = `${currentLetter.getBoundingClientRect().top}px`
-            cursor.element().style.left = `${currentLetter.getBoundingClientRect().left}px`
-            cursor.element().style.height = currentLetter.clientHeight + 'px'
+            if (currentLetter) {
+                cursor.element().style.top = `${currentLetter.getBoundingClientRect().top}px`
+                cursor.element().style.left = `${currentLetter.getBoundingClientRect().left}px`
+                cursor.element().style.height = currentLetter.clientHeight + 'px'
+            } else {
+                console.log(`FATAL: Current letter not found for cursor ${cursorName}`)
+            }
 
         }
     }
@@ -241,44 +199,55 @@ class Game {
     /**
      * Update the passage
      */
-    updatePassage() { // Each letter has it's own <span>
+    updatePassage() {
         var passageHTML = ''
-        this.setCursor('main', Math.max(this.getCorrectLetterCount(), 0))
-        var correctLettersLeft = this.getCorrectLetterCount() - Math.max(0, this.getLettersHidden())
-        var incorrectLettersLeft = this.getIncorrectLetterCount()
+        this.setCursor('main', Math.max(this.getCorrectLetterCount(true), 0)) // Set the cursor character to either 0 or the current correct letter
+        var correctLettersLeft = this.getCorrectLetterCount(false)
+        var incorrectLettersLeft = this.getIncorrectLetterCount(false)
 
         var currentLetterPlaced = false
 
-        for (var word of this.getDisplayPassage().replaceAll(' ', '// ').split('//')) {
-            passageHTML += `<word>`
-            for (var letter of word) {
+        for (var word of this.getDisplayPassage().replaceAll(' ', '// ').split('//')) { // Loop through all the words
+            passageHTML += `<word>` // Open the word tag
+            for (var letter of word) { // Loop through all the letters in the word
                 var classToAdd = ''
     
+                // Find out whether the word is correct or incorrect
                 if (correctLettersLeft-- > 0) {
                     var classToAdd = 'correct'
                 } else if (incorrectLettersLeft-- > 0) {
                     var classToAdd = 'incorrect'
                 }
     
+                // Place the current letter at the end of the correct letters
                 if (classToAdd != 'correct' && !currentLetterPlaced) {
                     classToAdd+= ' current'
                     currentLetterPlaced = true
                 }
     
+                // Add the letter to the passageHTML
                 passageHTML += `<letter class='${classToAdd}'>${letter == " " ? '&nbsp' : letter}</letter>`
             }
-            passageHTML += `</word>`
+            passageHTML += `</word>` // Close the word tag
         }
 
-        if (!currentLetterPlaced) { // The game has ended
-            // Create a fake invisible character at the end so the cursor can stand behind that one
+        if (!currentLetterPlaced) { // The game has ended and there is no current letter
+            // Create a fake invisible character at the end so the cursor can stand has a letter to stand behind
             passageHTML += `<letter class="current" style="opacity: 0">.</letter>`
         }
 
-        this.passageElement.innerHTML = passageHTML
-        document.getElementsByClassName("current")[0].scrollIntoView()
-        this.updateCursors()
+        this.passageElement.innerHTML = passageHTML // Set the new passageHTML
+        document.getElementsByClassName("current")[0].scrollIntoView() // Scroll the current letter into view
+        this.updateCursors() // Update the cursor positions
+        this.updateHiddenLetters() // Hide all the letters that are not visible to improve optimization
+        
+    }
 
+    /**
+     * Update the amount of letters hidden above the passage
+     */
+    updateHiddenLetters() {
+        // Get the letters that are currently hidden in the top
         var currentlyHiddenTopLetters = 0
         for (var letterNum in document.getElementsByTagName("letter")) {
             if (isNaN(letterNum)) {
@@ -290,13 +259,14 @@ class Game {
                 currentlyHiddenTopLetters++
             }
         }
+
+        // Add them to the total amount of hiddenTopLetters
         this.hiddenTopLetters += currentlyHiddenTopLetters
-        this.confirmedText = this.confirmedText.substring(currentlyHiddenTopLetters)
     }
 
     /**
      * Display an alert
-     * @param {String} alert - The text to display
+     * @param {String} alert The text to display (if undefined) it hides the alert
      */
     setAlert(alert) {
         var alertElement = document.getElementById("alert")
@@ -311,87 +281,148 @@ class Game {
         alertElement.innerHTML = alert
     }
 
-
-    /*
-    Helper methods
-    */
-
+    /**
+     * Get the word the user is expected to type
+     * @returns {String}
+     */
     getExpectedWord() {
         return this.fullPassage.split(' ')[this.currentWordIndex]
     }
     
-    isTextFinished() {
-        return (this.currentWordIndex + 1) > this.fullPassage.split(' ').length
+    /**
+     * Check if the user finished typing the text
+     * @returns {Boolean}
+     */
+    textFinishedCheck() {
+        if ((this.currentWordIndex + 1) > this.fullPassage.split(' ').length) {
+            this.onGameEnd()
+            this.stopEngine()
+        }
     }
     
+    /**
+     * Get whether the user is typing the last word
+     * @returns {Boolean}
+     */
     onLastWord() {
-        return this.getTotalTypedText().split(' ').filter(e => e).length  >= this.fullPassage.split(' ').length
+        // I have no clue what ".filter(e => e)" does but it stops the program from breaking
+        return this.getTypedText(true).split(' ').filter(e => e).length  >= this.fullPassage.split(' ').length
     }
     
-    getTotalTypedText() {
-        return this.confirmedText + this.textInput.value
-    }
-    
+    /**
+     * Get the user's words per minute
+     * @returns {Number}
+     */
     getWPM() {
         var wordsTyped = this.confirmedText.split(' ').length - 1
         var wpm = Math.round(wordsTyped / (this.secondsElapsed / 60))
-        return (isNaN(wpm) || wpm == 'Infinity' ? 0 : wpm) // WPM is 'Infinity' if secondsElapsed is 0
+        return (isNaN(wpm) || wpm == 'Infinity' ? 0 : wpm) // Return 0 if WPM is not a valid number
     }
-    
-    getCorrectLetterCount() {
-        var letterCount = 0
-        var letterArray = Array.from(this.getTotalTypedText())
-        var passageLetterArray = Array.from(this.getDisplayPassage())
-        for (var i in letterArray) {
-            if (letterArray[i] == passageLetterArray[i]) {
-                letterCount++
-            } else {
-                break
-            }
+
+    /**
+     * Get the total text that the user typed
+     * @param {Boolean} full - Use full passage or display passage
+     * @returns {Number}
+     */
+    getTypedText(full) {
+        if (full) {
+            return this.confirmedText + this.textInput.value
         }
-        return letterCount
+        return this.confirmedText.substring(this.hiddenTopLetters) + this.textInput.value
     }
     
-    getIncorrectLetterCount() {
+    /**
+     * Get the amount of correct letters typed
+     * @param {Boolean} full - Use full passage or display passage
+     * @returns {Number}
+     */
+    getCorrectLetterCount(full) {
+        var letterArray = this.getTypedText(full) // Array of letters user typed
+        var passageLetterArray = full ? this.fullPassage : this.getDisplayPassage() // Array of letters from the passage
+
         var letterCount = 0
-        var letterArray = Array.from(this.getTotalTypedText())
-        var passageLetterArray = Array.from(this.getDisplayPassage())
-        var incorrectLetterFound = false
-        for (var i in letterArray) {
-            if (i < this.getCorrectLetterCount()) // Skip all the correct letters
+        for (var ltrIndex in letterArray) {
+            if (letterArray[ltrIndex] == passageLetterArray[ltrIndex]) { // If the letter typed matches the text letter
+                letterCount++
                 continue
+            }
+            break // The letter typed does not match, stop counting correct letters
+        }
+        return letterCount
+    }
     
-            // 2nd condition : If the user has typed more characters than exist, def wrong
-            if (letterArray[i] != passageLetterArray[i] || !passageLetterArray[i] || incorrectLetterFound) {
-                incorrectLetterFound++
+    /**
+     * Get the amount of incorrect letters typed
+     * @param {Boolean} full - Use full passage or display passage
+     * @returns {Number}
+     */
+    getIncorrectLetterCount(full) {
+        var letterArray = this.getTypedText(full) // Array of letters user typed
+        var passageLetterArray = full ? this.fullPassage : this.getDisplayPassage() // Array of letters from the passage
+
+        var letterCount = 0
+        for (var ltrIndex in letterArray) {
+            if (ltrIndex < this.getCorrectLetterCount()) { // Skip all the correct letters
+                continue
+            }
+    
+            // A incorrect letter has already been found, mark the rest of the letters as incorrect
+            if (letterCount) {
                 letterCount++
-            } else {
-                break
+                continue
+            }
+
+            // If the user has typed more characters than exist (def wrong)
+            if (!passageLetterArray[ltrIndex]) {
+                letterCount++;
+                continue
+            }
+
+            // If typed letter does not match the passage letter
+            if (letterArray[ltrIndex] != passageLetterArray[ltrIndex]) {
+                letterCount++
+                continue
             }
         }
         return letterCount
     }
     
-    isLetterVisible(el) {
-        var eRect = el.getBoundingClientRect()
-        var pRect = this.passageElement.getBoundingClientRect()
-        var isVisible = (eRect.top < pRect.bottom) && (eRect.bottom > pRect.top)
-        return isVisible
+    /**
+     * Get whether the letter is visible
+     * @param {Object} ltr - The letter element
+     * @returns {Boolean}
+     */
+    isLetterVisible(ltr) {
+        return !this.isLetterHiddenTop(ltr) && this.isLetterHiddenBottom(ltr)
     }
 
-    isLetterHiddenTop(el) {
-        var eRect = el.getBoundingClientRect()
-        var pRect = this.passageWrapper.getBoundingClientRect()
-        return eRect.bottom < pRect.top
+    /**
+     * Get whether the letter is hidden above the passage element
+     * @param {Object} ltr - The letter element
+     * @returns {Boolean}
+     */
+    isLetterHiddenTop(ltr) {
+        var lRect = ltr.getBoundingClientRect() // Letter ClientRectangle
+        var pRect = this.passageWrapper.getBoundingClientRect() // Passage ClientRectangle
+        return lRect.bottom < pRect.top // Whether the bottom of the letter is above the top of the rectangle
     }
 
-    isLetterHiddenBottom(el) {
-        var eRect = el.getBoundingClientRect()
-        var pRect = this.passageWrapper.getBoundingClientRect()
-        return eRect.top > pRect.bottom
+    /**
+     * Get whether the letter is hidden below the passage element
+     * @param {Object} ltr - The letter element
+     * @returns {Boolean}
+     */
+    isLetterHiddenBottom(ltr) {
+        var lRect = ltr.getBoundingClientRect() // Letter ClientRectangle
+        var pRect = this.passageWrapper.getBoundingClientRect() // Passage ClientRectangle
+        return lRect.top > pRect.bottom // Whether the top of the letter is below the bottom of the rectangle
     }
 
+    /**
+     * Get the amount of letters  left to type
+     * @returns {Number}
+     */
     getLettersLeft() {
-        return this.getDisplayPassage().length - this.getCorrectLetterCount()
+        return this.fullPassage.length - this.getCorrectLetterCount(true)
     }
 }
