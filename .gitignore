@@ -108,3 +108,6 @@ dist
 
 # User avatars
 public/data/
+
+# Apple Data
+.DS_STORE

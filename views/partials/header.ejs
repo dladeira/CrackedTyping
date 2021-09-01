@@ -11,6 +11,8 @@
         <link type="text/css" rel="stylesheet" href="/css/utility.css">
         <link type="text/css" rel="stylesheet" href="/css/header.css">
 
+        <link rel="icon" href="/img/cracked-icon.ico" type="image/x-icon">
+
         <!-- Keep script at bottom of <head> container to prevent flash of unstyled content -->
         <script>
             var username = '<%= username %>'
@@ -19,9 +21,9 @@
     </head>
     <body>
     <nav>
-        <div class="brand-container">
-           <img class="brand" src="/img/cracked-logo.svg">
-        </div>
+        <a class="brand-container" href="/">
+            <img class="brand" src="/img/cracked-logo.svg">
+        </a>
 
         <% if (loggedIn && admin) { %>
             <div class="control-container">
