@@ -306,8 +306,17 @@ class Game {
      * @returns {Number}
      */
     getWPM() {
-        var wordsTyped = this.confirmedText.split(' ').length - 1
-        var wpm = Math.round(wordsTyped / (this.secondsElapsed / 60))
+        return Math.round(this.calculateWPM(this.confirmedText.split(' ').length - 1, this.secondsElapsed * 1000))
+    }
+
+    /**
+     * Calculate the speed (WPM) based on words typed and milliseconds
+     * @param {Number} wordsTyped Words typed
+     * @param {Number} timeElapsed Milliseconds taken to type the word
+     * @returns {Number} Words per minute
+     */
+    calculateWPM(wordsTyped, timeElapsed){
+        var wpm = wordsTyped / ((timeElapsed / 1000) / 60)
         return (isNaN(wpm) || wpm == 'Infinity' ? 0 : wpm) // Return 0 if WPM is not a valid number
     }
 
@@ -417,5 +426,13 @@ class Game {
      */
     getLettersLeft() {
         return this.fullPassage.length - this.getCorrectLetterCount(true)
+    }
+
+    getWPMInTime(callback, time) {
+        var startWord = this.currentWordIndex
+        setTimeout(() => {
+            var endWord = this.currentWordIndex
+            callback(this.calculateWPM(endWord - startWord, time))
+        }, time)
     }
 }

@@ -37,17 +37,25 @@ function startGame() {
  * Collect data every X milliseconds and display it on the graph
  */
 function startGraphingData() {
-    setInterval(() => {
+    game.getWPMInTime((wpm) => {
         chart.data.labels.push('')
         chart.data.datasets.forEach((dataset) => {
-            dataset.data.push(game.getWPM())
-
-            if (dataset.data.length > 1) {
-                dataset.radius = 0
-            }
+            dataset.data.push(wpm)
         })
+        chart.update()
+    }, dataCollectionFrequency)
+    
+    setInterval(() => {
+        game.getWPMInTime((wpm) => {
+            chart.data.labels.push('')
+            chart.data.datasets.forEach((dataset) => {
+                dataset.data.push(wpm)
+
+                dataset.radius = 0
+            })
 
         chart.update()
+        }, dataCollectionFrequency)
     }, dataCollectionFrequency)
 }
 
