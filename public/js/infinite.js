@@ -9,7 +9,7 @@ var dictionary = words.toLowerCase().split('\n')
 function startGame() {
     var startingIn = 5
 
-    game = new Game(generateRandomWords(30).substring(1)) // Create a new game with 30 words and remove the first space
+    game = new Game(generateRandomWords(30).substring(1), () => {}, 1) // Create a new game with 30 words and remove the first space (and with a alert type of 1)
     game.setAlert(startingIn) // Set the alert as soon as we start the game
 
     startWPMUpdater()

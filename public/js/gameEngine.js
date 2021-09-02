@@ -2,10 +2,11 @@ class Game {
 
     /**
      * Create a game
-     * @param {String} passage - The passage to type
-     * @param {Function} onGameEnd - Callback to run at gameEnd
+     * @param {String} passage The passage to type
+     * @param {Function} onGameEnd Callback to run at gameEnd
+     * @param {Number} alertType The alert type to use (0 = box, 1 = cover)
      */
-    constructor(passage, onGameEnd = () => {}) {
+    constructor(passage, onGameEnd = () => {}, alertType = 0) {
         this.fullPassage = passage.replace(/[\r\n\x0B\x0C\u0085\u2028\u2029]+/g, ' ').replace(/  +/g, ' ')
         this.onGameEnd = onGameEnd
         this.engineRunning = false
@@ -20,9 +21,11 @@ class Game {
         this.passageElement = document.getElementById('engine-passage')
         this.passageWrapper = document.getElementById('engine-passage-wrapper')
 
+
         this.setupTextInput('engine-input')
         this.setupEngineTick(200)
         this.updatePassage()
+        this.setupAlert(alertType)
     }
 
     /**
@@ -34,6 +37,21 @@ class Game {
             mistakeCount += letter.count
         }
         return mistakeCount
+    }
+
+    setupAlert(type) {
+        var alert = document.getElementById('alert')
+        switch (type) {
+            case 0:
+                alert.classList.add('alert-0')
+                break;
+            case 1:
+                var engineBox = document.getElementById('engine-container').getBoundingClientRect()
+                alert.classList.add('alert-1')
+                alert.style.height = engineBox.height + "px"
+                alert.style.width = engineBox.width + "px"
+                break;
+        }
     }
 
     /**

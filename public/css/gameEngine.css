@@ -113,7 +113,7 @@ MISC
     border-color: gray !important;
 }
 
-#alert {
+.alert-0 {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -132,6 +132,43 @@ MISC
     font-size: 2rem;
     background-color: var(--darker-background);
     color: var(--orange);
+
+    transition: opacity 0.2s linear;
+}
+
+.alert-0 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+
+    top: 160px;
+
+    height: 100px;
+    width: 100px;
+
+    padding: 20px;
+
+    border-radius: 15px;
+
+    opacity: 0;
+    font-size: 2rem;
+    background-color: var(--darker-background);
+    color: var(--orange);
+
+    transition: opacity 0.2s linear;
+}
+
+.alert-1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+
+    opacity: 0;
+    font-size: 4rem;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
 
     transition: opacity 0.2s linear;
 }
