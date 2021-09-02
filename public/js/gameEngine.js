@@ -14,6 +14,7 @@ class Game {
         this.currentWordIndex = 0 // Start the user at the first word
         this.confirmedText = '' // Text typed correctly locked after space was pressed
         this.secondsElapsed = 0 // Seconds of user being able to type
+        this.mistakes = 0 // The amount of mistypes
 
         this.passageElement = document.getElementById('engine-passage')
         this.passageWrapper = document.getElementById('engine-passage-wrapper')
@@ -48,10 +49,33 @@ class Game {
         this.textInput.value = ''
         this.textInput.placeholder = ''
 
+        this.lastCharacterError = false;
+
         this.textInput.oninput = (event) => {
-            var wordInputed = this.textInput.value.substring(0, this.textInput.value.length - 1)
-            if (this.onLastWord())
-                wordInputed = this.textInput.value
+            var pressedBackspace = event.data == null
+            var wordInputed = this.textInput.value
+            var wordInputedFull = wordInputed
+            if (!pressedBackspace && !this.onLastWord()) {
+                var wordInputed = this.textInput.value.substring(0, this.textInput.value.length - 1)
+                wordInputedFull = wordInputed + event.data // Word inputed with the new character
+            }
+
+            mainLoop:
+            do {
+                for (var ltrIndex in this.getExpectedWord()) {
+                    if (wordInputedFull[ltrIndex] && !pressedBackspace) {
+                        if (this.getExpectedWord()[ltrIndex] != wordInputedFull[ltrIndex]) {
+                            if (!this.lastCharacterError) {
+                                console.log("making funny")
+                                this.mistakes++
+                            }
+                            this.lastCharacterError = true;
+                            break mainLoop
+                        }
+                    }
+                }
+                this.lastCharacterError = false
+            } while (false)
 
             if (event.data == ' ' || this.onLastWord()) {
                 if (this.getExpectedWord() == wordInputed) {

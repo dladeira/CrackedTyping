@@ -28,7 +28,9 @@ function startGame() {
             game.addTextToPassage(generateRandomWords(10));
     }, 200)
 
-    
+    setInterval(() => {
+        updateStats()
+    }, 1000)
 
     chart = renderChart();
 }
@@ -77,15 +79,15 @@ function generateRandomWords(wordCount = 1) {
  * @returns {Object} The chartJS object
  */
 function renderChart() {
-      const data = {
+    const data = {
         labels: [],
-        datasets: [{
-          label: '',
-          borderColor: '#f8b600',
-          data: [],
-          radius: 5
-        }]
-      };
+            datasets: [{
+                label: '',
+                borderColor: '#f8b600',
+                data: [],
+                radius: 5
+            }]
+        };
     
     const config = {
         type: 'line',
@@ -103,8 +105,13 @@ function renderChart() {
             events: []
         }
     };
-
     return new Chart(document.getElementById("chart"), config)
+}
+
+
+function updateStats() {
+    document.getElementById("wpm-display").innerHTML = game.getWPM()
+    document.getElementById("time-elapsed").innerHTML = ((game.secondsElapsed - game.secondsElapsed % 60) / 60) + ":" + Math.round(game.secondsElapsed % 60).toString().padStart(2, "0")
 }
 
 startGame()
