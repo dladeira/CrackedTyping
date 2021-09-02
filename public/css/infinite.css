@@ -1,3 +1,7 @@
+/*
+STATS
+*/
+
 #stats {
     display: flex;
     flex-direction: column;
@@ -50,4 +54,48 @@
     font-size: 0.8rem;
     font-style: italic;
     color: var(--orange);
+}
+
+/*
+ENGINE NOTES
+*/
+
+#notes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#engine-title {
+    width: 100%;
+
+    margin-bottom: 10%;
+
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--red);
+}
+
+#engine-subtitle {
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--red);
+}
+
+#letters-list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+
+    max-width: 80%;
+    min-width: 30%;
+
+    margin: 0 auto;
+}
+
+ltr {
+    font-size: 1.2rem;
+    color: white;
 }

@@ -3,8 +3,12 @@
 <link rel="stylesheet" href="/css/gameboard.css" type="text/css">
 <div class="gameboard">
     <div class="main-row">
-        <div class="side-column">
-
+        <div class="side-column" id="notes">
+            <p id="engine-title">Engine Notes</p>
+            <p id="engine-subtitle">Difficult Letters</p>
+            <div id="letters-list">
+                
+            </div>
         </div>
         <div class="engine-wrapper main-column">
             <%- include('partials/gameEngine.ejs') %>

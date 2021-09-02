@@ -15,7 +15,7 @@ class Game {
         this.currentWordIndex = 0 // Start the user at the first word
         this.confirmedText = '' // Text typed correctly locked after space was pressed
         this.secondsElapsed = 0 // Seconds of user being able to type
-        this.mistakes = 0 // The amount of mistypes
+        this.mistakeArray = []
 
         this.passageElement = document.getElementById('engine-passage')
         this.passageWrapper = document.getElementById('engine-passage-wrapper')
@@ -23,6 +23,17 @@ class Game {
         this.setupTextInput('engine-input')
         this.setupEngineTick(200)
         this.updatePassage()
+    }
+
+    /**
+     * Get the total mistake count
+     */
+    get mistakes() {
+        var mistakeCount = 0
+        for (var letter of this.mistakeArray) {
+            mistakeCount += letter.count
+        }
+        return mistakeCount
     }
 
     /**
@@ -64,10 +75,11 @@ class Game {
             mainLoop:
             do {
                 for (var ltrIndex in this.getExpectedWord() + " ") {
+                    var expectedCharacter = this.getExpectedWord()[ltrIndex] ? this.getExpectedWord()[ltrIndex] : " "
                     if (wordInputedFull[ltrIndex] && !pressedBackspace) {
-                        if (this.getExpectedWord()[ltrIndex] != wordInputedFull[ltrIndex]) {
+                        if (expectedCharacter != wordInputedFull[ltrIndex]) {
                             if (!this.lastCharacterError) {
-                                this.mistakes++
+                                this.registerMistake(expectedCharacter)
                             }
                             this.lastCharacterError = true;
                             break mainLoop
@@ -132,10 +144,6 @@ class Game {
     getDisplayPassage() {
         return this.fullPassage.substring(this.hiddenTopLetters)
     }
-
-    /*
-    Cursors
-    */
 
     /**
      * Get a cursor
@@ -219,7 +227,6 @@ class Game {
      * Update the passage
      */
     updatePassage() {
-        console.log(this.getCharacterSpeed())
         var passageHTML = ''
         this.setCursor('main', Math.max(this.getCorrectLetterCount(true), 0)) // Set the cursor character to either 0 or the current correct letter
         var correctLettersLeft = this.getCorrectLetterCount(false)
@@ -490,7 +497,7 @@ class Game {
      */
     getAccuracy() {
         var acc = Math.round(((this.getCharactersTyped() - this.mistakes) / this.getCharactersTyped()) * 100)
-        return !isNaN(acc) && acc != "Infinity" && acc != "-Infinity" ? acc : 100
+        return Math.max(!isNaN(acc) && acc != "Infinity" && acc != "-Infinity" ? acc : 100, 0)
     }
 
     /**
@@ -500,5 +507,55 @@ class Game {
     getCharacterSpeed() {
         var cSpeed = this.secondsElapsed / this.getCharactersTyped()
         return !isNaN(cSpeed) && cSpeed != "Infinity" && cSpeed != "-Infinity" ? cSpeed : 0
+    }
+
+    /**
+     * Register a mistake
+     * @param {String} ltrMistake The letter that the user mistyped
+     * @param {Number} count The amount of mistakes to add
+     */
+    registerMistake(letter, count = 1) {
+        for (var ltrMistake of this.mistakeArray) {
+            if (ltrMistake.letter == letter) { // This letter is already in the array
+                ltrMistake.count += count
+                return
+            }
+        }
+
+        // The letter is not in the array
+        this.mistakeArray.push({ letter: letter, count: count})
+    }
+
+    /**
+     * Get the letters with the most mistakes
+     * @returns {Array} The 4 most mistakeful letters to type
+     */
+    getMistakefulLetters() {
+        var array = [...this.mistakeArray]
+        var difficultArray = []
+        for (var i = 0; i < 4; i++) { // Loop through for the 4 biggest letters
+            var biggest = undefined
+
+            // Loop through all the remaining letters
+            for (var ltr of array) {
+                if (!biggest) {
+                    if (ltr.count > 2) {
+                        biggest = ltr
+                    } else {
+                        continue;
+                    }
+                }
+
+                if (ltr.count > biggest.count) {
+                    biggest = ltr
+                }
+            }
+
+            if (biggest) { // If a letter has been found
+                array = array.filter(ltr => ltr.letter != biggest.letter) // Remove the biggest letter from the array
+                difficultArray.push(biggest.letter) // Add the letter
+            }
+        }
+        return difficultArray
     }
 }

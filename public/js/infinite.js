@@ -32,9 +32,10 @@ function startGame() {
 
     setInterval(() => {
         updateStats()
+        updateNotes()
     }, 300)
 
-    chart = renderChart();
+    chart = renderChart()
 }
 
 /**
@@ -131,6 +132,19 @@ function updateStats() {
     document.getElementById("accuracy").innerHTML = game.getAccuracy()
     document.getElementById("words-typed").innerHTML = game.getWordsTyped()
     document.getElementById("session-wpm").innerHTML = game.getWPM()
+}
+
+/**
+ * Update the notes view
+ */
+function updateNotes() {
+    var listHTML = ""
+
+    for (ltr of game.getMistakefulLetters()) {
+        listHTML += `<ltr>${ltr}</ltr>`
+    }
+
+    document.getElementById("letters-list").innerHTML = listHTML
 }
 
 startGame()
