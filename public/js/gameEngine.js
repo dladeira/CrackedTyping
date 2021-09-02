@@ -10,6 +10,7 @@ class Game {
         this.onGameEnd = onGameEnd
         this.engineRunning = false
         this.cursors = {}
+        this.currentInput = ''
         this.hiddenTopLetters = 0
         this.currentWordIndex = 0 // Start the user at the first word
         this.confirmedText = '' // Text typed correctly locked after space was pressed
@@ -62,11 +63,10 @@ class Game {
 
             mainLoop:
             do {
-                for (var ltrIndex in this.getExpectedWord()) {
+                for (var ltrIndex in this.getExpectedWord() + " ") {
                     if (wordInputedFull[ltrIndex] && !pressedBackspace) {
                         if (this.getExpectedWord()[ltrIndex] != wordInputedFull[ltrIndex]) {
                             if (!this.lastCharacterError) {
-                                console.log("making funny")
                                 this.mistakes++
                             }
                             this.lastCharacterError = true;
@@ -76,6 +76,8 @@ class Game {
                 }
                 this.lastCharacterError = false
             } while (false)
+
+            this.currentInput = wordInputedFull
 
             if (event.data == ' ' || this.onLastWord()) {
                 if (this.getExpectedWord() == wordInputed) {
@@ -217,6 +219,7 @@ class Game {
      * Update the passage
      */
     updatePassage() {
+        console.log(this.getCharacterSpeed())
         var passageHTML = ''
         this.setCursor('main', Math.max(this.getCorrectLetterCount(true), 0)) // Set the cursor character to either 0 or the current correct letter
         var correctLettersLeft = this.getCorrectLetterCount(false)
@@ -330,7 +333,7 @@ class Game {
      * @returns {Number}
      */
     getWPM() {
-        return Math.round(this.calculateWPM(this.confirmedText.split(' ').length - 1, this.secondsElapsed * 1000))
+        return this.calculateWPM(this.confirmedText.split(' ').length - 1, this.secondsElapsed * 1000)
     }
 
     /**
@@ -341,7 +344,7 @@ class Game {
      */
     calculateWPM(wordsTyped, timeElapsed){
         var wpm = wordsTyped / ((timeElapsed / 1000) / 60)
-        return (isNaN(wpm) || wpm == 'Infinity' ? 0 : wpm) // Return 0 if WPM is not a valid number
+        return (isNaN(wpm) || wpm == 'Infinity' ? 0 : Math.round(wpm)) // Return 0 if WPM is not a valid number
     }
 
     /**
@@ -452,11 +455,50 @@ class Game {
         return this.fullPassage.length - this.getCorrectLetterCount(true)
     }
 
+    /**
+     * Get the current amount of letters the user types
+     * @returns {Number}
+     */
+    getCharactersTyped() {
+        return this.confirmedText.split('').length + this.currentInput.split('').length
+    }
+
+    /**
+     * Get the total words the user typed
+     * @returns {Number}
+     */
+    getWordsTyped() {
+        return this.confirmedText.split(' ').length
+    }
+
+    /**
+     * Get the user's WPM over a span of certain seconds
+     * @param {Function} callback The function to run with a wpm parameter when the WPM has been collected
+     * @param {Number} time The amount of time to collect WPM for
+     */
     getWPMInTime(callback, time) {
         var startWord = this.currentWordIndex
         setTimeout(() => {
             var endWord = this.currentWordIndex
             callback(this.calculateWPM(endWord - startWord, time))
         }, time)
+    }
+
+    /**
+     * Get the percentage of letters that the user did not make a mistake on
+     * @returns {Number}
+     */
+    getAccuracy() {
+        var acc = Math.round(((this.getCharactersTyped() - this.mistakes) / this.getCharactersTyped()) * 100)
+        return !isNaN(acc) && acc != "Infinity" && acc != "-Infinity" ? acc : 100
+    }
+
+    /**
+     * Get the average amount of seconds to type one character
+     * @returns {Number}
+     */
+    getCharacterSpeed() {
+        var cSpeed = this.secondsElapsed / this.getCharactersTyped()
+        return !isNaN(cSpeed) && cSpeed != "Infinity" && cSpeed != "-Infinity" ? cSpeed : 0
     }
 }

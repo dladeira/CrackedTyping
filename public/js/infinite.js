@@ -1,7 +1,7 @@
 var game, chart
 var dataCollectionFrequency = 5000 // How frequently to collect the data in ms
 
-var dictionary = ["water", "aqua", "breathe", "see", "fall", "reason", "why", "world", "continue", "discover", "run", "place", "territory", "country", "airplane", "airport", "nature", "keyboard", "computer", "website", "internet", "domain", "computer", "mouse", "speaker", "configuration", "bridge", "phone", "blood", "pressure", "notebook", "pencil", "pen", "array", "channel", "television", "broadway", "broadcast", "reasons", "speech", "united", "nation", "color", "red", "green", "blue", "yellow", "purple", "female", "male", "dog", "cat", "fast", "slow", "interesting", "professor", "teacher", "student", "prison", "labor", "force", "biology", "chemistry", "physics", "minecraft", "fortnite", "suicide", "america"]
+var dictionary = words.toLowerCase().split('\n')
 
 /**
  * Start the game
@@ -11,6 +11,8 @@ function startGame() {
 
     game = new Game(generateRandomWords(30).substring(1)) // Create a new game with 30 words and remove the first space
     game.setAlert(startingIn) // Set the alert as soon as we start the game
+
+    startWPMUpdater()
 
     var intervalId = setInterval(() => {
         game.setAlert(--startingIn)
@@ -30,7 +32,7 @@ function startGame() {
 
     setInterval(() => {
         updateStats()
-    }, 1000)
+    }, 300)
 
     chart = renderChart();
 }
@@ -108,10 +110,27 @@ function renderChart() {
     return new Chart(document.getElementById("chart"), config)
 }
 
+function startWPMUpdater() {
+    for (var i = 1000; i < 10000; i += 1000) {
+        game.getWPMInTime((wpm) => {
+            document.getElementById("wpm-display").innerHTML = wpm
+        }, i)
+    }
+    setInterval(() => {
+        game.getWPMInTime((wpm) => {
+            document.getElementById("wpm-display").innerHTML = wpm
+        }, 10000)
+    }, 300)
+}
 
+/**
+ * Update the stats view
+ */
 function updateStats() {
-    document.getElementById("wpm-display").innerHTML = game.getWPM()
     document.getElementById("time-elapsed").innerHTML = ((game.secondsElapsed - game.secondsElapsed % 60) / 60) + ":" + Math.round(game.secondsElapsed % 60).toString().padStart(2, "0")
+    document.getElementById("accuracy").innerHTML = game.getAccuracy()
+    document.getElementById("words-typed").innerHTML = game.getWordsTyped()
+    document.getElementById("session-wpm").innerHTML = game.getWPM()
 }
 
 startGame()

@@ -1,0 +1,53 @@
+#stats {
+    display: flex;
+    flex-direction: column;
+}
+
+#wpm-subtitle {
+    width: 100%;
+
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--orange);
+}
+
+#wpm-display {
+    width: 100%;
+
+    text-align: center;
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: white;
+}
+
+.stats-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+
+    height: 100%;
+}
+
+.stats-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+
+    padding: 0 20px;
+}
+
+.stats-key {
+    font-size: 1.2rem;
+    color: white;
+}
+
+.stats-value {
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--orange);
+}

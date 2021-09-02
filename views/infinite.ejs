@@ -10,11 +10,26 @@
             <%- include('partials/gameEngine.ejs') %>
         </div>
         <div class="side-column" id="stats">
-            <p id="wpm-display"></p>
             <p id="wpm-subtitle">WPM</p>
+            <p id="wpm-display"></p>
 
             <div class="stats-list">
-                <div class="stats-header" id="time-elapsed"></div>
+                <div class="stats-item">
+                    <div class="stats-key" id="accuracy"></div>
+                    <div class="stats-value">Accuracy</div>
+                </div>
+                <div class="stats-item">
+                    <div class="stats-key" id="words-typed"></div>
+                    <div class="stats-value">Words Typed</div>
+                </div>
+                <div class="stats-item">
+                    <div class="stats-key" id="time-elapsed"></div>
+                    <div class="stats-value">Time Elapsed</div>
+                </div>
+                <div class="stats-item">
+                    <div class="stats-key" id="session-wpm"></div>
+                    <div class="stats-value">Session WPM</div>
+                </div>
             </div>
         </div>
     </div>
@@ -30,5 +45,6 @@
 <!-- Keep scripts in this order (socket.io on top) -->
 <script src="/socket.io/socket.io.js"></script>
 <script src="/node_modules/chart.js/dist/chart.min.js"></script>
+<script src="/js/words.js"></script>
 <script src="/js/infinite.js"></script>
 <%- include('partials/footer.ejs') %>
