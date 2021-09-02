@@ -21,6 +21,13 @@
     color: var(--orange);
 }
 
+.engine-wrapper {
+    height: 100%;
+    width: 50%;
+
+    margin: 0 auto;
+}
+
 #player-list {
     display: flex;
     flex-direction: row;

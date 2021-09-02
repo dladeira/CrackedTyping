@@ -1,10 +1,54 @@
 <%- include('partials/header.ejs') %>
 <link rel="stylesheet" href="/css/infinite.css" type="text/css">
-<div id="game-container">
-    <%- include('partials/gameEngine.ejs') %>
+<link rel="stylesheet" href="/css/gameboard.css" type="text/css">
+<div class="gameboard">
+    <div class="main-row">
+        <div class="side-column" id="notes">
+            <p id="engine-title">Engine Notes</p>
+            <p id="engine-subtitle">Difficult Letters</p>
+            <div id="letters-list">
+                
+            </div>
+        </div>
+        <div class="engine-wrapper main-column">
+            <%- include('partials/gameEngine.ejs') %>
+        </div>
+        <div class="side-column" id="stats">
+            <p id="wpm-subtitle">WPM</p>
+            <p id="wpm-display"></p>
+
+            <div class="stats-list">
+                <div class="stats-item">
+                    <div class="stats-key" id="accuracy"></div>
+                    <div class="stats-value">Accuracy</div>
+                </div>
+                <div class="stats-item">
+                    <div class="stats-key" id="words-typed"></div>
+                    <div class="stats-value">Words Typed</div>
+                </div>
+                <div class="stats-item">
+                    <div class="stats-key" id="time-elapsed"></div>
+                    <div class="stats-value">Time Elapsed</div>
+                </div>
+                <div class="stats-item">
+                    <div class="stats-key" id="session-wpm"></div>
+                    <div class="stats-value">Session WPM</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alt-row">
+        <div class="info-column">
+            <canvas id="chart" height="100%" width="100%">
+
+            </canvas>
+        </div>
+    </div>
 </div>
 
-<!-- Keep scripts in this order (socket.io on top)-->
+<!-- Keep scripts in this order (socket.io on top) -->
 <script src="/socket.io/socket.io.js"></script>
+<script src="/node_modules/chart.js/dist/chart.min.js"></script>
+<script src="/js/words.js"></script>
 <script src="/js/infinite.js"></script>
 <%- include('partials/footer.ejs') %>

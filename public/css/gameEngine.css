@@ -1,3 +1,7 @@
+/*
+ENGINE
+*/
+
 #engine-container {
     display: flex;
     flex-direction: column;
@@ -5,31 +9,11 @@
     align-items: center;
   
     height: 100%;
+    width: 100%;
+
+    padding: 20px;
 
     box-sizing: border-box;
-}
-
-#engine-box {
-    display: flex;
-    align-items: center;
-
-    height: 50%;
-
-    padding: 1%;
-    
-    border: none;
-
-    font-size: 1.4rem;
-    line-height: 1.8rem;
-    color: rgb(167, 156, 156);
-
-    box-sizing: border-box;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 }
 
 #engine-passage-wrapper {
@@ -41,10 +25,18 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-content: start;
+    justify-content: start;
 
     height: 100%;
 
     overflow-y: hidden;
+    box-sizing: border-box;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 #engine-input {
@@ -60,9 +52,49 @@
     opacity: 1;
     outline: 0;
     border: none;
-    background-color: black;
+}
+
+/*
+WORDS AND LETTERS
+*/
+
+word {
+    display: flex;
+    flex-direction: row;
+
+    height: 1.8rem;
+
+    margin: 10px 0;
+    padding: 10px 0;
+
+    border-bottom: 1px dashed darkgray;
+
+    font-size: 1.6rem;
+    line-height: 1.8rem;
+
+    box-sizing: content-box;
+}
+
+letter {
+    display: block;
+
+    height: 1.8rem;
+
     color: var(--green);
 }
+
+letter.correct {
+    color: var(--orange);
+ }
+
+letter.incorrect {
+    text-decoration: line-through;
+    color: red;
+}
+
+/*
+MISC
+*/
 
 .cursor {
     position: absolute;
@@ -72,9 +104,13 @@
     left: 0;
 
     height: 0;
-    width: 1px;
+    width: 2px;
 
     background-color: white;
+}
+
+.other-cursor {
+    border-color: gray !important;
 }
 
 #alert {
@@ -98,30 +134,4 @@
     color: var(--orange);
 
     transition: opacity 0.2s linear;
-}
-
-word {
-    display: flex;
-    flex-direction: row;
-
-    height: 1.8rem;
-}
-
-letter {
-    display: block;
-
-    height: 1.8rem;
-}
-
-letter.correct {
-    color: var(--orange);
- }
-
-letter.incorrect {
-    text-decoration: line-through;
-    color: red;
-}
-
-.other-cursor {
-    border-color: gray !important;
 }

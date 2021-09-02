@@ -52,20 +52,9 @@ nav > * {
 }
 
 .brand {
-    padding: 10px 10px;
-    text-decoration: none;
-    letter-spacing: 1px;
-    font-size: 30px;
-    color: white;
-}
+    height: 75%;
 
-.brand cracked {
-    margin-right: 3px;
-
-    border-radius: 3px;
-
-    background-color: #2dd410;
-    letter-spacing: 2px;
+    margin-left: 20px;
 }
 
 /*

@@ -1,18 +1,101 @@
-#game-container {
+/*
+STATS
+*/
+
+#stats {
+    display: flex;
+    flex-direction: column;
+}
+
+#wpm-subtitle {
+    width: 100%;
+
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--orange);
+}
+
+#wpm-display {
+    width: 100%;
+
+    text-align: center;
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: white;
+}
+
+.stats-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+
+    height: 100%;
+}
+
+.stats-item {
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: space-between;
 
-    height: 100%;
+    width: 100%;
+
+    padding: 0 20px;
 }
 
-#engine-container {
-    height: 100%;
-    width: 20%
+.stats-key {
+    font-size: 1.2rem;
+    color: white;
 }
 
-#engine-passage {
-    height: 10%;
+.stats-value {
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--orange);
+}
 
-    margin-top: 0 !important;
+/*
+ENGINE NOTES
+*/
+
+#notes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#engine-title {
+    width: 100%;
+
+    margin-bottom: 10%;
+
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--red);
+}
+
+#engine-subtitle {
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--red);
+}
+
+#letters-list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+
+    max-width: 80%;
+    min-width: 30%;
+
+    margin: 0 auto;
+}
+
+ltr {
+    font-size: 1.2rem;
+    color: white;
 }

@@ -10,7 +10,10 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // Serve static content
-app.use(express.static(__dirname + '/public'))
+app.use('/css', express.static(__dirname + '/public/css'))
+app.use('/js', express.static(__dirname + '/public/js'))
+app.use('/img', express.static(__dirname + '/public/img'))
+app.use('/node_modules', express.static(__dirname + '/node_modules'))
 
 // MongoDB session store
 app.use(require('./session.js'))
