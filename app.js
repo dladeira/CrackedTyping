@@ -13,6 +13,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/css', express.static(__dirname + '/public/css'))
 app.use('/js', express.static(__dirname + '/public/js'))
 app.use('/img', express.static(__dirname + '/public/img'))
+app.use('/data', express.static(__dirname + '/public/data'))
 app.use('/node_modules', express.static(__dirname + '/node_modules'))
 
 // MongoDB session store
