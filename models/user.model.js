@@ -31,7 +31,7 @@ userSchema.plugin(function getPastGamesPlugin(schema) {
             var pastGames = []
             for (var game of games) {
                 for (var playerObject of game.players) {
-                    if (toString(playerObject.player) == toString(id)) {
+                    if (playerObject.player.equals(id)) {
                         var gameObject = game.toObject()
                         gameObject.player = playerObject
                         pastGames.push(gameObject)
